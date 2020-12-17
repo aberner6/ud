@@ -3,6 +3,7 @@ async function drawLineChart() {
   // 1. Access data
   const dataset = await d3.json("./../../my_weather_data.json")
 
+  console.log(dataset)
   const yAccessor = d => d.temperatureMax
   const dateParser = d3.timeParse("%Y-%m-%d")
   const xAccessor = d => dateParser(d.date)
@@ -88,4 +89,5 @@ async function drawLineChart() {
         dimensions.boundedHeight
       }px)`)
 }
-// drawLineChart()
+drawLineChart()
+console.log("in here")
