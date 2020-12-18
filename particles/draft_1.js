@@ -1,15 +1,16 @@
 //global variables
 //"var" could also be "let" - can be redefined locally
-var width, height;
-
 var keywords = [];
 var uniqueKeywords;
 
 var links = [];
 var nodes = {};
-var svg, vis;
-var circle, path;
+var svg;
+var vis;
+var circle;
+var path;
 
+var rMap;
 var radius = 2;
 var simulation;
 
@@ -23,8 +24,8 @@ async function drawData() {
 	const accessOnePiece = dataset[0];
 
 /*step 2: basic dimensions, setting up canvas*/    
-    width = window.innerWidth*.99;
-    height = window.innerHeight*.99;
+    var width = window.innerWidth*.99;
+    var height = window.innerHeight*.99;
 
     svg = d3.select("#wrapper")
         .append("svg")
@@ -54,27 +55,12 @@ async function drawData() {
 	function createLinks(){
 	    links = [];
 	        for (i=0; i<dataset.length; i++){ //for the whole dataset
-	           links.push({"source":dataset[i].id,"target":dataset[i].name,"ty":dataset[i].ty}) //set them as sources and targets
+	           links.push({"source":dataset[i].id,"target":dataset[i].name,"te":dataset[i].te}) //set them as sources and targets
 	        }
-//start newness
-        var nodes = d3.range(n).map(function () {
-          var i = dataset[n].ty,
-              r = radius,
-              d = {
-                cluster: i,
-                radius: r,
-                x: Math.cos(i / m * 2 * Math.PI) * 150 + width / 2,
-                y: Math.sin(i / m * 2 * Math.PI) * 150 + height / 2
-              };
-          if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
-          return d;
-        });
-//end newness
+
 	   simpleNodes();
 	}
     function simpleNodes(){
-    console.log(n);
-    console.log(m);
 
         var thisWeight = [];
         var maxWeight;
