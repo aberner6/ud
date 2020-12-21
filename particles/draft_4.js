@@ -12,7 +12,6 @@ var svg, vis;
 var circle, path;
 
 var rad = 8;
-var m = 0;
 var simulation;
 
 var padding = 1.5, // separation between same-color nodes
@@ -32,14 +31,23 @@ const makeRequest = async () => {
   }
 }
 
-
+var index = 0;
+var howMuch = 0;
+var whichNum = 0;
 const processPrep = async(data) => {
 // async function processPrep(data){
+
     width = 960;
     height = 500;
     svg = d3.select('body').append('svg')
         .attr('width', width)
         .attr('height', height);
+
+    svg.on("click", function(){ 
+        series();
+    })
+
+    node = svg.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll(".node");
 
     for (var i = 0;i<data.length; i++){ //this is a for loop and goes through the whole dataset
         keywords.push(data[i].name);
@@ -54,22 +62,24 @@ const processPrep = async(data) => {
 
 var clusters;
 var node;
-async function drawNodes(uniqueKeywords){
+var n, m, color;
+async function makeNodes(uniqueKeywords){
 
-    var n = data.length; // total number of nodes
+    n = data.length; // total number of nodes
     m = uniqueKeywords.length; // number of distinct clusters
     clusters = new Array(m);
     console.log(m);
     console.log(m+uniqueKeywords);
 
-    var color = d3.scaleSequential(d3.interpolateRainbow)
+    color = d3.scaleSequential(d3.interpolateRainbow)
         .domain(d3.range(m));
 
     for (var j=0; j<data.length; j++){
         var i = parseInt(data[j].ty),
-            r = rad,
+            r = parseInt(data[j].age),
             d = {
                 cluster: i,
+                name: data[j].name,
                 radius: r,
                 x: Math.cos(i / m * 2 * Math.PI) * 150 + width / 2,
                 y: Math.sin(i / m * 2 * Math.PI) * 150 + height / 2
@@ -77,51 +87,74 @@ async function drawNodes(uniqueKeywords){
         if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
         nodes.push(d);
     }
+}
+
+function series(){
+    console.log("hi")
+    index++;
+    // if(index==1){
+        restart(chooseData(nodes, index));
+    // }
+    // if(index==2){
+    //     restart(chooseData(nodes, 2));
+    // }
+    // if(index==3){
+    //     restart(chooseData(nodes, 3));
+    // }
+}
+
+function chooseData(nodes, whichNum){
+    var liveData = [];
+        for (var i = 0; i<nodes.length; i++){
+            if(nodes[i].cluster==whichNum){
+                liveData.push(nodes[i])
+            }
+        }
+    return liveData;
+}
+function restart(nodes){
+
+    console.log(nodes);
+    // transition
+    // var t = d3.transition()
+    //   .duration(750);    
 
 
-    var maxStrength = 0.25;
+    // node = node.data(nodes);
+
+    node = node.data(nodes, function(d){ return d; });
+    node.exit()
+    // .transition(t)
+        // .style("fill","grey")
+      // .attr("r", 1e-6)
+      .remove();
+
+    // node
+    //   .transition(t)
+    //     .attr("r", function(d){ return d.radius });
+
+    node = node.enter().append("circle")
+      .style("fill", "pink")
+      .style("opacity",.5)
+      .attr("r", function(d){ return d.radius })
+      .merge(node);
+
+
     simulation = d3.forceSimulation()
+        .on('tick', layoutTick)
 
-        // pull toward mouse (see 'mousemove' handler below)
-        // .force('attract', d3.forceAttract()
-        //     .target([width/2, height/2])
-        //     .strength(function (d) { return Math.pow((d.radius / rad) * maxStrength, 2); })) //.001
-
-        // use center force to keep normal
-        // .force('center', d3.forceCenter(width/2, height/2))
-
+    simulation.nodes(nodes)
         // always cluster by section
         .force('cluster', d3.forceCluster()
             .centers(function (d) { 
                 return clusters[d.cluster]; })
             .strength(0.75)
             .centerInertia(0.1))
-
         // always apply collision with padding
         .force('collide', d3.forceCollide(function (d) { 
             return d.radius + padding; })
-            .strength(0))
+            .strength(0).radius(function(d){ return d.radius; }).iterations(1))
 
-        .on('tick', layoutTick)
-        .nodes(nodes);
-
-    node = svg.selectAll('circle')
-      .data(nodes)
-      .enter().append('circle')
-      .style("fill", function(d){
-        return color(d.cluster/10)
-      })   
-      .style("opacity",.5)
-
-console.log(node);
-    //will only work if we start with the force of attraction
-    // svg.on('mousemove', function () {
-    //     simulation.force('attract')
-    //         .target([300*Math.random(), 300*Math.random()]);
-    //     simulation
-    //       .alphaTarget(0.3)
-    //       .restart();
-    // });
 
       
     // ramp up collision strength to provide smooth transition
@@ -131,20 +164,20 @@ console.log(node);
       simulation.force('collide').strength(Math.pow(dt, 2) * 0.7);
       if (dt >= 1.0) t.stop();
     });
-      
-    function layoutTick (e) {
-      node
-        .attr('cx', function (d) { return d.x; })
-        .attr('cy', function (d) { return d.y; })
-        .attr('r', function (d) { return d.radius; });
-    }
+
 }
 
-
+  
+function layoutTick (e) {
+  node
+    .attr('cx', function (d) { return d.x; })
+    .attr('cy', function (d) { return d.y; })
+    .attr('r', function (d) { return d.radius; });
+}
 
 makeRequest()
     .then(data => processPrep(data))
-    .then(uniqueKeywords => drawNodes(uniqueKeywords));
-
+    .then(uniqueKeywords => makeNodes(uniqueKeywords))
+    // .then(interval())
 
 
