@@ -14,7 +14,7 @@ var circle, path;
 var rad = 8;
 var simulation;
 
-var padding = 1.5, // separation between same-color nodes
+var padding = 1,//1.5, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 8;
 
@@ -23,7 +23,8 @@ var data;
 // get the data
 const makeRequest = async () => {
   try {
-    data = await d3.csv("mini_train.csv");
+    data = await d3.csv("data_structure.csv");
+    // data = await d3.csv("mini_train.csv");
     return data;
   } catch (err) {
     console.log(err)
@@ -46,8 +47,7 @@ const processPrep = async(data) => {
     svg.on("click", function(){ 
         series();
     })
-
-    node = svg.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll(".node");
+    node = svg.append("g").selectAll(".node");
 
     for (var i = 0;i<data.length; i++){ //this is a for loop and goes through the whole dataset
         keywords.push(data[i].name);
@@ -74,10 +74,12 @@ async function makeNodes(uniqueKeywords){
     color = d3.scaleSequential(d3.interpolateRainbow)
         .domain(d3.range(m));
 
+
     for (var j=0; j<data.length; j++){
         var i = parseInt(data[j].ty),
-            r = parseInt(data[j].age),
+            r = parseInt(data[j].age)/4,
             d = {
+                id: data[j].id,
                 cluster: i,
                 name: data[j].name,
                 radius: r,
@@ -87,63 +89,59 @@ async function makeNodes(uniqueKeywords){
         if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
         nodes.push(d);
     }
+    return nodes;
 }
 
 function series(){
-    console.log("hi")
     index++;
-    // if(index==1){
-        restart(chooseData(nodes, index));
-    // }
-    // if(index==2){
-    //     restart(chooseData(nodes, 2));
-    // }
-    // if(index==3){
-    //     restart(chooseData(nodes, 3));
-    // }
+    console.log(index+"series")
+    restart(chooseData(nodes, index));
 }
 
 function chooseData(nodes, whichNum){
+    console.log(whichNum)
     var liveData = [];
         for (var i = 0; i<nodes.length; i++){
-            if(nodes[i].cluster==whichNum){
+            if(nodes[i].cluster==whichNum){ //the ckuster to focus on
                 liveData.push(nodes[i])
             }
         }
     return liveData;
 }
-function restart(nodes){
+function restart(liveData){
 
-    console.log(nodes);
+    // console.log(liveData);
     // transition
-    // var t = d3.transition()
-    //   .duration(750);    
+    var t = d3.transition()
+      .duration(700);    
 
-
-    // node = node.data(nodes);
-
-    node = node.data(nodes, function(d){ return d; });
+    node = node.data(liveData, function(d){ return d.cluster; });
     node.exit()
-    // .transition(t)
-        // .style("fill","grey")
-      // .attr("r", 1e-6)
+    .transition(t)
+        .style("fill","grey")
+      .attr("r", 1e-6)
       .remove();
 
-    // node
-    //   .transition(t)
-    //     .attr("r", function(d){ return d.radius });
+    node
+      .transition(t)
+        .attr("r", function(d){ return d.radius });
+
 
     node = node.enter().append("circle")
-      .style("fill", "pink")
+      .style("fill", function(d){
+        return color(d.cluster/10)
+      })
       .style("opacity",.5)
       .attr("r", function(d){ return d.radius })
+      .attr("class", function(d){
+        return d.id+" "+d.cluster;
+      })
       .merge(node);
 
 
-    simulation = d3.forceSimulation()
-        .on('tick', layoutTick)
 
-    simulation.nodes(nodes)
+    simulation = d3.forceSimulation(liveData)
+        .nodes(liveData)
         // always cluster by section
         .force('cluster', d3.forceCluster()
             .centers(function (d) { 
@@ -154,6 +152,7 @@ function restart(nodes){
         .force('collide', d3.forceCollide(function (d) { 
             return d.radius + padding; })
             .strength(0).radius(function(d){ return d.radius; }).iterations(1))
+        .on("tick", layoutTick);
 
 
       
@@ -164,7 +163,6 @@ function restart(nodes){
       simulation.force('collide').strength(Math.pow(dt, 2) * 0.7);
       if (dt >= 1.0) t.stop();
     });
-
 }
 
   
@@ -178,6 +176,6 @@ function layoutTick (e) {
 makeRequest()
     .then(data => processPrep(data))
     .then(uniqueKeywords => makeNodes(uniqueKeywords))
-    // .then(interval())
+    // .then(nodes => makeForce(nodes))
 
 
