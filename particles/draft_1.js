@@ -14,20 +14,22 @@ var rMap;
 var radius = 2;
 var simulation;
 
+var dataset;
+
 var padding = 1.5, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 8;
 
 async function drawData() {
 /*step 1: get the data and see one piece of it*/	
-	const dataset = await d3.csv("mini_train.csv");
+	dataset = await d3.csv("mini_train.csv");
 	const accessOnePiece = dataset[0];
 
 /*step 2: basic dimensions, setting up canvas*/    
     var width = window.innerWidth*.99;
     var height = window.innerHeight*.99;
 
-    svg = d3.select("#wrapper")
+    svg = d3.select("body")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -55,7 +57,7 @@ async function drawData() {
 	function createLinks(){
 	    links = [];
 	        for (i=0; i<dataset.length; i++){ //for the whole dataset
-	           links.push({"source":dataset[i].id,"target":dataset[i].name,"te":dataset[i].te}) //set them as sources and targets
+	           links.push({"source":dataset[i].id,"target":dataset[i].type,"title":dataset[i].name}) //set them as sources and targets
 	        }
 
 	   simpleNodes();
@@ -66,10 +68,14 @@ async function drawData() {
         var maxWeight;
 
         links.forEach(function(link) {
-          link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, te: link.te});
-          link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+          // link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, title: link.title});
+          // link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
 
+          link.source = nodes[link.source] || (nodes[link.source] = {sourceTitle: link.title, sourceId: link.source});
+          link.target = nodes[link.target] || (nodes[link.target] = {targetTitle: link.title, sourceId: link.source});
         });
+
+        console.log(links)
 
         simulation = d3.forceSimulation()
             .nodes(Object.values(nodes))
@@ -83,19 +89,21 @@ async function drawData() {
             .data(links)
             .enter().append("path")
             .attr("class", function(d){
-                // console.log(d);
+                return d;
             })
-            .attr("fill","none");
-            // .attr("fill","#e6e6e3");
+            .attr("fill","#e6e6e3");
 
         circle = vis.selectAll("node")
             .data(simulation.nodes())
             .enter().append("circle")
             .attr("class", function(d){
-                return d.name;
+                console.log(d)
+                return d.title;
             })
             .attr("r", radius)
-            .attr("fill", "pink")
+            .attr("fill", function(d){
+                // if(d."pink"
+            })
 
         function ticked() {
           path.attr("d", linkArc);

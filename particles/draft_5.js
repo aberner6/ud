@@ -102,7 +102,7 @@ function chooseData(nodes, whichNum){
     console.log(whichNum)
     var liveData = [];
         for (var i = 0; i<nodes.length; i++){
-            if(nodes[i].cluster==whichNum){ //the ckuster to focus on
+            if(nodes[i].cluster==whichNum){ //the cluster to focus on
                 liveData.push(nodes[i])
             }
         }
