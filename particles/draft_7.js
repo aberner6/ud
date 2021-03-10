@@ -12,8 +12,8 @@ var svg, g, node, link;
 var radius = 2;
 var simulation;
 
-var padding = 1.5, // separation between same-color nodes
-    clusterPadding = 6, // separation between different-color nodes
+var padding = 1.5,
+    clusterPadding = 6,
     maxRadius = 8;
 
 var dataset;
@@ -38,13 +38,6 @@ const processPrep = async(dataset) => {
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
-    //old way
-    // simulation = d3.forceSimulation()
-        // .nodes(Object.values(nodes))
-        // .force("link", d3.forceLink(liveData))
-        // .force("charge", d3.forceManyBody().strength(-10))
-        // .force("center", d3.forceCenter(width / 2, height / 2))
-        // .on("tick", ticked)
     simulation = d3.forceSimulation()
         .nodes(Object.values(nodes))
         .force("link", d3.forceLink(liveData).distance(200))
@@ -130,9 +123,6 @@ function makeNodes(liveData){
       link.source = nodes[link.source] || (nodes[link.source]= {name: link.source});
       link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
       //MAYBE JUST ADD IN THE OTHER RELEVANT DATA?
-
-      // link.source = nodes[link.source] || (nodes[link.source] = {title: link.title, id: link.source, type: link.type});
-      // link.target = nodes[link.target] || (nodes[link.target] = {title: link.title, id: link.target, type: link.type});
     });  
     console.log(nodes);
     return nodes;  
@@ -141,20 +131,6 @@ function makeNodes(liveData){
 function restart(liveData, nodes){
     var t = d3.transition()
         .duration(750);
-    // node = node.data(Object.values(nodes), function(d) { return d;});
-    // node.exit().remove();
-    // node = node.enter().append("circle")
-    //     .attr("fill", "pink")
-    //     .attr("r", function(d){
-    //         return d.ty*5;
-    //     })
-    // .merge(node);
-
-    // link = link.data(liveData, function(d){ return d; })
-    // link.exit().remove();
-    // link = link.enter().append("path")
-    //     .attr("fill", "pink")
-    //     .merge(link);
 
     node = node.data(Object.values(nodes), function(d) { return d;});
     node.exit()
@@ -166,24 +142,12 @@ function restart(liveData, nodes){
         .transition(t)
         .attr("fill",function(d){
             return color(parseInt(d.name))
-            // if(d.ty==1){
-            //     return "grey"
-            // }
-            // if(d.ty==2){
-            //     return "pink"
-            // }
         })
         .attr("r", function(d){ return parseInt(d.name)*5; });
     node = node.enter().append("circle")
         .attr("r", function(d){ return parseInt(d.name)*5 })
         .attr("fill",function(d){
             return color(parseInt(d.name))
-            // if(d.ty==1){
-            //     return "grey"
-            // }
-            // if(d.ty==2){
-            //     return "pink"
-            // }
         })
         .merge(node);
 
