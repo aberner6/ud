@@ -39,8 +39,8 @@ const processPrep = async(dataset) => {
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        .nodes(Object.values(nodes))
-        .force("link", d3.forceLink(liveData).distance(200))
+        // .nodes(Object.values(nodes))
+        // .force("link", d3.forceLink(liveData).distance(200))
         .force("charge", d3.forceManyBody().strength(-10))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .alphaTarget(1)
@@ -96,7 +96,7 @@ async function makeLinks(uniqueKeywords){
 
 function series(){
     index++;
-    console.log(index+"series")
+    // console.log(index+"series")
 
     chooseData(links, index)
         .then(liveData => makeNodes(liveData))
@@ -104,7 +104,7 @@ function series(){
 }
 
 var chooseData = async(links, whichNum) => {
-    console.log(whichNum);
+    // console.log(whichNum);
     liveData = [];
     // console.log(links);
     for (var i = 0; i<links.length; i++){
@@ -113,18 +113,18 @@ var chooseData = async(links, whichNum) => {
             liveData.push(links[i])
         }
     }
-    console.log(liveData);
+    // console.log(liveData);
     return liveData;
 }
 function makeNodes(liveData){
     nodes = {};
     liveData.forEach(function(link) {
-        console.log(link);
+        // console.log(link);
       link.source = nodes[link.source] || (nodes[link.source]= {name: link.source});
       link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
       //MAYBE JUST ADD IN THE OTHER RELEVANT DATA?
     });  
-    console.log(nodes);
+    // console.log(nodes);
     return nodes;  
 }
 
@@ -132,23 +132,17 @@ function restart(liveData, nodes){
     var t = d3.transition()
         .duration(750);
 
-    node = node.data(Object.values(nodes), function(d) { return d;});
+    node = node.data(Object.values(nodes), function(d){return d.name;});
     node.exit()
-        .transition(t)
-        .attr("fill","none")
-        .attr("r", 1e-6)
         .remove();
-    node
-        .transition(t)
-        .attr("fill",function(d){
-            return color(parseInt(d.name))
-        })
-        .attr("r", function(d){ return parseInt(d.name)*5; });
+
     node = node.enter().append("circle")
-        .attr("r", function(d){ return parseInt(d.name)*5 })
-        .attr("fill",function(d){
-            return color(parseInt(d.name))
+        .attr("class","enter")
+        .attr("r", function(d){ 
+            console.log(d);
+            return 5;
         })
+        .attr("fill","black")
         .merge(node);
 
 
@@ -160,6 +154,7 @@ function restart(liveData, nodes){
     link
         .transition(t)
         .attr("fill",function(d){
+            console.log(d);
             return color(d.type)
         })
     link = link.enter().append("path")
@@ -168,11 +163,9 @@ function restart(liveData, nodes){
         })
         .merge(link);
 
-    simulation
-        .nodes(Object.values(nodes))
-    simulation
-        .force("link", d3.forceLink(liveData))
-    simulation.alpha(1).restart();
+    simulation.nodes(Object.values(nodes))
+    simulation.force("link", d3.forceLink(liveData))
+    simulation.alpha(1).restart();//
 }
 
 
