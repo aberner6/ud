@@ -111,10 +111,9 @@ function makeNodes(liveData){
       link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
     });  
 
-    //JUST ADD IN THE OTHER RELEVANT DATA?
+    //JUST ADD IN THE OTHER RELEVANT DATA
     for (var i = 0; i<Object.values(nodes).length; i++){
         var index = parseInt(Object.values(nodes)[i].name)-1;
-        console.log(index)
         Object.values(nodes)[i].entry = links[index].title;
     }
     return nodes;  
@@ -137,6 +136,9 @@ function restart(liveData, nodes){
             return 5;
         })
         .attr("fill","black")
+        .on("mouseover", (event, d)=>{
+            console.log(d);
+        }) 
         .merge(node);
 
 
