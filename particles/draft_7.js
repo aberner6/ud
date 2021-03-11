@@ -12,7 +12,7 @@ var clusters;
 var radius = 2;
 
 var dataset;
-var liveData;
+var liveData = [];
 var simulation;
 
 const makeRequest = async () => {
@@ -26,7 +26,6 @@ const makeRequest = async () => {
   }
 }
 
-var index = 0;
 var whichNum = 0;
 const processPrep = async(dataset) => {
     
@@ -34,7 +33,7 @@ const processPrep = async(dataset) => {
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        .force("charge", d3.forceManyBody().strength(-10))
+        .force("charge", d3.forceManyBody().strength(-1))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .alphaTarget(1)
         .on("tick", ticked);
@@ -88,14 +87,15 @@ async function makeLinks(uniqueKeywords){
 }
 
 function series(){
-    index++;
-    chooseData(links, index)
+    whichNum++;
+    chooseData(links, whichNum)
         .then(liveData => makeNodes(liveData))
         .then(nodes => restart(liveData, nodes))
 }
 
 var chooseData = async(links, whichNum) => {
-    liveData = [];
+    liveData=[];
+    liveData.length = 0;
     for (var i = 0; i<links.length; i++){
         if(links[i].type==whichNum){ 
             console.log("yes");
@@ -107,19 +107,26 @@ var chooseData = async(links, whichNum) => {
 function makeNodes(liveData){
     nodes = {};
     liveData.forEach(function(link) {
-      link.source = nodes[link.source] || (nodes[link.source]= {name: link.source});
-      link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
+        console.log(link)
+        link.source = nodes[link.source] || (nodes[link.source]= {name: link.source});
+        link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
     });  
 
     //JUST ADD IN THE OTHER RELEVANT DATA
-    for (var i = 0; i<Object.values(nodes).length; i++){
-        var index = parseInt(Object.values(nodes)[i].name)-1;
-        Object.values(nodes)[i].entry = links[index].title;
-    }
+    // for (var i = 0; i<Object.values(nodes).length; i++){
+        // var index = parseInt(Object.values(nodes)[i].name);
+        // var index = (Object.values(nodes)[i].name);
+        // console.log(Object.values(nodes)[i].name);
+        // console.log(links[index].title);
+        // Object.values(nodes)[i].entry = links[1].title;
+    // }
+    console.log(liveData)
+    console.log(nodes)
     return nodes;  
 }
 
 function restart(liveData, nodes){
+    console.log("restart")
     var t = d3.transition()
         .duration(750);
 
@@ -160,7 +167,7 @@ function restart(liveData, nodes){
 
     simulation.nodes(Object.values(nodes))
     simulation.force("link", d3.forceLink(liveData))
-    simulation.alpha(1).restart();//
+    simulation.alpha(1).restart();
 }
 
 
@@ -173,9 +180,6 @@ function ticked() {
 function transform(d) {
     node.attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
-    // d.x = Math.max(radius, Math.min(width - radius, d.x));
-    // d.y = Math.max(radius, Math.min(height - radius, d.y));   
-    // return "translate(" + d.x+ "," + d.y + ")";
 }
 
 function linkArc(d) {

@@ -1,0 +1,18 @@
+{
+  "nodes": [
+	    {"id": 1, "name":"High Clouds", "type": 1},
+	    {"id": 2, "name":"Mid Clouds", "type": 1},
+	    {"id": 3, "name":"Low Clouds", "type": 1},
+	    {"id": 4, "name":"Mid Clouds", "type": 2},
+	    {"id": 5, "name":"Low Clouds", "type": 2},
+	    {"id": 6, "name":"Low Clouds", "type": 2}
+	],
+  "links": [
+    	{"source": 1, "target": 2, "type": 1},
+    	{"source": 2, "target": 3, "type": 1},
+    	{"source": 3, "target": 1, "type": 1},
+    	{"source": 4, "target": 5, "type": 2},
+    	{"source": 5, "target": 6, "type": 2},
+    	{"source": 6, "target": 4, "type": 2}
+  ]
+}
