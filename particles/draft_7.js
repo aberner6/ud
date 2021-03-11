@@ -1,4 +1,3 @@
-//global variables
 var width, height;
 
 var keywords = [];
@@ -9,17 +8,13 @@ var nodes = {};
 
 var svg, g, node, link;
 
+var clusters;
 var radius = 2;
-var simulation;
-
-var padding = 1.5,
-    clusterPadding = 6,
-    maxRadius = 8;
 
 var dataset;
 var liveData;
 var simulation;
-// get the data
+
 const makeRequest = async () => {
   try {
     dataset = await d3.csv("mini_train.csv");
@@ -39,8 +34,6 @@ const processPrep = async(dataset) => {
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        // .nodes(Object.values(nodes))
-        // .force("link", d3.forceLink(liveData).distance(200))
         .force("charge", d3.forceManyBody().strength(-10))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .alphaTarget(1)
@@ -78,8 +71,8 @@ const processPrep = async(dataset) => {
 var n, m, color;
 async function makeLinks(uniqueKeywords){
 
-    n = dataset.length; // total number of nodes
-    m = uniqueKeywords.length; // number of distinct clusters
+    n = dataset.length; // total number of items
+    m = uniqueKeywords.length; // number of names
     clusters = new Array(m);
     console.log(m);
     console.log(m+uniqueKeywords);
@@ -88,7 +81,7 @@ async function makeLinks(uniqueKeywords){
         .domain([0, m]);
 
 	links = [];
-	for (i=0; i<dataset.length; i++){ //for the whole dataset
+	for (i=0; i<dataset.length; i++){
 	    links.push({"source":dataset[i].id,"target":dataset[i].cnct,"title":dataset[i].name, "type": dataset[i].type}) //set them as sources and targets
 	}
     return links;
@@ -96,40 +89,34 @@ async function makeLinks(uniqueKeywords){
 
 function series(){
     index++;
-    // console.log(index+"series")
-
     chooseData(links, index)
         .then(liveData => makeNodes(liveData))
         .then(nodes => restart(liveData, nodes))
 }
 
 var chooseData = async(links, whichNum) => {
-    // console.log(whichNum);
     liveData = [];
-    // console.log(links);
     for (var i = 0; i<links.length; i++){
-        if(links[i].type==whichNum){ //the cluster to focus on
+        if(links[i].type==whichNum){ 
             console.log("yes");
             liveData.push(links[i])
         }
     }
-    // console.log(liveData);
     return liveData;
 }
 function makeNodes(liveData){
     nodes = {};
     liveData.forEach(function(link) {
-        // console.log(link);
       link.source = nodes[link.source] || (nodes[link.source]= {name: link.source});
       link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
-      //MAYBE JUST ADD IN THE OTHER RELEVANT DATA?
     });  
+
+    //JUST ADD IN THE OTHER RELEVANT DATA?
     for (var i = 0; i<Object.values(nodes).length; i++){
         var index = parseInt(Object.values(nodes)[i].name)-1;
         console.log(index)
         Object.values(nodes)[i].entry = links[index].title;
     }
-    // console.log(nodes);
     return nodes;  
 }
 
