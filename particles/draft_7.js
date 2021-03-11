@@ -124,6 +124,11 @@ function makeNodes(liveData){
       link.target = nodes[link.target] || (nodes[link.target]= {name: link.target});
       //MAYBE JUST ADD IN THE OTHER RELEVANT DATA?
     });  
+    for (var i = 0; i<Object.values(nodes).length; i++){
+        var index = parseInt(Object.values(nodes)[i].name)-1;
+        console.log(index)
+        Object.values(nodes)[i].entry = links[index].title;
+    }
     // console.log(nodes);
     return nodes;  
 }
@@ -132,13 +137,15 @@ function restart(liveData, nodes){
     var t = d3.transition()
         .duration(750);
 
-    node = node.data(Object.values(nodes), function(d){return d.name;});
+    node = node.data(Object.values(nodes), function(d){
+        return d.name;
+    });
     node.exit()
         .remove();
 
     node = node.enter().append("circle")
         .attr("class","enter")
-        .attr("r", function(d){ 
+        .attr("r", function(d){
             console.log(d);
             return 5;
         })
@@ -154,7 +161,6 @@ function restart(liveData, nodes){
     link
         .transition(t)
         .attr("fill",function(d){
-            console.log(d);
             return color(d.type)
         })
     link = link.enter().append("path")
