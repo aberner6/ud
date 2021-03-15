@@ -85,13 +85,9 @@ const processPrep = async(dataset, nodes, links) => {
 function series(){
     whichNum++;
     chooseData(whichNum)
-
-        // .then(liveLinks => makeNodes(liveData))
-        // .then(liveLinks => restart())
 }
 
 function chooseData(whichNum){
-// var chooseData = async(whichNum) => {
     liveLinks = [];
     liveNodes = [];
     for (var i = 0; i<links.length; i++){
@@ -102,12 +98,17 @@ function chooseData(whichNum){
             if(links[i].type==whichNum){ 
                 liveLinks.push(links[i])
             }
+            if(links[i].type.length>0){
+                for(j=0; j<links[i].type.length; j++){
+                    if(links[i].type[j]==whichNum){
+                        liveLinks.push(links[i]);
+                    }
+                }
+            }
         }
-        // if(whichNum==3){ 
-        //     if(links[i].type==whichNum){ 
-        //         liveLinks.push(links[i])
-        //     }
-        // }
+        if(whichNum==3){ 
+            liveLinks.push(links[i])
+        }
     }
     for (var i = 0; i<nodes.length; i++){
         if(whichNum==1){ 
@@ -116,13 +117,18 @@ function chooseData(whichNum){
         if(whichNum==2){
             if(nodes[i].type==whichNum){ 
                 liveNodes.push(nodes[i]);
-            } //probably have to make an else?
+            }
+            if(nodes[i].type.length>0){
+                for(j=0; j<nodes[i].type.length; j++){
+                    if(nodes[i].type[j]==whichNum){
+                        liveNodes.push(nodes[i]);
+                    }
+                }
+            }
         }
-        // if(whichNum==3){ 
-        //     if(nodes[i].type==whichNum){ 
-        //         liveNodes.push(nodes[i]);
-        //     } //probably have to make an else?
-        // }
+        if(whichNum==3){ 
+            liveNodes.push(nodes[i]);
+        }
     }
     restart(liveLinks, liveNodes);
 }
@@ -130,12 +136,9 @@ function chooseData(whichNum){
 function restart(liveLinks, liveNodes){
     console.log("restart")
 
-    console.log(liveLinks);
-    console.log(liveNodes);
-
     node = node
         .data(liveNodes, function(d){
-            console.log(d.id);
+            // console.log(d.id);
             return d.id;
         });
     node.exit()
@@ -158,7 +161,7 @@ function restart(liveLinks, liveNodes){
     link = link.enter().append("path")
         .attr("stroke","black")
         .attr("class",function(d){
-            console.log(d);
+            // console.log(d);
             return d;
         })
         .merge(link);
