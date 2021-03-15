@@ -38,8 +38,9 @@ const nodesLinks = async(dataset)=>{
     return nodes;
 }
 
- var n, m, color;
+var n, m, color;
 var whichNum = 0;
+var maxStrength = 0.25;
 const processPrep = async(dataset, nodes, links) => {
     
     width = window.innerWidth*.99;
@@ -50,8 +51,8 @@ const processPrep = async(dataset, nodes, links) => {
         .force("charge", d3.forceManyBody().strength(-100))
         .force("x", d3.forceX())
         .force("y", d3.forceY())
-        // .alphaTarget(1)
-        // .on("tick", ticked);
+        .alphaTarget(.09)
+        .on("tick", ticked);
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [-width / 2, -height / 2, width, height])
@@ -138,38 +139,30 @@ function restart(liveLinks, liveNodes){
 
     node = node
         .data(liveNodes, function(d){
-            // console.log(d.id);
             return d.id;
         });
     node.exit()
         .remove();
-
     node = node.enter().append("circle")
-        .attr("class","enter")
-        .attr("r", function(d){
-            return 5;
-        })
-        .attr("fill","black") 
+        .attr("r", 5)
         .merge(node);
+
 
     link = link.data(liveLinks, function(d){
         return d;
     })
-
     link.exit()
-        .remove();
+        .remove();       
     link = link.enter().append("path")
-        .attr("class",function(d){
-            // console.log(d);
-            return d;
-        })
         .attr("stroke","grey")
         .attr("fill","none")
         .merge(link);
 
     simulation.nodes(liveNodes);
     simulation.force("link").links(liveLinks);
-    simulation.alpha(1).on("tick", ticked).restart();
+    simulation.alpha(.09).restart();
+    // .on("tick", ticked)
+    // .restart();
 }
 
 
@@ -183,6 +176,15 @@ function transform(d) {
     if(whichNum==1 && d.type==1){
         d.y = -height/2;   
     }
+
+    if(d.type.length>0){
+        for(i=0; i<d.type.length; i++){
+            if(d.type[i]==whichNum){
+                d.y = height/2;
+            }
+        }
+    }
+
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; })
 }
