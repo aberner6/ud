@@ -46,16 +46,16 @@ const processPrep = async(dataset, nodes, links) => {
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        .force("charge", d3.forceManyBody().strength(-1))
-          .force("link", d3.forceLink().id(d => d.id)) //.distance(200)
-        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("link", d3.forceLink().id(d => d.id))
+        .force("charge", d3.forceManyBody())
+        .force("x", d3.forceX())
+        .force("y", d3.forceY())
         .alphaTarget(1)
         .on("tick", ticked);
 
     svg = d3.select("body").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
     node = svg.append("g")
         .selectAll("circle");
     link = svg.append("g")
