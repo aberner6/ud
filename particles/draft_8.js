@@ -160,11 +160,11 @@ function restart(liveLinks, liveNodes){
 
     simulation.nodes(liveNodes);
     simulation.force("link").links(liveLinks);
-    simulation.alpha(.09).restart();
-    // .on("tick", ticked)
+    simulation.alpha(.09)
     // .restart();
+    .on("tick", ticked)
+    .restart();
 }
-
 
 
 
@@ -173,20 +173,17 @@ function ticked() {
     link.attr("d", linkArc);
 }
 function transform(d) {
-    if(whichNum==1 && d.type==1){
-        d.y = -height/2;   
-    }
-
-    if(d.type.length>0){
-        for(i=0; i<d.type.length; i++){
-            if(d.type[i]==whichNum){
-                d.y = height/2;
+    if(whichNum==2){
+        if(d.type.length>0){
+            for(i=0; i<d.type.length; i++){
+                if(d.type[i]==whichNum){
+                    d.y = height/2;
+                }
             }
-        }
+        } 
     }
-
-    node.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
+    node.attr("cy", function(d) { return d.y; })
+        .attr("cx", function(d) { return d.x; })
 }
 function linkArc(d) {
     var dx = d.target.x - d.source.x,
