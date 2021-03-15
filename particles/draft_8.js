@@ -47,15 +47,15 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(d => d.id))
-        .force("charge", d3.forceManyBody())
+        .force("charge", d3.forceManyBody().strength(-100))
         .force("x", d3.forceX())
         .force("y", d3.forceY())
-        .alphaTarget(1)
-        .on("tick", ticked);
+        // .alphaTarget(1)
+        // .on("tick", ticked);
 
     svg = d3.select("body").append("svg")
-        .attr("viewBox", [-width / 2, -height / 2, width, height]);
-
+        .attr("viewBox", [-width / 2, -height / 2, width, height])
+        .attr("fill","grey")
     node = svg.append("g")
         .selectAll("circle");
     link = svg.append("g")
@@ -159,16 +159,17 @@ function restart(liveLinks, liveNodes){
     link.exit()
         .remove();
     link = link.enter().append("path")
-        .attr("stroke","black")
         .attr("class",function(d){
             // console.log(d);
             return d;
         })
+        .attr("stroke","grey")
+        .attr("fill","none")
         .merge(link);
 
     simulation.nodes(liveNodes);
     simulation.force("link").links(liveLinks);
-    simulation.alpha(1).restart();
+    simulation.alpha(1).on("tick", ticked).restart();
 }
 
 
@@ -179,6 +180,9 @@ function ticked() {
     link.attr("d", linkArc);
 }
 function transform(d) {
+    if(whichNum==1 && d.type==1){
+        d.y = -height/2;   
+    }
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; })
 }
