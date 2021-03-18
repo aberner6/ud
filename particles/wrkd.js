@@ -24,7 +24,7 @@ var maxStrength = 0.25;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json("goalData.json");
+    dataset = await d3.json("prevData.json");
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -106,19 +106,19 @@ function chooseData(whichNum){
         //     liveLinks.push(links[i])
         // }
         // if(whichNum==2){ 
-            if(links[i].type==whichNum){ 
-                liveLinks.push(links[i])
-            }
-            if(links[i].type.length>0){
-                for(j=0; j<links[i].type.length; j++){
-                    if(links[i].type[j]==whichNum){
-                        liveLinks.push(links[i]);
-                    }
-                }
-            }
+        //     if(links[i].type==whichNum){ 
+        //         liveLinks.push(links[i])
+        //     }
+        //     if(links[i].type.length>0){
+        //         for(j=0; j<links[i].type.length; j++){
+        //             if(links[i].type[j]==whichNum){
+        //                 liveLinks.push(links[i]);
+        //             }
+        //         }
+        //     }
         // }
         // if(whichNum==3){ 
-        //     liveLinks.push(links[i])
+            liveLinks.push(links[i])
         // }
     }
     for (var i = 0; i<nodes.length; i++){
@@ -126,19 +126,19 @@ function chooseData(whichNum){
         //     liveNodes.push(nodes[i])
         // }
         // if(whichNum==2){
-            if(nodes[i].type==whichNum){ 
-                liveNodes.push(nodes[i]);
-            }
-            if(nodes[i].type.length>0){
-                for(j=0; j<nodes[i].type.length; j++){
-                    if(nodes[i].type[j]==whichNum){
-                        liveNodes.push(nodes[i]);
-                    }
-                }
-            }
+        //     if(nodes[i].type==whichNum){ 
+        //         liveNodes.push(nodes[i]);
+        //     }
+        //     if(nodes[i].type.length>0){
+        //         for(j=0; j<nodes[i].type.length; j++){
+        //             if(nodes[i].type[j]==whichNum){
+        //                 liveNodes.push(nodes[i]);
+        //             }
+        //         }
+        //     }
         // }
         // if(whichNum==3){ 
-        //     liveNodes.push(nodes[i]);
+            liveNodes.push(nodes[i]);
         // }
     }
 
@@ -207,10 +207,9 @@ function transform(d) {
         //         // }
         //     }
         // } else {
-        // if(whichNum = d.type){
-            // d.y = yScale(d.type);
-            ////WILL HAVE TO DO THIS WITH NESTED LOOPS AND CHOOSE THE FIRST TYPE IN ARRAY
-        // } 
+        if(whichNum = d.type){
+            d.y = yScale(d.type);
+        } 
     // }
     node
         .attr("cy", function(d) { 

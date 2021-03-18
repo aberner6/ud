@@ -24,7 +24,7 @@ var maxStrength = 0.25;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json("goalData.json");
+    dataset = await d3.json("prevData.json");
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -55,7 +55,7 @@ const processPrep = async(dataset, nodes, links) => {
         .force("charge", d3.forceManyBody().strength(-400))
         .force("center", d3.forceCenter(width / 2, height / 2))
         // .alphaTarget(.09) //makes it keep moving endlessly
-        .on("tick", ticked)
+        // .on("tick", ticked)
         // .stop() //just in case it doesnt stop
 
     svg = d3.select("body").append("svg")
@@ -95,7 +95,9 @@ const processPrep = async(dataset, nodes, links) => {
 
 function series(){
     whichNum++;
-    chooseData(whichNum)
+    if(whichNum>0){
+        chooseData(whichNum)
+    }
 }
 
 function chooseData(whichNum){
@@ -106,47 +108,50 @@ function chooseData(whichNum){
         //     liveLinks.push(links[i])
         // }
         // if(whichNum==2){ 
-            if(links[i].type==whichNum){ 
-                liveLinks.push(links[i])
-            }
-            if(links[i].type.length>0){
-                for(j=0; j<links[i].type.length; j++){
-                    if(links[i].type[j]==whichNum){
-                        liveLinks.push(links[i]);
-                    }
-                }
-            }
+        //     if(links[i].type==whichNum){ 
+        //         liveLinks.push(links[i])
+        //     }
+        //     if(links[i].type.length>0){
+        //         for(j=0; j<links[i].type.length; j++){
+        //             if(links[i].type[j]==whichNum){
+        //                 liveLinks.push(links[i]);
+        //             }
+        //         }
+        //     }
         // }
-        // if(whichNum==3){ 
-        //     liveLinks.push(links[i])
-        // }
+        if(links[i].type == whichNum || links[i].type == whichNum-1){ 
+            liveLinks.push(links[i])
+        }
+        // else{}
     }
     for (var i = 0; i<nodes.length; i++){
         // if(whichNum==1){ 
         //     liveNodes.push(nodes[i])
         // }
         // if(whichNum==2){
-            if(nodes[i].type==whichNum){ 
-                liveNodes.push(nodes[i]);
-            }
-            if(nodes[i].type.length>0){
-                for(j=0; j<nodes[i].type.length; j++){
-                    if(nodes[i].type[j]==whichNum){
-                        liveNodes.push(nodes[i]);
-                    }
-                }
-            }
+        //     if(nodes[i].type==whichNum){ 
+        //         liveNodes.push(nodes[i]);
+        //     }
+        //     if(nodes[i].type.length>0){
+        //         for(j=0; j<nodes[i].type.length; j++){
+        //             if(nodes[i].type[j]==whichNum){
+        //                 liveNodes.push(nodes[i]);
+        //             }
+        //         }
+        //     }
         // }
-        // if(whichNum==3){ 
-        //     liveNodes.push(nodes[i]);
-        // }
+        if(nodes[i].type == whichNum || nodes[i].type == whichNum-1){ 
+            liveNodes.push(nodes[i]);
+        }
+        // else{}
     }
 
     restart(liveLinks, liveNodes);
 }
 
 function restart(liveLinks, liveNodes){
-    console.log("restart")
+    console.log(liveLinks);
+    console.log(liveNodes);
 
     node = node
         .data(liveNodes, function(d){
@@ -156,15 +161,13 @@ function restart(liveLinks, liveNodes){
         .remove();
     node = node.enter().append("circle")
         .attr("r", radius)
-        .attr("class", function(d){
-            return d.type
-        })
         .merge(node);
 
 
-    link = link.data(liveLinks, function(d){
-        return d.id;
-    })
+    link = link
+        .data(liveLinks, function(d){
+            return d;
+        });
     link.exit()
         .remove();       
     link = link.enter().append("path")
@@ -175,12 +178,6 @@ function restart(liveLinks, liveNodes){
     simulation
         .nodes(liveNodes)
         .force("link").links(liveLinks)
-
-    // simulation
-    //     .force("y", d3.forceY(function(d){return yScale(d.type)}))
-    // simulation.force("link", d3.forceLink().distance(function(d){
-    //         return yScale(d.type);
-    //     }).strength(100))
 
     simulation
         .alpha(.09)
@@ -207,10 +204,11 @@ function transform(d) {
         //         // }
         //     }
         // } else {
-        // if(whichNum = d.type){
-            // d.y = yScale(d.type);
-            ////WILL HAVE TO DO THIS WITH NESTED LOOPS AND CHOOSE THE FIRST TYPE IN ARRAY
-        // } 
+        // if(whichNum == d.type){
+            d.y = yScale(d.type);
+        // } else {
+
+        // }
     // }
     node
         .attr("cy", function(d) { 
