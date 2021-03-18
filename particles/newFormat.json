@@ -1,17 +1,30 @@
 {
   "nodes": [
-	    {"id": 1, "name":"High Clouds", "type": [1, 2]},
-	    {"id": 2, "name":"Mid Clouds", "type": 1},
-	    {"id": 3, "name":"Low Clouds", "type": 1},
-	    {"id": 4, "name":"Mid Clouds", "type": 2},
-	    {"id": 5, "name":"Low Clouds", "type": 2},
-	    {"id": 6, "name":"Low Clouds", "type": 2},
-      {"id": 7, "name":"Low Clouds", "type": [1, 2]},
-      {"id": 8, "name":"Low Clouds", "type": [1, 2]},
-      {"id": 9, "name":"Low Clouds", "type": [1, 2]},
-      {"id": 10, "name":"Low Clouds", "type": [1, 2]},
-      {"id": 11, "name":"Low Clouds", "type": [1, 2]},
-      {"id": 12, "name":"Low Clouds", "type": [1, 2]}
+	    {"id": 1, "name":"Satellites", "type": 1, "loc": "top"},
+	    {"id": 2, "name":"Radiance", "type": 2, "loc": "srnd"},
+	    {"id": 3, "name":"High Clouds", "type": 3, "loc": "high"},
+	    {"id": 4, "name":"Low Clouds", "type": 3, "loc": "low"},
+	    {"id": 5, "name":"Heat", "type": 2, "loc": "srnd"},
+	    {"id": 6, "name":"Carbon Dioxide", "type": 2, "loc": "srnd"},
+      {"id": 7, "name":"Humidity", "type": 2, "loc": "srnd"},
+      {"id": 8, "name":"Weather", "type": 2, "loc": "srnd"},
+      {"id": 9, "name":"Permafrost", "type": 4, "loc": "srfc"},
+      {"id": 10, "name":"Ice sheet", "type": 4, "loc": "srfc"},
+      {"id": 11, "name":"Flooding", "type": 4, "loc": "srfc"},
+      {"id": 12, "name":"Energy", "type": 5, "loc": "blw"}
+      {"id": 13, "name":"Internet Landing Site", "type": 6, "loc": "blw"}
+      {"id": 14, "name":"Internet Landing Site", "type": 6, "loc": "blw"}
+      {"id": 15, "name":"Internet Landing Site", "type": 6, "loc": "blw"}
+      {"id": 16, "name":"Sending", "type": 6, "loc": "blw"}
+      {"id": 17, "name":"Wind", "type": 3, "loc": "srnd"}
+      {"id": 18, "name":"Radio Towers", "type": 6, "loc": "srfc"}
+      {"id": 19, "name":"Sending", "type": 6, "loc": "srfc"}
+
+      {"id": 12, "name":"Sensing", "type": 12}
+      {"id": 13, "name":"Sending", "type": 13}
+      {"id": 14, "name":"Processing", "type": 14}
+      {"id": 15, "name":"Storage", "type": 15}
+      {"id": 16, "name":"Storage", "type": 15}
 
 	],
   "links": [

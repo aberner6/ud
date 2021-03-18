@@ -2,6 +2,8 @@ var width, height;
 
 var keywords = [];
 var uniqueKeywords;
+var keytypes = [];
+var uniqueTypes;
 
 var links = [];
 var nodes = [];
@@ -10,15 +12,19 @@ var svg, g, node, link;
 var liveLinks = [];
 var liveNodes = [];
 
-var radius = 2;
+var radius = 5;
 
 var dataset;
 var liveData = [];
 var simulation;
 
+var uk, ut, color, yScale;
+var whichNum = 0;
+var maxStrength = 0.25;
+
 const makeRequest = async () => {
   try {
-    dataset = await d3.json("newFormat.json");
+    dataset = await d3.json("prevData.json");
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -38,9 +44,7 @@ const nodesLinks = async(dataset)=>{
     return nodes;
 }
 
-var n, m, color;
-var whichNum = 0;
-var maxStrength = 0.25;
+
 const processPrep = async(dataset, nodes, links) => {
     
     width = window.innerWidth*.99;
@@ -48,15 +52,14 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(d => d.id))
-        .force("charge", d3.forceManyBody().strength(-100))
-        .force("x", d3.forceX())
-        .force("y", d3.forceY())
-        .alphaTarget(.09)
-        .on("tick", ticked);
+        .force("charge", d3.forceManyBody().strength(-400))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        // .alphaTarget(.09)
+        // .on("tick", ticked)
+        // .stop()
 
     svg = d3.select("body").append("svg")
-        .attr("viewBox", [-width / 2, -height / 2, width, height])
-        .attr("fill","grey")
+        .attr("viewBox", [0,0, width, height])
     node = svg.append("g")
         .selectAll("circle");
     link = svg.append("g")
@@ -66,19 +69,26 @@ const processPrep = async(dataset, nodes, links) => {
         series();
     })
 
-
     //KEYWORDS
     for (var i = 0;i<nodes.length; i++){ 
         keywords.push(nodes[i].name);
+        keytypes.push(nodes[i].type)
     };
     uniqueKeywords = keywords.filter(onlyUnique);
+    uniqueTypes = keytypes.filter(onlyUnique);
     function onlyUnique(value, index, self) {
         return self.indexOf(value) === index;
     }
-    n = dataset.length;
-    m = uniqueKeywords.length;
-    color = d3.scaleSequential(d3.schemeBlues[m])
-        .domain([0, m]);
+
+    uk = uniqueKeywords.length;
+    ut = uniqueTypes.length;
+    
+    color = d3.scaleSequential(d3.schemeBlues[uk])
+        .domain([0, uk]);
+    yScale = d3.scaleLinear()
+        .domain([0, ut])
+        .range([0,height])
+        // .range([-height/2+10, height/2-100])        
 
     return uniqueKeywords;
 }
@@ -92,45 +102,46 @@ function chooseData(whichNum){
     liveLinks = [];
     liveNodes = [];
     for (var i = 0; i<links.length; i++){
-        if(whichNum==1){ 
+        // if(whichNum==1){ 
+        //     liveLinks.push(links[i])
+        // }
+        // if(whichNum==2){ 
+        //     if(links[i].type==whichNum){ 
+        //         liveLinks.push(links[i])
+        //     }
+        //     if(links[i].type.length>0){
+        //         for(j=0; j<links[i].type.length; j++){
+        //             if(links[i].type[j]==whichNum){
+        //                 liveLinks.push(links[i]);
+        //             }
+        //         }
+        //     }
+        // }
+        // if(whichNum==3){ 
             liveLinks.push(links[i])
-        }
-        if(whichNum==2){ 
-            if(links[i].type==whichNum){ 
-                liveLinks.push(links[i])
-            }
-            if(links[i].type.length>0){
-                for(j=0; j<links[i].type.length; j++){
-                    if(links[i].type[j]==whichNum){
-                        liveLinks.push(links[i]);
-                    }
-                }
-            }
-        }
-        if(whichNum==3){ 
-            liveLinks.push(links[i])
-        }
+        // }
     }
     for (var i = 0; i<nodes.length; i++){
-        if(whichNum==1){ 
-            liveNodes.push(nodes[i])
-        }
-        if(whichNum==2){
-            if(nodes[i].type==whichNum){ 
-                liveNodes.push(nodes[i]);
-            }
-            if(nodes[i].type.length>0){
-                for(j=0; j<nodes[i].type.length; j++){
-                    if(nodes[i].type[j]==whichNum){
-                        liveNodes.push(nodes[i]);
-                    }
-                }
-            }
-        }
-        if(whichNum==3){ 
+        // if(whichNum==1){ 
+        //     liveNodes.push(nodes[i])
+        // }
+        // if(whichNum==2){
+        //     if(nodes[i].type==whichNum){ 
+        //         liveNodes.push(nodes[i]);
+        //     }
+        //     if(nodes[i].type.length>0){
+        //         for(j=0; j<nodes[i].type.length; j++){
+        //             if(nodes[i].type[j]==whichNum){
+        //                 liveNodes.push(nodes[i]);
+        //             }
+        //         }
+        //     }
+        // }
+        // if(whichNum==3){ 
             liveNodes.push(nodes[i]);
-        }
+        // }
     }
+
     restart(liveLinks, liveNodes);
 }
 
@@ -144,12 +155,15 @@ function restart(liveLinks, liveNodes){
     node.exit()
         .remove();
     node = node.enter().append("circle")
-        .attr("r", 5)
+        .attr("r", radius)
+        .attr("class", function(d){
+            return d.type
+        })
         .merge(node);
 
 
     link = link.data(liveLinks, function(d){
-        return d;
+        return d.id;
     })
     link.exit()
         .remove();       
@@ -158,12 +172,20 @@ function restart(liveLinks, liveNodes){
         .attr("fill","none")
         .merge(link);
 
-    simulation.nodes(liveNodes);
-    simulation.force("link").links(liveLinks);
-    simulation.alpha(.09)
-    // .restart();
-    .on("tick", ticked)
-    .restart();
+    simulation
+        .nodes(liveNodes)
+        .force("link").links(liveLinks)
+
+    // simulation
+    //     .force("y", d3.forceY(function(d){return yScale(d.type)}))
+    // simulation.force("link", d3.forceLink().distance(function(d){
+    //         return yScale(d.type);
+    //     }).strength(100))
+
+    simulation
+        .alpha(.09)
+        .on("tick", ticked)
+        .restart();
 }
 
 
@@ -172,17 +194,28 @@ function ticked() {
     node.attr("transform", transform);
     link.attr("d", linkArc);
 }
+
 function transform(d) {
-    if(whichNum==2){
-        if(d.type.length>0){
-            for(i=0; i<d.type.length; i++){
-                if(d.type[i]==whichNum){
-                    d.y = height/2;
-                }
-            }
-        } 
-    }
-    node.attr("cy", function(d) { return d.y; })
+    // node.attr("transform", function(d){
+    //     return "translate(60, 100)"
+    // })
+    // if(whichNum==2){
+        // if(d.type.length>0){
+        //     for(i=0; i<d.type.length; i++){
+        //         // if(d.type[i]==whichNum){
+        //             d.y = d.y+(yScale(d.type[i]));
+        //         // }
+        //     }
+        // } else {
+
+            d.y = yScale(d.type);
+
+        // } 
+    // }
+    node
+        .attr("cy", function(d) { 
+            return d.y; 
+        })
         .attr("cx", function(d) { return d.x; })
 }
 function linkArc(d) {
