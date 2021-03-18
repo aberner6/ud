@@ -55,7 +55,7 @@ const processPrep = async(dataset, nodes, links) => {
         .force("charge", d3.forceManyBody().strength(-400))
         .force("center", d3.forceCenter(width / 2, height / 2))
         // .alphaTarget(.09) //makes it keep moving endlessly
-        .on("tick", ticked)
+        // .on("tick", ticked)
         // .stop() //just in case it doesnt stop
 
     svg = d3.select("body").append("svg")
@@ -70,26 +70,25 @@ const processPrep = async(dataset, nodes, links) => {
     })
 
     //KEYWORDS
-    for (var i = 0;i<nodes.length; i++){ 
-        keywords.push(nodes[i].name);
-        keytypes.push(nodes[i].type)
-    };
-    uniqueKeywords = keywords.filter(onlyUnique);
-    uniqueTypes = keytypes.filter(onlyUnique);
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-    }
+    // for (var i = 0;i<nodes.length; i++){ 
+    //     keywords.push(nodes[i].name);
+    //     keytypes.push(nodes[i].type)
+    // };
+    // uniqueKeywords = keywords.filter(onlyUnique);
+    // uniqueTypes = keytypes.filter(onlyUnique);
+    // function onlyUnique(value, index, self) {
+    //     return self.indexOf(value) === index;
+    // }
 
-    uk = uniqueKeywords.length;
-    ut = uniqueTypes.length;
+    // uk = uniqueKeywords.length;
+    // ut = uniqueTypes.length;
     
-    color = d3.scaleSequential(d3.schemeBlues[uk])
-        .domain([0, uk]);
-    yScale = d3.scaleLinear()
-        .domain([0, ut])
-        .range([0,height-100])
-        // .range([-height/2+10, height/2-100])        
-
+    // color = d3.scaleSequential(d3.schemeBlues[uk])
+    //     .domain([0, uk]);
+    // yScale = d3.scaleLinear()
+    //     .domain([0, ut])
+    //     .range([0,height-100])
+    uniqueKeywords = ["bla"]
     return uniqueKeywords;
 }
 
@@ -99,47 +98,33 @@ function series(){
 }
 
 function chooseData(whichNum){
-    liveLinks = [];
-    liveNodes = [];
+    // liveLinks = [];
+    // liveNodes = [];
+    
+//PROBLEM IS IT IS ADDING ON IN WEIRD WAYS
     for (var i = 0; i<links.length; i++){
-        // if(whichNum==1){ 
-        //     liveLinks.push(links[i])
-        // }
-        // if(whichNum==2){ 
-            if(links[i].type==whichNum){ 
-                liveLinks.push(links[i])
-            }
-            if(links[i].type.length>0){
-                for(j=0; j<links[i].type.length; j++){
-                    if(links[i].type[j]==whichNum){
-                        liveLinks.push(links[i]);
-                    }
+        if(links[i].type==whichNum || links[i].type==whichNum-1){ 
+            liveLinks.push(links[i])
+        }
+        if(links[i].type.length>0){
+            for(j=0; j<links[i].type.length; j++){
+                if(links[i].type[j]==whichNum || links[i].type[j]==whichNum-1){
+                    liveLinks.push(links[i]);
                 }
             }
-        // }
-        // if(whichNum==3){ 
-        //     liveLinks.push(links[i])
-        // }
+        }
     }
     for (var i = 0; i<nodes.length; i++){
-        // if(whichNum==1){ 
-        //     liveNodes.push(nodes[i])
-        // }
-        // if(whichNum==2){
-            if(nodes[i].type==whichNum){ 
-                liveNodes.push(nodes[i]);
-            }
-            if(nodes[i].type.length>0){
-                for(j=0; j<nodes[i].type.length; j++){
-                    if(nodes[i].type[j]==whichNum){
-                        liveNodes.push(nodes[i]);
-                    }
+        if(nodes[i].type==whichNum || nodes[i].type==whichNum-1){ 
+            liveNodes.push(nodes[i]);
+        }
+        if(nodes[i].type.length>0){
+            for(j=0; j<nodes[i].type.length; j++){
+                if(nodes[i].type[j]==whichNum || nodes[i].type[j]==whichNum-1){
+                    liveNodes.push(nodes[i]);
                 }
             }
-        // }
-        // if(whichNum==3){ 
-        //     liveNodes.push(nodes[i]);
-        // }
+        }
     }
 
     restart(liveLinks, liveNodes);
@@ -148,6 +133,7 @@ function chooseData(whichNum){
 function restart(liveLinks, liveNodes){
     console.log("restart")
 
+    console.log(liveNodes);
     node = node
         .data(liveNodes, function(d){
             return d.id;
