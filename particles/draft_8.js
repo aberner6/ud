@@ -52,9 +52,11 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(d => d.id))
-        .force("charge", d3.forceManyBody().strength(-400))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        // .alphaTarget(.09) //makes it keep moving endlessly
+        .force("charge", d3.forceManyBody().strength(-1))
+        .force("y", d3.forceY(height/2))
+        .force("x", d3.forceX(width/2))
+        // .force("center", d3.forceCenter(width / 2, height / 2))
+        // .alphaTarget(1) //makes it keep moving endlessly
         // .on("tick", ticked)
         // .stop() //just in case it doesnt stop
 
@@ -70,24 +72,24 @@ const processPrep = async(dataset, nodes, links) => {
     })
 
     //KEYWORDS
-    // for (var i = 0;i<nodes.length; i++){ 
-    //     keywords.push(nodes[i].name);
-    //     keytypes.push(nodes[i].type)
-    // };
-    // uniqueKeywords = keywords.filter(onlyUnique);
+    for (var i = 0;i<nodes.length; i++){ 
+        keywords.push(nodes[i].name);
+        // keytypes.push(nodes[i].type)
+    };
+    uniqueKeywords = keywords.filter(onlyUnique);
     // uniqueTypes = keytypes.filter(onlyUnique);
-    // function onlyUnique(value, index, self) {
-    //     return self.indexOf(value) === index;
-    // }
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
 
-    // uk = uniqueKeywords.length;
+    uk = uniqueKeywords.length;
     // ut = uniqueTypes.length;
     
     // color = d3.scaleSequential(d3.schemeBlues[uk])
-    //     .domain([0, uk]);
-    // yScale = d3.scaleLinear()
-    //     .domain([0, ut])
-    //     .range([0,height-100])
+        // .domain([0, uk]);
+    yScale = d3.scaleLinear()
+        .domain([1, 10])
+        .range([0,10])
     uniqueKeywords = ["bla"]
     return uniqueKeywords;
 }
@@ -101,28 +103,37 @@ function chooseData(whichNum){
     // liveLinks = [];
     // liveNodes = [];
     
-//PROBLEM IS IT IS ADDING ON IN WEIRD WAYS
+//option to do it one by one
+    // for (var i = 0; i<links.length; i++){
+    //     if(links[i].type==whichNum || links[i].type==whichNum-1){ //only the one before
+    //         liveLinks.push(links[i])
+    //     }
+    //     if(links[i].type.length>0){
+    //         for(j=0; j<links[i].type.length; j++){
+    //             if(links[i].type[j]==whichNum || links[i].type[j]==whichNum-1){ // access only one before or ones before with same types
+    //                 liveLinks.push(links[i]);
+    //             }
+    //         }
+    //     }
+    // }
+//option to do it as adding on to all previous
     for (var i = 0; i<links.length; i++){
-        if(links[i].type==whichNum || links[i].type==whichNum-1){ 
+        if(links[i].type==whichNum){
             liveLinks.push(links[i])
         }
         if(links[i].type.length>0){
-            for(j=0; j<links[i].type.length; j++){
-                if(links[i].type[j]==whichNum || links[i].type[j]==whichNum-1){
-                    liveLinks.push(links[i]);
-                }
+            if(links[i].type[0]==whichNum){
+                liveLinks.push(links[i]);
             }
         }
     }
     for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].type==whichNum || nodes[i].type==whichNum-1){ 
+        if(nodes[i].type==whichNum){ 
             liveNodes.push(nodes[i]);
         }
         if(nodes[i].type.length>0){
-            for(j=0; j<nodes[i].type.length; j++){
-                if(nodes[i].type[j]==whichNum || nodes[i].type[j]==whichNum-1){
-                    liveNodes.push(nodes[i]);
-                }
+            if(nodes[i].type[0]==whichNum){
+                liveNodes.push(nodes[i]);
             }
         }
     }
@@ -143,7 +154,7 @@ function restart(liveLinks, liveNodes){
     node = node.enter().append("circle")
         .attr("r", radius)
         .attr("class", function(d){
-            return d.type
+            return d.id+"_"+d.type;
         })
         .merge(node);
 
@@ -162,8 +173,8 @@ function restart(liveLinks, liveNodes){
         .nodes(liveNodes)
         .force("link").links(liveLinks)
 
-    // simulation
-    //     .force("y", d3.forceY(function(d){return yScale(d.type)}))
+    // // simulation
+    // //     .force("y", d3.forceY(function(d){return yScale(d.type)}))
     // simulation.force("link", d3.forceLink().distance(function(d){
     //         return yScale(d.type);
     //     }).strength(100))
@@ -182,22 +193,19 @@ function ticked() {
 }
 
 function transform(d) {
-    // node.attr("transform", function(d){
-    //     return "translate(60, 100)"
-    // })
-    // if(whichNum==2){
-        // if(d.type.length>0){
-        //     for(i=0; i<d.type.length; i++){
-        //         // if(d.type[i]==whichNum){
-        //             d.y = d.y+(yScale(d.type[i]));
-        //         // }
-        //     }
-        // } else {
-        // if(whichNum = d.type){
-            // d.y = yScale(d.type);
-            ////WILL HAVE TO DO THIS WITH NESTED LOOPS AND CHOOSE THE FIRST TYPE IN ARRAY
-        // } 
-    // }
+//how to add this back in?
+    if(d.type.length>0){
+        // for(i=0; i<d.type.length; i++){
+            if(d.type[0]==whichNum){
+                d.y = d.y+(yScale(d.type[0]));
+            }
+        // }
+    } 
+    if(d.type.length==undefined){
+        if(d.type == whichNum){
+            d.y = d.y + yScale(d.type);
+        } 
+    }
     node
         .attr("cy", function(d) { 
             return d.y; 
