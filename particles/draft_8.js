@@ -54,7 +54,7 @@ const processPrep = async(dataset, nodes, links) => {
         .force("link", d3.forceLink().id(d => d.id).distance(100).strength(0.1))
         .force("charge", d3.forceManyBody()) //.strength(-30)
         // .force("y", d3.forceY(height/2))
-        // .force("x", d3.forceX(width/2))
+        .force("x", d3.forceX(width/2).strength(1))
         .force("center", d3.forceCenter(width / 2, height / 2))
         // .alphaTarget(1) //makes it keep moving endlessly
         // .on("tick", ticked)
@@ -118,28 +118,28 @@ function chooseData(whichNum){
     //     }
     // }
 //option to do it as adding on to all previous
-    // for (var i = 0; i<links.length; i++){
-    //     if(links[i].type==whichNum){
-    //         liveLinks.push(links[i])
-    //     }
-    //     if(links[i].type.length>0){
-    //         if(links[i].type[0]==whichNum){
-    //             liveLinks.push(links[i]);
-    //         }
-    //     }
-    // }
-    // for (var i = 0; i<nodes.length; i++){
-    //     if(nodes[i].type==whichNum){ 
-    //         liveNodes.push(nodes[i]);
-    //     }
-    //     if(nodes[i].type.length>0){
-    //         if(nodes[i].type[0]==whichNum){
-    //             liveNodes.push(nodes[i]);
-    //         }
-    //     }
-    // }
-liveLinks = links;
-liveNodes = nodes;
+    for (var i = 0; i<links.length; i++){
+        if(links[i].type==whichNum){
+            liveLinks.push(links[i])
+        }
+        if(links[i].type.length>0){
+            if(links[i].type[0]==whichNum){
+                liveLinks.push(links[i]);
+            }
+        }
+    }
+    for (var i = 0; i<nodes.length; i++){
+        if(nodes[i].type==whichNum){ 
+            liveNodes.push(nodes[i]);
+        }
+        if(nodes[i].type.length>0){
+            if(nodes[i].type[0]==whichNum){
+                liveNodes.push(nodes[i]);
+            }
+        }
+    }
+// liveLinks = links;
+// liveNodes = nodes;
     restart(liveLinks, liveNodes);
 }
 
