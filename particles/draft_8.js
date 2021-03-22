@@ -52,7 +52,7 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(d => d.id))
-        .force("charge", d3.forceManyBody().strength(-1))
+        .force("charge", d3.forceManyBody().strength(-30))
         .force("y", d3.forceY(height/2))
         .force("x", d3.forceX(width/2))
         // .force("center", d3.forceCenter(width / 2, height / 2))
@@ -88,8 +88,9 @@ const processPrep = async(dataset, nodes, links) => {
     // color = d3.scaleSequential(d3.schemeBlues[uk])
         // .domain([0, uk]);
     yScale = d3.scaleLinear()
-        .domain([1, 10])
-        .range([0,10])
+        .domain([0, 11])
+        // .range([0,10])
+        .range([10,height/2])
     uniqueKeywords = ["bla"]
     return uniqueKeywords;
 }
@@ -117,27 +118,28 @@ function chooseData(whichNum){
     //     }
     // }
 //option to do it as adding on to all previous
-    for (var i = 0; i<links.length; i++){
-        if(links[i].type==whichNum){
-            liveLinks.push(links[i])
-        }
-        if(links[i].type.length>0){
-            if(links[i].type[0]==whichNum){
-                liveLinks.push(links[i]);
-            }
-        }
-    }
-    for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].type==whichNum){ 
-            liveNodes.push(nodes[i]);
-        }
-        if(nodes[i].type.length>0){
-            if(nodes[i].type[0]==whichNum){
-                liveNodes.push(nodes[i]);
-            }
-        }
-    }
-
+    // for (var i = 0; i<links.length; i++){
+    //     if(links[i].type==whichNum){
+    //         liveLinks.push(links[i])
+    //     }
+    //     if(links[i].type.length>0){
+    //         if(links[i].type[0]==whichNum){
+    //             liveLinks.push(links[i]);
+    //         }
+    //     }
+    // }
+    // for (var i = 0; i<nodes.length; i++){
+    //     if(nodes[i].type==whichNum){ 
+    //         liveNodes.push(nodes[i]);
+    //     }
+    //     if(nodes[i].type.length>0){
+    //         if(nodes[i].type[0]==whichNum){
+    //             liveNodes.push(nodes[i]);
+    //         }
+    //     }
+    // }
+liveLinks = links;
+liveNodes = nodes;
     restart(liveLinks, liveNodes);
 }
 
@@ -181,11 +183,11 @@ function restart(liveLinks, liveNodes){
 
     simulation
         .alpha(.09)
+        // .tick(1)
+        // .stop()
         .on("tick", ticked)
-        .restart();
+        .restart()
 }
-
-
 
 function ticked() {
     node.attr("transform", transform);
@@ -194,18 +196,34 @@ function ticked() {
 
 function transform(d) {
 //how to add this back in?
+    // if(d.type.length>0){
+    //     // for(i=0; i<d.type.length; i++){
+    //         if(d.type[0]==whichNum){
+    //             d.y = d.y+(yScale(d.type[0]));
+    //         }
+    //     // }
+    // } 
+    // if(d.type.length==undefined){
+    //     if(d.type == whichNum){
+    //         d.y = d.y + yScale(d.type);
+    //     } 
+    // }
+
     if(d.type.length>0){
-        // for(i=0; i<d.type.length; i++){
-            if(d.type[0]==whichNum){
-                d.y = d.y+(yScale(d.type[0]));
-            }
-        // }
+        if(d.first ==1){ //d.type[0]==whichNum && 
+            d.y = yScale(d.type[0])
+        } else{
+            d.y = d.y;
+        }
     } 
     if(d.type.length==undefined){
-        if(d.type == whichNum){
-            d.y = d.y + yScale(d.type);
-        } 
+        if(d.first ==1){ //d.type == whichNum&& 
+            d.y = yScale(d.type)
+        }else{
+            d.y = d.y;
+        }
     }
+    // d.y = yScale(1)+d.y;
     node
         .attr("cy", function(d) { 
             return d.y; 
