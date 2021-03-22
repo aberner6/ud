@@ -51,11 +51,11 @@ const processPrep = async(dataset, nodes, links) => {
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(d => d.id))
-        .force("charge", d3.forceManyBody().strength(-30))
-        .force("y", d3.forceY(height/2))
-        .force("x", d3.forceX(width/2))
-        // .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("link", d3.forceLink().id(d => d.id).distance(100).strength(0.1))
+        .force("charge", d3.forceManyBody()) //.strength(-30)
+        // .force("y", d3.forceY(height/2))
+        // .force("x", d3.forceX(width/2))
+        .force("center", d3.forceCenter(width / 2, height / 2))
         // .alphaTarget(1) //makes it keep moving endlessly
         // .on("tick", ticked)
         // .stop() //just in case it doesnt stop
@@ -175,8 +175,15 @@ function restart(liveLinks, liveNodes){
         .nodes(liveNodes)
         .force("link").links(liveLinks)
 
-    // // simulation
-    // //     .force("y", d3.forceY(function(d){return yScale(d.type)}))
+    simulation
+        .force("y", d3.forceY(function(d){
+            if(d.type.length>0){
+                return yScale(d.type[0])
+            }
+            if(d.type.length==undefined){
+                return yScale(d.type)
+            }
+        }).strength(1))
     // simulation.force("link", d3.forceLink().distance(function(d){
     //         return yScale(d.type);
     //     }).strength(100))
@@ -209,20 +216,20 @@ function transform(d) {
     //     } 
     // }
 
-    if(d.type.length>0){
-        if(d.first ==1){ //d.type[0]==whichNum && 
-            d.y = yScale(d.type[0])
-        } else{
-            d.y = d.y;
-        }
-    } 
-    if(d.type.length==undefined){
-        if(d.first ==1){ //d.type == whichNum&& 
-            d.y = yScale(d.type)
-        }else{
-            d.y = d.y;
-        }
-    }
+    // if(d.type.length>0){
+    //     if(d.first ==1){ //d.type[0]==whichNum && 
+    //         d.y = yScale(d.type[0])
+    //     } else{
+    //         d.y = d.y;
+    //     }
+    // } 
+    // if(d.type.length==undefined){
+    //     if(d.first ==1){ //d.type == whichNum&& 
+    //         d.y = yScale(d.type)
+    //     }else{
+    //         d.y = d.y;
+    //     }
+    // }
     // d.y = yScale(1)+d.y;
     node
         .attr("cy", function(d) { 
