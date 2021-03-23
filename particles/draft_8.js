@@ -8,7 +8,7 @@ var uniqueTypes;
 var links = [];
 var nodes = [];
 
-var svg, g, node, link;
+var svg, g, node, link, img, defs;
 var liveLinks = [];
 var liveNodes = [];
 
@@ -58,10 +58,14 @@ const processPrep = async(dataset, nodes, links) => {
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [0,0, width, height])
+    img = svg.append("g")
+        .selectAll("image");
     node = svg.append("g")
         .selectAll("circle");
     link = svg.append("g")
         .selectAll("line");
+
+    defs = svg.append('defs').selectAll("masks")
 
     svg.on("click", function(){ 
         series();
@@ -103,6 +107,7 @@ function series(){
 }
 
 function chooseData(whichNum){
+    console.log(whichNum)
     // liveLinks = [];
     // liveNodes = [];
     
@@ -143,13 +148,16 @@ function chooseData(whichNum){
 //all immediately on click
 // liveLinks = links;
 // liveNodes = nodes;
-    restart(liveLinks, liveNodes);
+    restart(liveLinks, liveNodes, whichNum);
 }
 
-function restart(liveLinks, liveNodes){
+function restart(liveLinks, liveNodes, whichNum){
     console.log("restart")
-
     console.log(liveNodes);
+
+
+
+
     node = node
         .data(liveNodes, function(d){
             return d.id;
@@ -158,10 +166,13 @@ function restart(liveLinks, liveNodes){
         .remove();
     node = node.enter().append("circle")
         .attr("r", radius)
+        .attr("fill","white")
         .attr("class", function(d){
             return d.id+"_"+d.type;
         })
         .merge(node);
+
+
 
 
     link = link.data(liveLinks, function(d){
@@ -170,7 +181,7 @@ function restart(liveLinks, liveNodes){
     link.exit()
         .remove();       
     link = link.enter().append("path")
-        .attr("stroke","grey")
+        .attr("stroke","white")
         .attr("fill","none")
         .merge(link);
 
@@ -192,6 +203,66 @@ function restart(liveLinks, liveNodes){
         .alpha(.09)
         .on("tick", ticked)
         .restart()
+
+
+
+
+    // define the clipPath
+    defs = defs.data(liveNodes, function(d){
+        return d;
+    }).enter().append("clipPath")
+        .filter(function(d) { 
+            if(d.img==undefined){ } 
+            if(d.img!=undefined){ return d }
+        })
+        .attr('id', 'circle-clip') // give the clipPath an ID
+        .append('circle')
+        .attr('cx', 100)
+        .attr('cy', function(d){
+            console.log(d.y)
+            return d.y;
+        })
+        .attr('r', 100)
+
+    img = img
+        .data(liveNodes, function(d){
+            return d.img;
+        })
+        .attr("opacity", function (d){
+            if(d.type.length>0){
+                if(d.type[0]==whichNum){
+                    return .8;
+                }else{
+                    return .5;
+                }
+            }
+            if(d.type.length==undefined){
+                if(d.type==whichNum){
+                    return .8;
+                }else{
+                    return .5;
+                }
+            }
+        })
+        .attr("y", function(d){
+            return 0;
+        })
+        .attr("clip-path", "url(#circle-clip)")
+
+    img.exit() //.transition().attr("opacity",.1)
+        .remove();
+    img = img.enter().append("svg:image")
+        .attr("xlink:href", function(d) {
+            return d.img;
+        })
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 1200+'px')
+        .attr("height", 1000+'px')
+        .attr("opacity",.8)
+        .attr("clip-path","none")
+        .merge(img);
+
 }
 
 function ticked() {
