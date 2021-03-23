@@ -70,21 +70,28 @@ const processPrep = async(dataset, nodes, links) => {
     //KEYWORDS
     for (var i = 0;i<nodes.length; i++){ 
         keywords.push(nodes[i].name);
-        // keytypes.push(nodes[i].type)
+
+        if(nodes[i].type.length>0){
+            for(j=0; j<nodes[i].type.length; j++){
+                keytypes.push(nodes[i].type[j])
+            }
+        } else{
+            keytypes.push(nodes[i].type)
+        }
     };
     uniqueKeywords = keywords.filter(onlyUnique);
-    // uniqueTypes = keytypes.filter(onlyUnique);
+    uniqueTypes = keytypes.filter(onlyUnique);
     function onlyUnique(value, index, self) {
         return self.indexOf(value) === index;
     }
 
     uk = uniqueKeywords.length;
-    // ut = uniqueTypes.length;
-    
+    utMax = d3.max(uniqueTypes);
+    utMin = d3.min(uniqueTypes);
     // color = d3.scaleSequential(d3.schemeBlues[uk])
         // .domain([0, uk]);
     yScale = d3.scaleLinear()
-        .domain([0, 11])//hard coded
+        .domain([utMin, utMax])
         .range([10,height/2])
     uniqueKeywords = ["bla"]
     return uniqueKeywords;
@@ -181,14 +188,8 @@ function restart(liveLinks, liveNodes){
             }
         }).strength(1))
 
-    // simulation.force("link", d3.forceLink().distance(function(d){
-    //         return yScale(d.type);
-    //     }).strength(100))
-
     simulation
         .alpha(.09)
-        // .tick(1)
-        // .stop()
         .on("tick", ticked)
         .restart()
 }
