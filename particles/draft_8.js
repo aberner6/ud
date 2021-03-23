@@ -52,13 +52,9 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(d => d.id).distance(100).strength(0.1))
-        .force("charge", d3.forceManyBody()) //.strength(-30)
-        // .force("y", d3.forceY(height/2))
+        .force("charge", d3.forceManyBody())
         .force("x", d3.forceX(width/2).strength(1))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        // .alphaTarget(1) //makes it keep moving endlessly
-        // .on("tick", ticked)
-        // .stop() //just in case it doesnt stop
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [0,0, width, height])
@@ -88,8 +84,7 @@ const processPrep = async(dataset, nodes, links) => {
     // color = d3.scaleSequential(d3.schemeBlues[uk])
         // .domain([0, uk]);
     yScale = d3.scaleLinear()
-        .domain([0, 11])
-        // .range([0,10])
+        .domain([0, 11])//hard coded
         .range([10,height/2])
     uniqueKeywords = ["bla"]
     return uniqueKeywords;
@@ -138,6 +133,7 @@ function chooseData(whichNum){
             }
         }
     }
+//all immediately on click
 // liveLinks = links;
 // liveNodes = nodes;
     restart(liveLinks, liveNodes);
@@ -184,6 +180,7 @@ function restart(liveLinks, liveNodes){
                 return yScale(d.type)
             }
         }).strength(1))
+
     // simulation.force("link", d3.forceLink().distance(function(d){
     //         return yScale(d.type);
     //     }).strength(100))
@@ -202,35 +199,6 @@ function ticked() {
 }
 
 function transform(d) {
-//how to add this back in?
-    // if(d.type.length>0){
-    //     // for(i=0; i<d.type.length; i++){
-    //         if(d.type[0]==whichNum){
-    //             d.y = d.y+(yScale(d.type[0]));
-    //         }
-    //     // }
-    // } 
-    // if(d.type.length==undefined){
-    //     if(d.type == whichNum){
-    //         d.y = d.y + yScale(d.type);
-    //     } 
-    // }
-
-    // if(d.type.length>0){
-    //     if(d.first ==1){ //d.type[0]==whichNum && 
-    //         d.y = yScale(d.type[0])
-    //     } else{
-    //         d.y = d.y;
-    //     }
-    // } 
-    // if(d.type.length==undefined){
-    //     if(d.first ==1){ //d.type == whichNum&& 
-    //         d.y = yScale(d.type)
-    //     }else{
-    //         d.y = d.y;
-    //     }
-    // }
-    // d.y = yScale(1)+d.y;
     node
         .attr("cy", function(d) { 
             return d.y; 
