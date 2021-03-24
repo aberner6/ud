@@ -109,28 +109,40 @@ const processPrep = async(dataset, nodes, links) => {
 }
 
 function series(){
-    // whichNum++;
+    whichNum++;
     chooseData(whichNum)
 }
 
 function chooseData(whichNum){
     console.log(whichNum)
-    // liveLinks = [];
-    // liveNodes = [];
+    liveLinks = [];
+    liveNodes = [];
     
 //option to do it one by one
-    // for (var i = 0; i<links.length; i++){
-    //     if(links[i].type==whichNum || links[i].type==whichNum-1){ //only the one before
-    //         liveLinks.push(links[i])
-    //     }
-    //     if(links[i].type.length>0){
-    //         for(j=0; j<links[i].type.length; j++){
-    //             if(links[i].type[j]==whichNum || links[i].type[j]==whichNum-1){ // access only one before or ones before with same types
-    //                 liveLinks.push(links[i]);
-    //             }
-    //         }
-    //     }
-    // }
+    for (var i = 0; i<links.length; i++){
+        if(links[i].type==whichNum || links[i].type==whichNum-1){ //only the one before
+            liveLinks.push(links[i])
+        }
+        if(links[i].type.length>0){
+            for(j=0; j<links[i].type.length; j++){
+                if(links[i].type[j]==whichNum || links[i].type[j]==whichNum-1){ // access only one before or ones before with same types
+                    liveLinks.push(links[i]);
+                }
+            }
+        }
+    }
+    for (var i = 0; i<nodes.length; i++){
+        if(nodes[i].type==whichNum || nodes[i].type==whichNum-1){ //only the one before
+            liveNodes.push(nodes[i])
+        }
+        if(nodes[i].type.length>0){
+            for(j=0; j<nodes[i].type.length; j++){
+                if(nodes[i].type[j]==whichNum || nodes[i].type[j]==whichNum-1){ // access only one before or ones before with same types
+                    liveNodes.push(nodes[i]);
+                }
+            }
+        }
+    }
 //option to do it as adding on to all previous
     // for (var i = 0; i<links.length; i++){
     //     if(links[i].type==whichNum){
@@ -153,8 +165,8 @@ function chooseData(whichNum){
     //     }
     // }
 //all immediately on click
-liveLinks = links;
-liveNodes = nodes;
+// liveLinks = links;
+// liveNodes = nodes;
     restart(liveLinks, liveNodes, whichNum);
 }
 
@@ -188,12 +200,12 @@ function restart(liveLinks, liveNodes, whichNum){
     //     .filter(function(d) { 
     //         if(d.img==undefined){ } 
     //         if(d.img!=undefined && d.type.length>0){
-    //             if(d.type[0]==whichNum || whichNum == 0){ 
+    //             if(d.type[0]==whichNum){ // || whichNum == 0
     //                 return d;
     //             }
     //         }
     //         if(d.img!=undefined && d.type.length==undefined){
-    //             if(d.type==whichNum || whichNum == 0){
+    //             if(d.type==whichNum){ // || whichNum == 0
     //                 return d;
     //             }
     //         }
@@ -216,13 +228,7 @@ function restart(liveLinks, liveNodes, whichNum){
         })
     node.exit()
         .remove();
-    // node = node.enter().append("circle")
-    //     .attr("r", radius)
-    //     .attr("fill","white")
-    //     .attr("class", function(d){
-    //         return d.id+"_"+d.type;
-    //     })
-    //     .merge(node);
+
     node = node.enter().append("image")
         .attr("class", function(d){
             return d.id+"_"+d.type;
@@ -265,26 +271,6 @@ function restart(liveLinks, liveNodes, whichNum){
         .alpha(.09)
         .on("tick", ticked)
         .restart()
-
-
-
-
-    // define the clipPath
-    // defs = defs.data(liveNodes, function(d){
-    //     return d;
-    // }).enter().append("clipPath")
-    //     .filter(function(d) { 
-    //         if(d.img==undefined){ } 
-    //         if(d.img!=undefined){ return d }
-    //     })
-    //     .attr('id', 'circle-clip') // give the clipPath an ID
-    //     .append('circle')
-    //     .attr('cx', 100)
-    //     .attr('cy', function(d){
-    //         console.log(d.y)
-    //         return d.y;
-    //     })
-    //     .attr('r', 100)
 }
 
 function ticked() {
