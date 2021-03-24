@@ -64,6 +64,7 @@ const processPrep = async(dataset, nodes, links) => {
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [0,0, width, height])
+        .style("background-color","black")
     img = svg.append("g")
         .selectAll("image");
     node = svg.append("g")
