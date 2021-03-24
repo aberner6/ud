@@ -115,33 +115,29 @@ function series(){
 
 function chooseData(whichNum){
     console.log(whichNum)
-    liveLinks = [];
-    liveNodes = [];
-    
+    // liveLinks = [];
+    // liveNodes = [];
 //option to do it one by one
+//but doesnt make sense because why would you be an origin to a destination that doesnt exist yet
+//so there shouldactually not be multiple types recorded because we dont use them?
+//then need to add on to live links and live nodes arrays if want to do it this way
+//one by one cannot work unless links are only to internal ring places
     for (var i = 0; i<links.length; i++){
-        if(links[i].type==whichNum || links[i].type==whichNum-1){ //only the one before
+        if(links[i].type==whichNum){
             liveLinks.push(links[i])
-        }
-        if(links[i].type.length>0){
-            for(j=0; j<links[i].type.length; j++){
-                if(links[i].type[j]==whichNum || links[i].type[j]==whichNum-1){ // access only one before or ones before with same types
-                    liveLinks.push(links[i]);
-                }
-            }
         }
     }
     for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].type==whichNum || nodes[i].type==whichNum-1){ //only the one before
+        if(nodes[i].type==whichNum){ 
             liveNodes.push(nodes[i])
         }
-        if(nodes[i].type.length>0){
-            for(j=0; j<nodes[i].type.length; j++){
-                if(nodes[i].type[j]==whichNum || nodes[i].type[j]==whichNum-1){ // access only one before or ones before with same types
-                    liveNodes.push(nodes[i]);
-                }
-            }
-        }
+        // if(nodes[i].type.length>0){
+        //     for(j=0; j<nodes[i].type.length; j++){
+        //         if(nodes[i].type[j]==whichNum){ 
+        //             liveNodes.push(nodes[i]);
+        //         }
+        //     }
+        // }
     }
 //option to do it as adding on to all previous
     // for (var i = 0; i<links.length; i++){
