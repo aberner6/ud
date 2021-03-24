@@ -3,7 +3,7 @@
 	    {"id": 1, "name":"High Clouds", "type": [1,3,10], "first": 1, "img":"img/1.jpeg", "symb":"symb/Clouds.svg"},
 	    {"id": 2, "name":"High Clouds", "type": 1, "first": 0, "symb":"symb/Clouds.svg"},
 	    {"id": 3, "name":"Low Clouds", "type": [1,2], "first": 0, "symb":"symb/Clouds.svg"},
-	    {"id": 4, "name":"Radiance", "type": 2, "first": 1, "symb":"symb/Heat.svg"},
+	    {"id": 4, "name":"Radiance", "type": 2, "first": 1, "img":"img/2.jpeg", "symb":"symb/Heat.svg"},
 	    {"id": 5, "name":"Radiance", "type": [2,10], "first": 0, "symb":"symb/Heat.svg"},
 	    {"id": 6, "name":"Radiance", "type": 2, "first": 0, "symb":"symb/Heat.svg"},
       {"id": 7, "name":"Co2", "type": [3,10], "first": 1, "img":"img/3.jpeg", "symb":"symb/Co2.svg"},

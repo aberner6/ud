@@ -22,6 +22,9 @@ var uk, ut, color, yScale;
 var whichNum = 0;
 var maxStrength = 0.25;
 
+var symWidth = 50;
+var symHeight = 50;
+
 const makeRequest = async () => {
   try {
     dataset = await d3.json("goalData.json");
@@ -52,9 +55,12 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(d => d.id).distance(100).strength(0.1))
-        .force("charge", d3.forceManyBody())
+        .force("charge", d3.forceManyBody(-10))
         .force("x", d3.forceX(width/2).strength(1))
-        .force("center", d3.forceCenter(width / 2, height / 2))
+//stop using if don't want to start towards middle
+        .force("center", d3.forceCenter(width / 2, height / 2)) 
+        //maybe helps, maybe doesn't
+        .force("collide", d3.forceCollide().radius(symWidth*4).strength(0.001))
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [0,0, width, height])
@@ -102,7 +108,7 @@ const processPrep = async(dataset, nodes, links) => {
 }
 
 function series(){
-    whichNum++;
+    // whichNum++;
     chooseData(whichNum)
 }
 
@@ -125,42 +131,88 @@ function chooseData(whichNum){
     //     }
     // }
 //option to do it as adding on to all previous
-    for (var i = 0; i<links.length; i++){
-        if(links[i].type==whichNum){
-            liveLinks.push(links[i])
-        }
-        if(links[i].type.length>0){
-            if(links[i].type[0]==whichNum){
-                liveLinks.push(links[i]);
-            }
-        }
-    }
-    for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].type==whichNum){ 
-            liveNodes.push(nodes[i]);
-        }
-        if(nodes[i].type.length>0){
-            if(nodes[i].type[0]==whichNum){
-                liveNodes.push(nodes[i]);
-            }
-        }
-    }
+    // for (var i = 0; i<links.length; i++){
+    //     if(links[i].type==whichNum){
+    //         liveLinks.push(links[i])
+    //     }
+    //     if(links[i].type.length>0){
+    //         if(links[i].type[0]==whichNum){
+    //             liveLinks.push(links[i]);
+    //         }
+    //     }
+    // }
+    // for (var i = 0; i<nodes.length; i++){
+    //     if(nodes[i].type==whichNum){ 
+    //         liveNodes.push(nodes[i]);
+    //     }
+    //     if(nodes[i].type.length>0){
+    //         if(nodes[i].type[0]==whichNum){
+    //             liveNodes.push(nodes[i]);
+    //         }
+    //     }
+    // }
 //all immediately on click
-// liveLinks = links;
-// liveNodes = nodes;
+liveLinks = links;
+liveNodes = nodes;
     restart(liveLinks, liveNodes, whichNum);
 }
 
-var imgWidth = 50;
-var imgHeight = 50;
 function restart(liveLinks, liveNodes, whichNum){
     console.log("restart")
     console.log(liveNodes);
 
+    // img = img
+    //     .data(liveNodes, function(d){
+    //         return d;
+    //     })
+    //     .attr("opacity", function (d){
+    //         if(d.type.length>0){
+    //             if(d.type[0]==whichNum){
+    //                 return .4;
+    //             }else{
+    //                 return .2;
+    //             }
+    //         }
+    //         if(d.type.length==undefined){
+    //             if(d.type==whichNum){
+    //                 return .4;
+    //             }else{
+    //                 return .2;
+    //             }
+    //         }
+    //     })
+    // img.exit()
+    //     .remove();
+    // img = img.enter()
+    //     .filter(function(d) { 
+    //         if(d.img==undefined){ } 
+    //         if(d.img!=undefined && d.type.length>0){
+    //             if(d.type[0]==whichNum || whichNum == 0){ 
+    //                 return d;
+    //             }
+    //         }
+    //         if(d.img!=undefined && d.type.length==undefined){
+    //             if(d.type==whichNum || whichNum == 0){
+    //                 return d;
+    //             }
+    //         }
+    //     })
+    //     .append("svg:image")
+    //     .attr("xlink:href", function(d) {
+    //         return d.img;
+    //     })
+    //     .attr("x", 0)
+    //     .attr("y", 0)
+    //     .attr("width", 1200+'px')
+    //     .attr("height", 1000+'px')
+    //     .attr("opacity",.4)
+    //     .merge(img);
+
+
     node = node
         .data(liveNodes, function(d){
             return d.id;
-        });
+        })
     node.exit()
         .remove();
     // node = node.enter().append("circle")
@@ -177,8 +229,9 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr("xlink:href", function(d){
             return d.symb;
         })
-        .attr("width", "20px")
-        .attr("height", "20px")
+        .attr("transform","translate("+ -symWidth/2 +","+ -symHeight/2 +")")
+        .attr("width", symWidth+"px")
+        .attr("height", symHeight+"px")
         .merge(node);
 
     link = link.data(liveLinks, function(d){
@@ -188,7 +241,9 @@ function restart(liveLinks, liveNodes, whichNum){
         .remove();       
     link = link.enter().append("path")
         .attr("stroke","white")
-        .attr("fill","none")
+        .attr("stroke-width",.1)
+        .attr("fill","white")
+        .attr("fill-opacity",.1)
         .merge(link);
 
     simulation
@@ -229,49 +284,10 @@ function restart(liveLinks, liveNodes, whichNum){
     //         return d.y;
     //     })
     //     .attr('r', 100)
-
-    img = img
-        .data(liveNodes, function(d){
-            return d.img;
-        })
-        .attr("opacity", function (d){
-            if(d.type.length>0){
-                if(d.type[0]==whichNum){
-                    return .5;
-                }else{
-                    return .2;
-                }
-            }
-            if(d.type.length==undefined){
-                if(d.type==whichNum){
-                    return .5;
-                }else{
-                    return .2;
-                }
-            }
-        })
-        // .attr("y", function(d){
-        //     return 0;
-        // })
-        // .attr("clip-path", "url(#circle-clip)")
-
-    img.exit() //.transition().attr("opacity",.1)
-        .remove();
-    img = img.enter().append("svg:image")
-        .attr("xlink:href", function(d) {
-            return d.img;
-        })
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 1200+'px')
-        .attr("height", 1000+'px')
-        .attr("opacity",.5)
-        // .attr("clip-path","none")
-        .merge(img);
 }
 
 function ticked() {
-    node.attr("transform", transform);
+    node.attr("fill", transform);
     link.attr("d", linkArc);
 }
 
@@ -280,7 +296,9 @@ function transform(d) {
         .attr("y", function(d) { 
             return d.y; 
         })
-        .attr("x", function(d) { return d.x; })
+        .attr("x", function(d) {
+            return d.x; 
+        })
 }
 function linkArc(d) {
     var dx = d.target.x - d.source.x,
