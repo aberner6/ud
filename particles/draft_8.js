@@ -22,8 +22,8 @@ var uk, ut, color, yScale;
 var whichNum = 0;
 var maxStrength = 0.25;
 
-var symWidth = 50;
-var symHeight = 50;
+var symWidth = 10;
+var symHeight = 10;
 
 const makeRequest = async () => {
   try {
