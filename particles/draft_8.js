@@ -151,6 +151,8 @@ function chooseData(whichNum){
     restart(liveLinks, liveNodes, whichNum);
 }
 
+var imgWidth = 50;
+var imgHeight = 50;
 function restart(liveLinks, liveNodes, whichNum){
     console.log("restart")
     console.log(liveNodes);
@@ -161,12 +163,22 @@ function restart(liveLinks, liveNodes, whichNum){
         });
     node.exit()
         .remove();
-    node = node.enter().append("circle")
-        .attr("r", radius)
-        .attr("fill","white")
+    // node = node.enter().append("circle")
+    //     .attr("r", radius)
+    //     .attr("fill","white")
+    //     .attr("class", function(d){
+    //         return d.id+"_"+d.type;
+    //     })
+    //     .merge(node);
+    node = node.enter().append("image")
         .attr("class", function(d){
             return d.id+"_"+d.type;
         })
+        .attr("xlink:href", function(d){
+            return d.symb;
+        })
+        .attr("width", "20px")
+        .attr("height", "20px")
         .merge(node);
 
     link = link.data(liveLinks, function(d){
@@ -218,44 +230,44 @@ function restart(liveLinks, liveNodes, whichNum){
     //     })
     //     .attr('r', 100)
 
-    // img = img
-    //     .data(liveNodes, function(d){
-    //         return d.img;
-    //     })
-    //     .attr("opacity", function (d){
-    //         if(d.type.length>0){
-    //             if(d.type[0]==whichNum){
-    //                 return .8;
-    //             }else{
-    //                 return .5;
-    //             }
-    //         }
-    //         if(d.type.length==undefined){
-    //             if(d.type==whichNum){
-    //                 return .8;
-    //             }else{
-    //                 return .5;
-    //             }
-    //         }
-    //     })
-    //     .attr("y", function(d){
-    //         return 0;
-    //     })
-    //     .attr("clip-path", "url(#circle-clip)")
+    img = img
+        .data(liveNodes, function(d){
+            return d.img;
+        })
+        .attr("opacity", function (d){
+            if(d.type.length>0){
+                if(d.type[0]==whichNum){
+                    return .5;
+                }else{
+                    return .2;
+                }
+            }
+            if(d.type.length==undefined){
+                if(d.type==whichNum){
+                    return .5;
+                }else{
+                    return .2;
+                }
+            }
+        })
+        // .attr("y", function(d){
+        //     return 0;
+        // })
+        // .attr("clip-path", "url(#circle-clip)")
 
-    // img.exit() //.transition().attr("opacity",.1)
-    //     .remove();
-    // img = img.enter().append("svg:image")
-    //     .attr("xlink:href", function(d) {
-    //         return d.img;
-    //     })
-    //     .attr("x", 0)
-    //     .attr("y", 0)
-    //     .attr("width", 1200+'px')
-    //     .attr("height", 1000+'px')
-    //     .attr("opacity",.8)
-    //     .attr("clip-path","none")
-    //     .merge(img);
+    img.exit() //.transition().attr("opacity",.1)
+        .remove();
+    img = img.enter().append("svg:image")
+        .attr("xlink:href", function(d) {
+            return d.img;
+        })
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 1200+'px')
+        .attr("height", 1000+'px')
+        .attr("opacity",.5)
+        // .attr("clip-path","none")
+        .merge(img);
 }
 
 function ticked() {
@@ -265,10 +277,10 @@ function ticked() {
 
 function transform(d) {
     node
-        .attr("cy", function(d) { 
+        .attr("y", function(d) { 
             return d.y; 
         })
-        .attr("cx", function(d) { return d.x; })
+        .attr("x", function(d) { return d.x; })
 }
 function linkArc(d) {
     var dx = d.target.x - d.source.x,
