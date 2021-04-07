@@ -8,7 +8,7 @@ var uniqueTypes;
 var links = [];
 var nodes = [];
 
-var svg, g, node, link, img, defs;
+var svg, g, node, link, img;
 var liveLinks = [];
 var liveNodes = [];
 
@@ -27,7 +27,7 @@ var symHeight = 10;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json("march24_locked.json");
+    dataset = await d3.json("currentData.json");
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -72,7 +72,6 @@ const processPrep = async(dataset, nodes, links) => {
     link = svg.append("g")
         .selectAll("line");
 
-    defs = svg.append('defs').selectAll("masks")
 
     svg.on("click", function(){ 
         series();
@@ -81,14 +80,7 @@ const processPrep = async(dataset, nodes, links) => {
     //KEYWORDS
     for (var i = 0;i<nodes.length; i++){ 
         keywords.push(nodes[i].name);
-
-        if(nodes[i].type.length>0){
-            for(j=0; j<nodes[i].type.length; j++){
-                keytypes.push(nodes[i].type[j])
-            }
-        } else{
-            keytypes.push(nodes[i].type)
-        }
+        keytypes.push(nodes[i].type)
     };
     uniqueKeywords = keywords.filter(onlyUnique);
     uniqueTypes = keytypes.filter(onlyUnique);
@@ -99,12 +91,10 @@ const processPrep = async(dataset, nodes, links) => {
     uk = uniqueKeywords.length;
     utMax = d3.max(uniqueTypes);
     utMin = d3.min(uniqueTypes);
-    // color = d3.scaleSequential(d3.schemeBlues[uk])
-        // .domain([0, uk]);
     yScale = d3.scaleLinear()
         .domain([utMin, utMax])
         .range([10,height/2])
-    uniqueKeywords = ["bla"]
+
     return uniqueKeywords;
 }
 
@@ -115,13 +105,6 @@ function series(){
 
 function chooseData(whichNum){
     console.log(whichNum)
-    // liveLinks = [];
-    // liveNodes = [];
-//option to do it one by one
-//but doesnt make sense because why would you be an origin to a destination that doesnt exist yet
-//so there shouldactually not be multiple types recorded because we dont use them?
-//then need to add on to live links and live nodes arrays if want to do it this way
-//one by one cannot work unless links are only to internal ring places
     for (var i = 0; i<links.length; i++){
         if(links[i].type==whichNum){
             liveLinks.push(links[i])
@@ -131,38 +114,7 @@ function chooseData(whichNum){
         if(nodes[i].type==whichNum){ 
             liveNodes.push(nodes[i])
         }
-        if(nodes[i].type.length>0){
-            for(j=0; j<nodes[i].type.length; j++){
-                if(nodes[i].type[j]==whichNum){ 
-                    liveNodes.push(nodes[i]);
-                }
-            }
-        }
     }
-//option to do it as adding on to all previous
-    // for (var i = 0; i<links.length; i++){
-    //     if(links[i].type==whichNum){
-    //         liveLinks.push(links[i])
-    //     }
-    //     if(links[i].type.length>0){
-    //         if(links[i].type[0]==whichNum){
-    //             liveLinks.push(links[i]);
-    //         }
-    //     }
-    // }
-    // for (var i = 0; i<nodes.length; i++){
-    //     if(nodes[i].type==whichNum){ 
-    //         liveNodes.push(nodes[i]);
-    //     }
-    //     if(nodes[i].type.length>0){
-    //         if(nodes[i].type[0]==whichNum){
-    //             liveNodes.push(nodes[i]);
-    //         }
-    //     }
-    // }
-//all immediately on click
-// liveLinks = links;
-// liveNodes = nodes;
     restart(liveLinks, liveNodes, whichNum);
 }
 
@@ -175,33 +127,18 @@ function restart(liveLinks, liveNodes, whichNum){
     //         return d;
     //     })
     //     .attr("opacity", function (d){
-    //         if(d.type.length>0){
-    //             if(d.type[0]==whichNum){
-    //                 return .4;
-    //             }else{
-    //                 return .2;
-    //             }
-    //         }
-    //         if(d.type.length==undefined){
     //             if(d.type==whichNum){
     //                 return .4;
     //             }else{
     //                 return .2;
     //             }
-    //         }
     //     })
     // img.exit()
     //     .remove();
     // img = img.enter()
     //     .filter(function(d) { 
-    //         if(d.img==undefined){ } 
-    //         if(d.img!=undefined && d.type.length>0){
-    //             if(d.type[0]==whichNum){ // || whichNum == 0
-    //                 return d;
-    //             }
-    //         }
-    //         if(d.img!=undefined && d.type.length==undefined){
-    //             if(d.type==whichNum){ // || whichNum == 0
+    //         if(d.img!=undefined){
+    //             if(d.type==whichNum){
     //                 return d;
     //             }
     //         }
@@ -256,12 +193,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
     simulation
         .force("y", d3.forceY(function(d){
-            if(d.type.length>0){
-                return yScale(d.type[0])
-            }
-            if(d.type.length==undefined){
-                return yScale(d.type)
-            }
+            return yScale(d.type)
         }).strength(1))
 
     simulation

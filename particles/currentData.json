@@ -1,0 +1,9 @@
+{
+  "nodes": [
+	    {"id": 1, "name":"High Clouds", "type": 1, "first": 1, "img":"img/1.jpeg", "symb":"symb/Clouds.svg"},
+	    {"id": 2, "name":"High Clouds", "type": 1, "first": 0, "symb":"symb/Clouds.svg"}
+	],
+  "links": [
+    	{"source": 2, "target": 1, "type": 1}
+    ]
+}
