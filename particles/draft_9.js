@@ -54,16 +54,16 @@ const processPrep = async(dataset, nodes, links) => {
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(d => d.id).distance(400).strength(0.1))
+        .force("link", d3.forceLink().id(d => d.id))//.distance(400).strength(0.1))
         .force("charge", d3.forceManyBody(-10))
-        .force("x", d3.forceX(width/2).strength(.1))
+        .force("x", d3.forceX(0).strength(.1))
 //stop using if don't want to start towards middle
-        .force("center", d3.forceCenter(width / 2, height / 2)) 
+        // .force("center", d3.forceCenter(width / 2, height / 2)) 
         //maybe helps, maybe doesn't
-        .force("collide", d3.forceCollide().radius(symWidth*4).strength(0.001))
+        .force("collide", d3.forceCollide().radius(symWidth).strength(0.001))
 
     svg = d3.select("body").append("svg")
-        .attr("viewBox", [0,0, width, height])
+        .attr("viewBox", [-width/2,0, width, height])
         .style("background-color","black")
     img = svg.append("g")
         .selectAll("image");
@@ -93,7 +93,7 @@ const processPrep = async(dataset, nodes, links) => {
     utMin = d3.min(uniqueTypes);
     yScale = d3.scaleLinear()
         .domain([utMin, utMax])
-        .range([10,height/2])
+        .range([symWidth*4,height/2])
 
     return uniqueKeywords;
 }
@@ -137,7 +137,7 @@ function restart(liveLinks, liveNodes, whichNum){
     //     .remove();
     // img = img.enter()
     //     .filter(function(d) { 
-    //         if(d.img!=undefined){
+    //         if(d.img!=undefined && d.first ==1){
     //             if(d.type==whichNum){
     //                 return d;
     //             }
@@ -164,7 +164,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append("image")
         .attr("class", function(d){
-            return d.id+"_"+d.type;
+            return "c"+d.type; //d.id+"_"+
         })
         .attr("xlink:href", function(d){
             return d.symb;
@@ -173,7 +173,9 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr("width", symWidth+"px")
         .attr("height", symHeight+"px")
         .merge(node);
-
+// node.transition().attr("delay", func(d,i){return 1000*i})
+// .attr("duration", func(d,i){return 1000*(i+1)})
+// .attr("cy", func(d,i){return 30*(i+1)})
     link = link.data(liveLinks, function(d){
         return d.id;
     })
@@ -182,7 +184,6 @@ function restart(liveLinks, liveNodes, whichNum){
     link = link.enter().append("path")
         .attr("stroke","white")
         .attr("stroke-width",.1)
-        // .attr("fill","none")
         .attr("fill","white")
         .attr("fill-opacity",.1)
         .merge(link);
@@ -193,7 +194,11 @@ function restart(liveLinks, liveNodes, whichNum){
 
     simulation
         .force("y", d3.forceY(function(d){
-            return yScale(d.type)
+            if (whichNum==3 && d.type==2){
+                return yScale(1);
+            }else{
+                return yScale(d.type)
+            }
         }).strength(1))
 
     simulation
@@ -208,9 +213,10 @@ function ticked() {
 }
 
 function transform(d) {
+
     node
         .attr("y", function(d) { 
-            return d.y; 
+            return d.y;  
         })
         .attr("x", function(d) {
             return d.x; 
