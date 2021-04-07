@@ -110,11 +110,28 @@ function chooseData(whichNum){
             liveLinks.push(links[i])
         }
     }
-    for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].type==whichNum){ 
-            liveNodes.push(nodes[i])
+    if(whichNum == 3){ //this is a way to filter out some that you don't want
+        var filtered = nodes.filter(function(value, index, arr){
+            return nodes[index].id!=55;
+        })
+        liveNodes = filtered;
+    }
+
+    else{
+        for (var i = 0; i<nodes.length; i++){
+            if(nodes[i].type==whichNum){ 
+                liveNodes.push(nodes[i])
+            }
+            if(whichNum==4){
+                if(nodes[i].id==55){
+                    liveNodes.push(nodes[i]);
+                }
+            }
         }
     }
+
+
+
     restart(liveLinks, liveNodes, whichNum);
 }
 
@@ -173,9 +190,7 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr("width", symWidth+"px")
         .attr("height", symHeight+"px")
         .merge(node);
-// node.transition().attr("delay", func(d,i){return 1000*i})
-// .attr("duration", func(d,i){return 1000*(i+1)})
-// .attr("cy", func(d,i){return 30*(i+1)})
+
     link = link.data(liveLinks, function(d){
         return d.id;
     })
