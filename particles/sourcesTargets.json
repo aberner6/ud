@@ -1,0 +1,12 @@
+    	{"source": 2, "target": 1, "type": 1},
+    	{"source": 3, "target": 1, "type": 2},
+    	{"source": 3, "target": 2, "type": 2},
+    	{"source": 4, "target": 1, "type": 2},
+    	{"source": 4, "target": 2, "type": 2},
+    	{"source": 4, "target": 3, "type": 2},
+    	{"source": 5, "target": 4, "type": 2},
+    	{"source": 5, "target": 2, "type": 2},
+    	{"source": 6, "target": 3, "type": 2},
+    	{"source": 6, "target": 2, "type": 2},
+    	{"source": 7, "target": 4, "type": 2},
+    	{"source": 7, "target": 1, "type": 2}

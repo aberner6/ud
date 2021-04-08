@@ -60,7 +60,7 @@ const processPrep = async(dataset, nodes, links) => {
 //stop using if don't want to start towards middle
         // .force("center", d3.forceCenter(width / 2, height / 2)) 
         //maybe helps, maybe doesn't
-        .force("collide", d3.forceCollide().radius(symWidth).strength(0.001))
+        .force("collide", d3.forceCollide().radius(symWidth*2).strength(0.001))
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [-width/2,0, width, height])
@@ -110,25 +110,25 @@ function chooseData(whichNum){
             liveLinks.push(links[i])
         }
     }
-    if(whichNum == 3){ //this is a way to filter out some that you don't want
-        var filtered = nodes.filter(function(value, index, arr){
-            return nodes[index].id!=55;
-        })
-        liveNodes = filtered;
-    }
+    // if(whichNum == 3){ //this is a way to filter out some that you don't want
+    //     var filtered = nodes.filter(function(value, index, arr){
+    //         return nodes[index].id!=55;
+    //     })
+    //     liveNodes = filtered;
+    // }
 
-    else{
+    // else{
         for (var i = 0; i<nodes.length; i++){
             if(nodes[i].type==whichNum){ 
                 liveNodes.push(nodes[i])
             }
-            if(whichNum==4){
-                if(nodes[i].id==55){
-                    liveNodes.push(nodes[i]);
-                }
-            }
+            // if(whichNum==4){
+            //     if(nodes[i].id==55){
+            //         liveNodes.push(nodes[i]);
+            //     }
+            // }
         }
-    }
+    // }
 
 
 
@@ -181,7 +181,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append("image")
         .attr("class", function(d){
-            return "c"+d.type; //d.id+"_"+
+            return "c"+d.id; //d.id+"_"+
         })
         .attr("xlink:href", function(d){
             return d.symb;
