@@ -140,7 +140,7 @@
 	    {"id": 65, "name":"Weather", "type": 3, "first": 0, "symb":"symb/Weather.svg"},
 	    {"id": 66, "name":"Weather", "type": 3, "first": 0, "symb":"symb/Weather.svg"},
 	    {"id": 67, "name":"Radiance", "type": 1, "first": 1, "img":"img/3.jpeg", "symb":"symb/Heat.svg"},
-	    {"id": 67, "name":"Radiance", "type": 2, "first": 1, "img":"img/3.jpeg", "symb":"symb/Heat.svg"},
+	    {"id": 68, "name":"Radiance", "type": 2, "first": 1, "img":"img/3.jpeg", "symb":"symb/Heat.svg"},
 	    {"id": 68, "name":"Radiance", "type": 3, "first": 1, "img":"img/3.jpeg", "symb":"symb/Heat.svg"},
 	    {"id": 69, "name":"Radiance", "type": 3, "first": 0, "symb":"symb/Heat.svg"},
 	    {"id": 70, "name":"Radiance", "type": 3, "first": 0, "symb":"symb/Heat.svg"},
@@ -155,7 +155,12 @@
 	    {"id": 79, "name":"Radiance", "type": 3, "first": 0, "symb":"symb/Heat.svg"},
 	    {"id": 80, "name":"Radiance", "type": 3, "first": 0, "symb":"symb/Heat.svg"},
 		{"id": 81, "name":"Wind", "type": 3, "first": 1, "img":"img/7.jpeg","symb":"symb/Wind.svg"},
-		{"id": 82, "name":"Wind", "type": 3, "first": 0,"symb":"symb/Wind.svg"}
+		{"id": 82, "name":"Wind", "type": 3, "first": 0,"symb":"symb/Wind.svg"},
+		{"id": 83, "name":"Earth", "type": 4, "first": 1, "img":"img/8.jpeg", "symb":"symb/Earth.svg"},
+		{"id": 84, "name":"Co2", "type": 5, "first": 1, "img":"img/4.jpeg", "symb":"symb/Co2.svg"},
+		{"id": 85, "name":"Co2", "type": 4, "first": 1, "img":"img/4.jpeg", "symb":"symb/Co2.svg"},
+		{"id": 86, "name":"Co2", "type": 3, "first": 1, "img":"img/4.jpeg", "symb":"symb/Co2.svg"},
+		{"id": 87, "name":"Co2", "type": 2, "first": 1, "img":"img/4.jpeg", "symb":"symb/Co2.svg"}
 	],
   "links": [
     	{"source": 2, "target": 1, "type": 1},
@@ -217,7 +222,7 @@
     	{"source": 52, "target": 51, "type": 2},
     	{"source": 53, "target": 52, "type": 2},
     	{"source": 54, "target": 53, "type": 2},
-    	{"source": 56, "target": 55, "type": 3},
+    	{"source": 56, "target": 54, "type": 3},
     	{"source": 57, "target": 56, "type": 3},
     	{"source": 58, "target": 57, "type": 3},
     	{"source": 59, "target": 58, "type": 3},
@@ -228,7 +233,6 @@
     	{"source": 64, "target": 63, "type": 3},
     	{"source": 65, "target": 64, "type": 3},
     	{"source": 66, "target": 65, "type": 3},
-    	{"source": 67, "target": 1, "type": 3},
     	{"source": 68, "target": 2, "type": 3},
     	{"source": 69, "target": 3, "type": 3},
     	{"source": 70, "target": 4, "type": 3},
@@ -243,6 +247,14 @@
     	{"source": 79, "target": 64, "type": 3},
     	{"source": 80, "target": 63, "type": 3},
     	{"source": 81, "target": 66, "type": 3},
-    	{"source": 82, "target": 65, "type": 3}
+    	{"source": 82, "target": 65, "type": 3},
+    	{"source": 83, "target": 82, "type": 4},
+    	{"source": 83, "target": 80, "type": 4},
+    	{"source": 83, "target": 66, "type": 4},
+    	{"source": 83, "target": 53, "type": 4},
+    	{"source": 84, "target": 83, "type": 5, "name": "Co2"},
+    	{"source": 85, "target": 54, "type": 4, "name": "Co2"},
+    	{"source": 86, "target": 10, "type": 3, "name": "Co2"},
+    	{"source": 87, "target": 2, "type": 2, "name": "Co2"}
     ]
 }

@@ -64,7 +64,7 @@ const processPrep = async(dataset, nodes, links) => {
 
     svg = d3.select("body").append("svg")
         .attr("viewBox", [-width/2,0, width, height])
-        .style("background-color","black")
+        .style("background-color","#000000e6")
     img = svg.append("g")
         .selectAll("image");
     node = svg.append("g")
@@ -106,8 +106,11 @@ function series(){
 function chooseData(whichNum){
     console.log(whichNum)
     for (var i = 0; i<links.length; i++){
-        if(links[i].type==whichNum){
-            liveLinks.push(links[i])
+        if(links[i].type==whichNum && links[i].name!="Co2"){
+            liveLinks.push(links[i]);
+        }
+        if(whichNum==5 && links[i].name=="Co2"){ //only if we have clicked to 5
+            liveLinks.push(links[i]);            
         }
     }
     // if(whichNum == 3){ //this is a way to filter out some that you don't want
@@ -119,7 +122,10 @@ function chooseData(whichNum){
 
     // else{
         for (var i = 0; i<nodes.length; i++){
-            if(nodes[i].type==whichNum){ 
+            if(nodes[i].type==whichNum && nodes[i].name!="Co2"){ 
+                liveNodes.push(nodes[i])
+            }
+            if(whichNum==5 && nodes[i].name=="Co2"){ //only if we have clicked to 5
                 liveNodes.push(nodes[i])
             }
             // if(whichNum==4){
@@ -207,14 +213,24 @@ function restart(liveLinks, liveNodes, whichNum){
         .nodes(liveNodes)
         .force("link").links(liveLinks)
 
-    simulation
-        .force("y", d3.forceY(function(d){
-            if (whichNum==3 && d.type==2){
-                return yScale(1);
-            }else{
+
+    if (whichNum==5){
+        simulation
+            .force("y", d3.forceY(function(d){
                 return yScale(d.type)
-            }
-        }).strength(1))
+            }).strength(.1)) 
+    }else{
+        simulation
+            .force("y", d3.forceY(function(d){
+                if (whichNum==3 && d.type==2){
+                    return yScale(1);
+                }
+                else{
+                    return yScale(d.type)
+                }
+            }).strength(1)) 
+    }
+
 
     simulation
         .alpha(.09)
