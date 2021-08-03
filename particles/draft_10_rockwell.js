@@ -121,13 +121,53 @@ function series(){
 }
 function chooseData(whichNum){
     console.log(whichNum)
-    for (var i = 0; i<links.length; i++){
-        liveLinks.push(links[i]);
-    }
+        for (i = 0; i < links.length; i++) {
+            for (j = 0; j < uniqueKeywords.length; j++) {
+                if (keywords[i].indexOf(uniqueKeywords[j]) != -1) {
+                    links.push({
+                        "source": keywords[i],
+                        "target": uniqueKeywords[j]
+                    })
+                }
+            }
+        }
+    //DO SOMETHING TO MAKE THE NODES WORK TOO
+    // // Compute the distinct nodes from the links.
+    // links.forEach(function(link) {
+    //     link.source = nodes[link.source] || (nodes[link.source] = {
+    //         name: link.source,
+    //         medium: link.medium,
+    //         headline: link.title,
+    //         author: link.author,
+    //         percent: link.percent
+    //     });
+    //     link.target = nodes[link.target] || (nodes[link.target] = {
+    //         name: link.target
+    //     });
 
-    for (var i = 0; i<nodes.length; i++){
-        liveNodes.push(nodes[i])
-    }
+    // });
+
+    // force = d3.layout.force()
+    //     .nodes(d3.values(nodes))
+    //     .links(links)
+    //     .size([w, h-100])
+    //     .linkDistance(60)
+    //     .charge(-500)
+    //     .on("tick", tick)
+    //     .start();
+
+
+
+
+
+
+    // for (var i = 0; i<links.length; i++){
+    //     liveLinks.push(links[i]);
+    // }
+
+    // for (var i = 0; i<nodes.length; i++){
+    //     liveNodes.push(nodes[i])
+    // }
     restart(liveLinks, liveNodes, whichNum);
 }
 
