@@ -1,9 +1,13 @@
 var width, height;
 
 var keywords = [];
+var eachKeyword = [];
 var uniqueKeywords;
-var keytypes = [];
-var uniqueTypes;
+var totalKeywords = [];
+var filterNum = .9;
+var focusKeywords = [];
+var mostKeyed;
+var uk;
 
 var links = [];
 var nodes = [];
@@ -18,7 +22,6 @@ var dataset;
 var liveData = [];
 var simulation;
 
-var uk, ut, color, yScale;
 var whichNum = 0;
 var maxStrength = 0.25;
 
@@ -27,7 +30,7 @@ var symHeight = 10;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json('currentData.json');
+    dataset = await d3.json('rwg.json');
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -55,10 +58,10 @@ const processPrep = async(dataset, nodes, links) => {
 
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id))//.distance(400).strength(0.1))
-        .force('charge', d3.forceManyBody(-10))
+        // .force('charge', d3.forceManyBody(-10))
         // .force('x', d3.forceX(0).strength(.1))
         .force('center', d3.forceCenter(0,height/2)) 
-        .force('collide', d3.forceCollide().radius(radius*2).strength(0.001))
+        // .force('collide', d3.forceCollide().radius(radius).strength(0.001))
 
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,0, width, height])
@@ -69,29 +72,46 @@ const processPrep = async(dataset, nodes, links) => {
     link = svg.append('g')
         .selectAll('line');
 
-
-    // svg.on('click', function(){ 
-        // series();
-    // })
-
     //KEYWORDS
     for (var i = 0;i<nodes.length; i++){ 
-        keywords.push(nodes[i].name);
-        keytypes.push(nodes[i].type)
-    };
-    uniqueKeywords = keywords.filter(onlyUnique);
-    uniqueTypes = keytypes.filter(onlyUnique);
+        keywords[i]=nodes[i].tag.split(",")
+        // 1 array with all the keywords
+        for (j = 0; j < keywords[i].length; j++) {
+            eachKeyword.push(keywords[i][j]);
+        }
+    }
+
+    for (i = 0; i < eachKeyword.length; i++) {
+        //count the number of times a keyword has been used
+        totalKeywords[i] = keyConsolidation(eachKeyword[i])
+        
+        //find the max used keyword
+        mostKeyed = d3.max(totalKeywords);
+
+        //each keyword has a number of times it has been used at the same position in the array
+        //so we can run through and say if this is a "frequent" keyword
+        //let's mark it as special in our "focus keywords" array
+        if (totalKeywords[i] > mostKeyed * filterNum) {
+            focusKeywords.push(eachKeyword[i]);
+        } else {
+            console.log("nope")
+        }
+    }
+
+    uniqueKeywords = focusKeywords.filter(onlyUnique);
     function onlyUnique(value, index, self) {
         return self.indexOf(value) === index;
     }
-
+    function keyConsolidation(givenKey, i) {
+        var total = 0;
+        for (i = 0; i < eachKeyword.length; i++) {
+            if (eachKeyword[i] == givenKey) {
+                total++;
+            }
+        }
+        return total;
+    }
     uk = uniqueKeywords.length;
-    utMax = d3.max(uniqueTypes);
-    utMin = d3.min(uniqueTypes);
-    yScale = d3.scaleLinear()
-        .domain([utMin, utMax])
-        .range([symWidth*4,height/2])
-
     return uniqueKeywords;
 }
 
@@ -124,15 +144,16 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append('circle')
         .attr('class', function(d){
-            return 'c'+d.id; //d.id+'_'+
+            return 'c'+d.id;
         })
         .attr('r',radius)
         .attr('fill','white')
         .merge(node);
 
-    link = link.data(liveLinks, function(d){
-        return d.id;
-    })
+    link = link
+        .data(liveLinks, function(d){
+            return d.id;
+        })
     link.exit()
         .remove();       
     link = link.enter().append('path')
@@ -153,7 +174,7 @@ function restart(liveLinks, liveNodes, whichNum){
 }
 
 function ticked() {
-    node.attr('cx', transform);
+    node.attr('class', transform);
     link.attr('d', linkArc);
 }
 
