@@ -1,12 +1,7 @@
 var width, height;
 
 var keywords = [];
-var eachKeyword = [];
 var uniqueKeywords;
-var totalKeywords = [];
-var filterNum = .9;
-var focusKeywords = [];
-var mostKeyed;
 var uk;
 
 var links = [];
@@ -30,7 +25,7 @@ var symHeight = 10;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json('rwg.json');
+    dataset = await d3.json('rwg/rwg.json');
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -40,9 +35,9 @@ const makeRequest = async () => {
 }
 
 const nodesLinks = async(dataset)=>{
-    // for (var i = 0; i<dataset.links.length; i++){
-    //     links.push(dataset.links[i]);
-    // }
+    for (var i = 0; i<dataset.links.length; i++){
+        links.push(dataset.links[i]);
+    }
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i]);
     }
@@ -51,13 +46,13 @@ const nodesLinks = async(dataset)=>{
 }
 
 
-const processPrep = async(dataset, nodes) => {
+const processPrep = async(dataset, nodes, links) => {
     
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
     simulation = d3.forceSimulation()
-        // .force('link', d3.forceLink().id(d => d.id))//.distance(400).strength(0.1))
+        .force('link', d3.forceLink().id(d => d.id))//.distance(400).strength(0.1))
         // .force('charge', d3.forceManyBody(-10))
         // .force('x', d3.forceX(0).strength(.1))
         .force('center', d3.forceCenter(0,height/2)) 
@@ -72,47 +67,7 @@ const processPrep = async(dataset, nodes) => {
     link = svg.append('g')
         .selectAll('line');
 
-    //KEYWORDS
-    for (var i = 0;i<nodes.length; i++){ 
-        keywords[i]=nodes[i].tag.split(",")
-        // 1 array with all the keywords
-        for (j = 0; j < keywords[i].length; j++) {
-            eachKeyword.push(keywords[i][j]);
-        }
-    }
-
-    for (i = 0; i < eachKeyword.length; i++) {
-        //count the number of times a keyword has been used
-        totalKeywords[i] = keyConsolidation(eachKeyword[i])
-        
-        //find the max used keyword
-        mostKeyed = d3.max(totalKeywords);
-
-        //each keyword has a number of times it has been used at the same position in the array
-        //so we can run through and say if this is a "frequent" keyword
-        //let's mark it as special in our "focus keywords" array
-        if (totalKeywords[i] > mostKeyed * filterNum) {
-            focusKeywords.push(eachKeyword[i]);
-        } else {
-            console.log("nope")
-        }
-    }
-
-    uniqueKeywords = focusKeywords.filter(onlyUnique);
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-    }
-    function keyConsolidation(givenKey, i) {
-        var total = 0;
-        for (i = 0; i < eachKeyword.length; i++) {
-            if (eachKeyword[i] == givenKey) {
-                total++;
-            }
-        }
-        return total;
-    }
-    uk = uniqueKeywords.length;
-    return uniqueKeywords;
+    return svg;
 }
 
 function series(){
@@ -121,29 +76,10 @@ function series(){
 }
 function chooseData(whichNum){
     console.log(whichNum)
-        for (i = 0; i < dataset.nodes.length; i++) {
-            for (j = 0; j < uniqueKeywords.length; j++) {
-                if (keywords[i].indexOf(uniqueKeywords[j]) != -1) {
-                    liveLinks.push({
-                        "source": keywords[i],
-                        "target": uniqueKeywords[j]
-                    })
-                }
-            }
-        }
+    for (var i = 0; i<links.length; i++){
+        liveLinks.push(links[i]);
+    }
 
-    // for (var i = 0; i<links.length; i++){
-    //     liveLinks.push(links[i]);
-    // }
-    links.forEach(function(link) {
-        link.source = nodes[link.source] || (nodes[link.source] = {
-            name: link.source
-        });
-        link.target = nodes[link.target] || (nodes[link.target] = {
-            name: link.target
-        });
-
-    });
     for (var i = 0; i<nodes.length; i++){
         liveNodes.push(nodes[i])
     }
@@ -163,7 +99,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append('circle')
         .attr('class', function(d){
-            return 'c';
+            return 'c'+d.id;
         })
         .attr('r',radius)
         .attr('fill','white')
@@ -215,6 +151,6 @@ function linkArc(d) {
 
 makeRequest()
     .then(dataset => nodesLinks(dataset))
-    .then(nodes => processPrep(dataset, nodes))
-    .then(uniqueKeywords => series())
+    .then(nodes => processPrep(dataset, nodes, links))
+    .then(svg => series())
 
