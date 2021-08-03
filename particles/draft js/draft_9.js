@@ -170,8 +170,8 @@ function restart(liveLinks, liveNodes, whichNum){
     //     .attr("xlink:href", function(d) {
     //         return d.img;
     //     })
-    //     .attr("x", 0)
-    //     .attr("y", 0)
+    //     .attr("x", -width/2)
+    //     .attr("y", -100)
     //     .attr("width", 1200+'px')
     //     .attr("height", 1000+'px')
     //     .attr("opacity",.4)
