@@ -30,25 +30,31 @@ const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i]);
     }
-    console.log(nodes);
     return nodes;
 }
-
 
 const processPrep = async(dataset, nodes) => {
     
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
-    simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => d.id))//.distance(400).strength(0.1))
-        // .force('charge', d3.forceManyBody(-10))
-        // .force('x', d3.forceX(0).strength(.1))
-        .force('center', d3.forceCenter(0,height/2)) 
-        // .force('collide', d3.forceCollide().radius(radius).strength(0.001))
+    var poScale = d3.scaleOrdinal()
+        .domain(['e', 's', 'w', 'na'])
+        .range([0, height/4])
 
+    simulation = d3.forceSimulation()
+        .force('link', d3.forceLink().id(d => d.id).strength(0.00001))
+            // .distance(20).strength(0.5))
+        .force('charge', d3.forceManyBody(200))
+        // .force('center', d3.forceCenter(0,height/2)) 
+        .force('collide', d3.forceCollide().radius(radius).iterations(2).strength(0.1))
+        .force('r', d3.forceRadial(function(d){
+            console.log(poScale(d.loc));
+            return poScale(d.loc)
+        }).strength(0.1))
+   
     svg = d3.select('body').append('svg')
-        .attr('viewBox', [-width/2,0, width, height])
+        .attr('viewBox', [-width/2,-height/2, width, height])
         .style('background-color','#000000e6')
 
     node = svg.append('g')
@@ -102,12 +108,28 @@ function restart(liveLinks, liveNodes, whichNum){
     node.exit()
         .remove();
     node = node.enter().append('circle')
-        .attr('r',radius)
-        .attr('fill','white')
+        .attr('r',function(d){
+            if(d.answer==-1){
+                return radius*5
+            }else {
+                return radius
+            }
+        })
+        .attr('fill',function(d){
+            if(d.answer==-1){
+                return 'none'
+            }else {
+                return 'white'
+            }
+        })
+        .attr('stroke',function(d){
+            if(d.answer==-1){
+                return 'white'
+            }else {
+                return 'none'
+            }
+        })
         .merge(node);
-
-
-
 
 
     link = link
@@ -120,15 +142,16 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('stroke','white')
         .attr('stroke-width',.1)
         .attr('fill','white')
-        .attr('fill-opacity',.1)
+        .attr('fill-opacity',.01)
         .merge(link);
 
 
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
+
     simulation
-        .alpha(.09)
+        .alpha(.6)
         .on('tick', ticked)
         .restart()
 }
