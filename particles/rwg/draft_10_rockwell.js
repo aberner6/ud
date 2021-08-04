@@ -43,15 +43,15 @@ const processPrep = async(dataset, nodes) => {
         .range([0, height/4])
 
     simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => d.id).strength(0.00001))
-            // .distance(20).strength(0.5))
-        .force('charge', d3.forceManyBody(200))
+        .force('link', d3.forceLink().id(d => d.id) //.strength(0.00001))
+            .distance(20).strength(0.1))
+        .force('charge', d3.forceManyBody(-200))
         // .force('center', d3.forceCenter(0,height/2)) 
         .force('collide', d3.forceCollide().radius(radius).iterations(2).strength(0.1))
-        .force('r', d3.forceRadial(function(d){
-            console.log(poScale(d.loc));
-            return poScale(d.loc)
-        }).strength(0.1))
+        // .force('r', d3.forceRadial(function(d){
+        //     console.log(poScale(d.loc));
+        //     return poScale(d.loc)
+        // }).strength(0.1))
    
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height])
