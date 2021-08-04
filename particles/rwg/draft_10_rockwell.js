@@ -40,10 +40,10 @@ const processPrep = async(dataset, nodes) => {
 
     var poScale = d3.scaleOrdinal()
         .domain(['e', 's', 'w', 'na'])
-        .range([0, height/4])
+        .range([0, height/2])
 
     simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => d.id) //.strength(0.00001))
+        .force('link', d3.forceLink().id(d => d.id) //.strength(0.100001))
             .distance(20).strength(0.1))
         .force('charge', d3.forceManyBody(-200))
         // .force('center', d3.forceCenter(0,height/2)) 
@@ -51,7 +51,7 @@ const processPrep = async(dataset, nodes) => {
         // .force('r', d3.forceRadial(function(d){
         //     console.log(poScale(d.loc));
         //     return poScale(d.loc)
-        // }).strength(0.1))
+        // }).strength(0.91))
    
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height])
@@ -158,7 +158,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
 function ticked() {
     node.attr('class', positionNodes);
-    link.attr('d', makeLinks);
+    // link.attr('d', makeLinks);
 }
 
 function positionNodes(d) {
