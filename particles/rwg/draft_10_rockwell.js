@@ -1,13 +1,8 @@
 var width, height;
 
-var keywords = [];
-var uniqueKeywords;
-var uk;
-
-var links = [];
 var nodes = [];
 
-var svg, g, node, link, img;
+var svg, g, node, answerNode, link;
 var liveLinks = [];
 var liveNodes = [];
 
@@ -17,15 +12,12 @@ var dataset;
 var liveData = [];
 var simulation;
 
-var whichNum = 0;
 var maxStrength = 0.25;
-
-var symWidth = 10;
-var symHeight = 10;
+var whichNum=0;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json('rwg/rwg.json');
+    dataset = await d3.json('rwg/rwg_full.json');
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -34,10 +26,7 @@ const makeRequest = async () => {
   }
 }
 
-const nodesLinks = async(dataset)=>{
-    for (var i = 0; i<dataset.links.length; i++){
-        links.push(dataset.links[i]);
-    }
+const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i]);
     }
@@ -46,7 +35,7 @@ const nodesLinks = async(dataset)=>{
 }
 
 
-const processPrep = async(dataset, nodes, links) => {
+const processPrep = async(dataset, nodes) => {
     
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
@@ -70,25 +59,41 @@ const processPrep = async(dataset, nodes, links) => {
     return svg;
 }
 
-function series(){
-    whichNum++;
-    chooseData(whichNum)
-}
-function chooseData(whichNum){
+var mainNodes = [];
+var answerNodes = [];
+function chooseData(){
     console.log(whichNum)
-    for (var i = 0; i<links.length; i++){
-        liveLinks.push(links[i]);
-    }
 
     for (var i = 0; i<nodes.length; i++){
         liveNodes.push(nodes[i])
     }
+
+    for (var i = 0; i<nodes.length; i++){
+        if(nodes[i].answer==-1){
+            mainNodes.push(nodes[i]);
+        }else{
+            answerNodes.push(nodes[i]);
+        }
+    }
+
+    for (var i = 0; i<answerNodes.length; i++){
+        for(j=0; j<answerNodes[i].tags.length; j++){
+            for (k=0; k<mainNodes.length; k++){
+                if(answerNodes[i].tags[j]==mainNodes[k].tags){
+                    liveLinks.push({
+                        "source": answerNodes[i].id,
+                        "target": mainNodes[k].id
+                    })
+                }
+             }
+        }
+    }
+
     restart(liveLinks, liveNodes, whichNum);
 }
 
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
-    console.log(liveNodes);
 
     node = node
         .data(liveNodes, function(d){
@@ -96,14 +101,14 @@ function restart(liveLinks, liveNodes, whichNum){
         })
     node.exit()
         .remove();
-
     node = node.enter().append('circle')
-        .attr('class', function(d){
-            return 'c'+d.id;
-        })
         .attr('r',radius)
         .attr('fill','white')
         .merge(node);
+
+
+
+
 
     link = link
         .data(liveLinks, function(d){
@@ -118,10 +123,10 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('fill-opacity',.1)
         .merge(link);
 
+
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
-
     simulation
         .alpha(.09)
         .on('tick', ticked)
@@ -129,12 +134,15 @@ function restart(liveLinks, liveNodes, whichNum){
 }
 
 function ticked() {
-    node.attr('class', transform);
-    link.attr('d', linkArc);
+    node.attr('class', positionNodes);
+    link.attr('d', makeLinks);
 }
 
-function transform(d) {
+function positionNodes(d) {
     node
+        .attr('class', function(d){
+            return 'n'+d.id;
+        })
         .attr('cy', function(d) { 
             return d.y;  
         })
@@ -142,7 +150,7 @@ function transform(d) {
             return d.x; 
         })
 }
-function linkArc(d) {
+function makeLinks(d) {
     var dx = d.target.x - d.source.x,
         dy = d.target.y - d.source.y,
         dr = Math.sqrt(dx * dx + dy * dy);
@@ -150,7 +158,7 @@ function linkArc(d) {
 }
 
 makeRequest()
-    .then(dataset => nodesLinks(dataset))
-    .then(nodes => processPrep(dataset, nodes, links))
-    .then(svg => series())
+    .then(dataset => getNodes(dataset))
+    .then(nodes => processPrep(dataset, nodes))
+    .then(svg => chooseData())
 
