@@ -17,7 +17,7 @@ var whichNum=0;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json('rwg/rwg_full.json');
+    dataset = await d3.json('rwg/rwg_qtypes.json');
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -40,18 +40,18 @@ const processPrep = async(dataset, nodes) => {
 
     var poScale = d3.scaleOrdinal()
         .domain(['e', 's', 'w', 'na'])
-        .range([0, height/2])
+        .range([10, height/2])
 
     simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => d.id) //.strength(0.100001))
-            .distance(20).strength(0.1))
-        .force('charge', d3.forceManyBody(-200))
+        .force('link', d3.forceLink().id(d => d.id).strength(0.100001))
+            // .distance(20).strength(0.1))
+        .force('charge', d3.forceManyBody(-100))
         // .force('center', d3.forceCenter(0,height/2)) 
-        .force('collide', d3.forceCollide().radius(radius).iterations(2).strength(0.1))
-        // .force('r', d3.forceRadial(function(d){
-        //     console.log(poScale(d.loc));
-        //     return poScale(d.loc)
-        // }).strength(0.91))
+        .force('collide', d3.forceCollide().radius(radius).strength(0.1))
+        .force('r', d3.forceRadial(function(d){
+            console.log(poScale(d.loc));
+            return poScale(d.loc)
+        }).strength(0.71))
    
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height])
@@ -142,7 +142,7 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('stroke','white')
         .attr('stroke-width',.1)
         .attr('fill','white')
-        .attr('fill-opacity',.01)
+        .attr('fill-opacity',.001)
         .merge(link);
 
 
@@ -158,7 +158,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
 function ticked() {
     node.attr('class', positionNodes);
-    // link.attr('d', makeLinks);
+    link.attr('d', makeLinks);
 }
 
 function positionNodes(d) {

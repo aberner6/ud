@@ -1,0 +1,2084 @@
+{
+  "nodes":[
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 33,
+       "tags": 33,
+       "loc": "na",
+       "frequency": 93,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 26,
+       "tags": 26,
+       "loc": "na",
+       "frequency": 10,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 31,
+       "tags": 31,
+       "loc": "na",
+       "frequency": 39,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 34,
+       "tags": 34,
+       "loc": "na",
+       "frequency": 104,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 27,
+       "tags": 27,
+       "loc": "na",
+       "frequency": 16,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 20,
+       "tags": 20,
+       "loc": "na",
+       "frequency": 25,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 32,
+       "tags": 32,
+       "loc": "na",
+       "frequency": 51,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 14,
+       "tags": 14,
+       "loc": "na",
+       "frequency": 47,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 28,
+       "tags": 28,
+       "loc": "na",
+       "frequency": 36,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 4,
+       "tags": 4,
+       "loc": "na",
+       "frequency": 11,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 30,
+       "tags": 30,
+       "loc": "na",
+       "frequency": 17,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 16,
+       "tags": 16,
+       "loc": "na",
+       "frequency": 8,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 29,
+       "tags": 29,
+       "loc": "na",
+       "frequency": 34,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 9,
+       "tags": 9,
+       "loc": "na",
+       "frequency": 14,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 11,
+       "tags": 11,
+       "loc": "na",
+       "frequency": 4,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 25,
+       "tags":25,
+       "loc": "na",
+       "frequency": 14,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 13,
+       "tags": 13,
+       "loc": "na",
+       "frequency": 6,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 10,
+       "tags": 10,
+       "loc": "na",
+       "frequency": 4,
+       "type": "hard_coded",
+       "note": "topic tag"
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 18,
+       "tags": 18,
+       "loc": "na",
+       "frequency": 10,
+       "type": "hard_coded",
+       "note": "topic tag"
+     },
+     {
+       "answer": -1,
+       "questionID": -1,
+       "id": 1,
+       "tags": 1,
+       "loc": "na",
+       "frequency": 3,
+       "type": "hard_coded",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 41,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 42,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 43,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 44,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 45,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 46,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 47,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 48,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 49,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 10,
+       "questionID": 1,
+       "id": 50,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 51,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 52,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 53,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 54,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 55,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 56,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 57,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 58,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 59,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 60,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 61,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 1,
+       "id": 62,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 31,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 1,
+       "id": 63,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 1,
+       "id": 64,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 1,
+       "id": 65,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 1,
+       "id": 66,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 1,
+       "id": 67,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 1,
+       "id": 68,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 1,
+       "id": 69,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 1,
+       "id": 70,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 15,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 1,
+       "id": 71,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 15,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 1,
+       "id": 72,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 15,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 1,
+       "id": 73,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 15,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 1,
+       "id": 74,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 15,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 1,
+       "id": 75,
+       "tags": [33, 26],
+       "loc": "e",
+       "frequency": 15,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 1,
+       "id": 76,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 1,
+       "id": 77,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 1,
+       "id": 78,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 1,
+       "id": 79,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 3,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 80,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 81,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 82,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 83,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 84,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 85,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 86,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 87,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 88,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 7,
+       "questionID": 2,
+       "id": 89,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 26,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 90,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 91,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 92,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 93,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 94,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 95,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 96,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 2,
+       "id": 97,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 21,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 2,
+       "id": 98,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 2,
+       "id": 99,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 2,
+       "id": 100,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 9,
+       "questionID": 2,
+       "id": 101,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 2,
+       "id": 102,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 2,
+       "id": 103,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 2,
+       "id": 104,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 6,
+       "questionID": 2,
+       "id": 105,
+       "tags": [31, 26],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 2,
+       "id": 106,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 13,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 2,
+       "id": 107,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 13,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 2,
+       "id": 108,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 13,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 2,
+       "id": 109,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 13,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 2,
+       "id": 110,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 13,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 2,
+       "id": 111,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 5,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 2,
+       "id": 112,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 5,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 2,
+       "id": 113,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 2,
+       "id": 114,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 2,
+       "id": 115,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 2,
+       "id": 116,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 3,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 2,
+       "id": 117,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 3,
+       "type": "scale",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 118,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 119,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 120,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 121,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 122,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 123,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 124,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 125,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 8,
+       "id": 126,
+       "tags": [27, 32, 20],
+       "loc": "e",
+       "frequency": 23,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 127,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 128,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 129,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 130,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 131,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 132,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 133,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 134,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 135,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 136,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 137,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 138,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 139,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 140,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 141,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 142,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 143,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 144,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 145,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 146,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 147,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 148,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 8,
+       "id": 149,
+       "tags": [30, 16, 29, 32],
+       "loc": "e",
+       "frequency": 56,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 8,
+       "id": 150,
+       "tags": [28, 14, 32, 4],
+       "loc": "e",
+       "frequency": 8,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 8,
+       "id": 151,
+       "tags": [28, 14, 32, 4],
+       "loc": "e",
+       "frequency": 8,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 8,
+       "id": 152,
+       "tags": [28, 14, 32, 4],
+       "loc": "e",
+       "frequency": 8,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 8,
+       "id": 153,
+       "tags": [9, 1, 11, 32],
+       "loc": "e",
+       "frequency": 5,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 8,
+       "id": 154,
+       "tags": [9, 1, 11, 32],
+       "loc": "e",
+       "frequency": 5,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 8,
+       "id": 155,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 8,
+       "id": 156,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 5,
+       "questionID": 8,
+       "id": 157,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 8,
+       "type": "cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 9,
+       "id": 158,
+       "tags": [28, 14, 13],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 9,
+       "id": 159,
+       "tags": [28, 14, 13],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 9,
+       "id": 160,
+       "tags": [28, 14, 13],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 1,
+       "questionID": 9,
+       "id": 161,
+       "tags": [28, 14, 13],
+       "loc": "e",
+       "frequency": 10,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 162,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 163,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 164,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 165,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 166,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 167,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 168,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 169,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 170,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 171,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 172,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 173,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 174,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 175,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 2,
+       "questionID": 9,
+       "id": 176,
+       "tags": [28, 14],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 177,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 178,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 179,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 180,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 181,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 182,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 183,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 184,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 185,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 186,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 187,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 188,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 189,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 3,
+       "questionID": 9,
+       "id": 190,
+       "tags": [28, 14, 25],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 191,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 192,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 193,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 194,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 195,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 196,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 197,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 4,
+       "questionID": 9,
+       "id": 198,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 18,
+       "type": "scale_cat",
+       "note": ""
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 199,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 200,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 201,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 202,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 203,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 204,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 205,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 206,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 207,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 208,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 209,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 210,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 211,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 212,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 213,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 8,
+       "questionID": 14,
+       "id": 214,
+       "tags": [33, 32, 10, 18],
+       "loc": "e",
+       "frequency": 39,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 215,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 216,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 217,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 218,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 219,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 220,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 221,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 222,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 223,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 224,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 225,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 226,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 227,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     },
+     {
+       "answer": 3,
+       "questionID": 14,
+       "id": 228,
+       "tags": [34],
+       "loc": "e",
+       "frequency": 33,
+       "type": "scale_cat",
+       "note": "grouped"
+     }
+  ]
+}
