@@ -1,8 +1,9 @@
 var width, height;
 
 var nodes = [];
+var tagTable = [];
 
-var svg, g, node, answerNode, link;
+var svg, g, node, text, link;
 var liveLinks = [];
 var liveNodes = [];
 
@@ -30,6 +31,9 @@ const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i]);
     }
+    for (var i = 0; i<dataset.tags.length; i++){
+        tagTable.push(dataset.tags[i]);
+    }
     return nodes;
 }
 
@@ -49,16 +53,16 @@ const processPrep = async(dataset, nodes) => {
         // .force('center', d3.forceCenter(0,height/2)) 
         .force('collide', d3.forceCollide().radius(radius).strength(0.1))
         .force('r', d3.forceRadial(function(d){
-            console.log(poScale(d.loc));
-            return poScale(d.loc)
-        }).strength(0.71))
+            return poScale(d.loc) //nodes are placed in relation to their halls
+        }).strength(0.01))
    
     svg = d3.select('body').append('svg')
-        .attr('viewBox', [-width/2,-height/2, width, height])
-        .style('background-color','#000000e6')
+        .attr('viewBox', [-width/2,-height/2, width, height]);
 
     node = svg.append('g')
         .selectAll('circle');
+    text = svg.append('g')
+        .selectAll('text');
     link = svg.append('g')
         .selectAll('line');
 
@@ -98,8 +102,14 @@ function chooseData(){
     restart(liveLinks, liveNodes, whichNum);
 }
 
+
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
+    
+    var satScale = d3.scaleLinear()
+        .domain([1,10])
+        .range([0, 100])
+    var yellow = 60;
 
     node = node
         .data(liveNodes, function(d){
@@ -117,9 +127,21 @@ function restart(liveLinks, liveNodes, whichNum){
         })
         .attr('fill',function(d){
             if(d.answer==-1){
-                return 'none'
+                return 'none' //no color scale for main topic tags
             }else {
-                return 'white'
+                if(d.loc=='e'){
+                    if(d.type=='scale'){
+                        var sat = (satScale(d.answer)).toString()
+                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+                    }
+                    if(d.type=='scale-cat'){
+                        var sat = (satScale(d.answer*2)).toString()
+                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+                    }
+                    else{
+                        return d3.lab('hsl('+yellow+',100%, 50%)')
+                    }
+                }
             }
         })
         .attr('stroke',function(d){
@@ -131,6 +153,29 @@ function restart(liveLinks, liveNodes, whichNum){
         })
         .merge(node);
 
+    text = text
+        .data(liveNodes, function(d){
+            return d.id;
+        })
+    text.exit()
+        .remove();       
+    text = text.enter()
+        .filter(function(d) { 
+            if(d.answer==-1){
+                return d;
+            }
+        })
+        .append('text')
+        .attr('dy', '.31em') 
+        .attr('dx', '.41em') 
+        .text(function(d){
+            for(i=0; i<tagTable.length; i++){
+                if(d.tags==tagTable[i].tagID){
+                    return tagTable[i].tag.toUpperCase();
+                }
+            }
+        })
+        .merge(text);    
 
     link = link
         .data(liveLinks, function(d){
@@ -159,6 +204,7 @@ function restart(liveLinks, liveNodes, whichNum){
 function ticked() {
     node.attr('class', positionNodes);
     link.attr('d', makeLinks);
+    text.attr('x', positionNodes)
 }
 
 function positionNodes(d) {
@@ -170,6 +216,14 @@ function positionNodes(d) {
             return d.y;  
         })
         .attr('cx', function(d) {
+            return d.x; 
+        })
+    
+    text
+        .attr('y', function(d) { 
+            return d.y;  
+        })
+        .attr('x', function(d) {
             return d.x; 
         })
 }

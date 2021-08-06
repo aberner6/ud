@@ -2080,5 +2080,207 @@
        "type": "scale_cat",
        "note": "grouped"
      }
-  ]
+  ],
+  "tags":[
+       {
+         "tagID": 1,
+         "tag": "Tradition",
+         "total": 3
+       },
+       {
+         "tagID": 2,
+         "tag": "Slow ",
+         "total": 7
+       },
+       {
+         "tagID": 3,
+         "tag": "Food",
+         "total": 11
+       },
+       {
+         "tagID": 4,
+         "tag": "Government",
+         "total": 11
+       },
+       {
+         "tagID": 5,
+         "tag": "Collaborative",
+         "total": 13
+       },
+       {
+         "tagID": 6,
+         "tag": "Activism",
+         "total": 18
+       },
+       {
+         "tagID": 7,
+         "tag": "Arts",
+         "total": 6
+       },
+       {
+         "tagID": 8,
+         "tag": "Empathy",
+         "total": 14
+       },
+       {
+         "tagID": 9,
+         "tag": "Inclusive",
+         "total": 14
+       },
+       {
+         "tagID": 10,
+         "tag": "OuterSpace ",
+         "total": 4
+       },
+       {
+         "tagID": 11,
+         "tag": "Games",
+         "total": 4
+       },
+       {
+         "tagID": 12,
+         "tag": "Communication",
+         "total": 18
+       },
+       {
+         "tagID": 13,
+         "tag": "Adventurous",
+         "total": 6
+       },
+       {
+         "tagID": 14,
+         "tag": "Sustainable",
+         "total": 47
+       },
+       {
+         "tagID": 15,
+         "tag": "Leisure",
+         "total": 11
+       },
+       {
+         "tagID": 16,
+         "tag": "MentalHealth",
+         "total": 8
+       },
+       {
+         "tagID": 17,
+         "tag": "Connected",
+         "total": 25
+       },
+       {
+         "tagID": 18,
+         "tag": "Travel",
+         "total": 10
+       },
+       {
+         "tagID": 19,
+         "tag": "Finance",
+         "total": 10
+       },
+       {
+         "tagID": 20,
+         "tag": "Efficient ",
+         "total": 25
+       },
+       {
+         "tagID": 21,
+         "tag": "Robots ",
+         "total": 14
+       },
+       {
+         "tagID": 22,
+         "tag": "Relationships",
+         "total": 17
+       },
+       {
+         "tagID": 23,
+         "tag": "Health",
+         "total": 26
+       },
+       {
+         "tagID": 24,
+         "tag": "Playful ",
+         "total": 9
+       },
+       {
+         "tagID": 25,
+         "tag": "Education",
+         "total": 14
+       },
+       {
+         "tagID": 26,
+         "tag": "Excitement ",
+         "total": 10
+       },
+       {
+         "tagID": 27,
+         "tag": "Transportation",
+         "total": 16
+       },
+       {
+         "tagID": 28,
+         "tag": "Lifestyle",
+         "total": 36
+       },
+       {
+         "tagID": 29,
+         "tag": "Technology",
+         "total": 34
+       },
+       {
+         "tagID": 30,
+         "tag": "Creativity",
+         "total": 17
+       },
+       {
+         "tagID": 31,
+         "tag": "Power",
+         "total": 39
+       },
+       {
+         "tagID": 32,
+         "tag": "FutureNorms",
+         "total": 51
+       },
+       {
+         "tagID": 33,
+         "tag": "Optimistic",
+         "total": 93
+       },
+       {
+         "tagID": 34,
+         "tag": "Skeptical",
+         "total": 104
+       },
+       {
+         "tagID": 35,
+         "tag": "Spirituality",
+         "total": 7
+       },
+       {
+         "tagID": 36,
+         "tag": "Peace",
+         "total": 10
+       },
+       {
+         "tagID": 37,
+         "tag": "Inspire",
+         "total": 13
+       },
+       {
+         "tagID": 38,
+         "tag": "Unite",
+         "total": 13
+       },
+       {
+         "tagID": 39,
+         "tag": "Work",
+         "total": 16
+       },
+       {
+         "tagID": 40,
+         "tag": "Science",
+         "total": 26
+       }
+    ]
 }
