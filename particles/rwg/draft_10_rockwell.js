@@ -14,7 +14,8 @@ var liveData = [];
 var simulation;
 
 var maxStrength = 0.25;
-var whichNum=0;
+//hacky way to get the vis started well
+var whichNum= -2;
 
 const makeRequest = async () => {
   try {
@@ -27,18 +28,26 @@ const makeRequest = async () => {
   }
 }
 
+var topicNodes = [];
+var freq = [];
 const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
-        nodes.push(dataset.nodes[i]);
+        nodes.push(dataset.nodes[i])
+        freq.push(dataset.nodes[i].frequency)
+        if(dataset.nodes[i].answer==-1){
+            topicNodes.push(dataset.nodes[i])
+        }
     }
+
     for (var i = 0; i<dataset.tags.length; i++){
         tagTable.push(dataset.tags[i]);
     }
     return nodes;
 }
 
+var radScale = d3.scaleLinear()
+    .range([radius*2, radius*50])
 const processPrep = async(dataset, nodes) => {
-    
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
@@ -46,53 +55,60 @@ const processPrep = async(dataset, nodes) => {
         .domain(['e', 's', 'w', 'na'])
         .range([10, height/2])
 
+    maxRad = d3.max(freq);
+    minRad = d3.min(freq);
+    radScale.domain([minRad, maxRad])
+
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id).strength(0.100001))
             // .distance(20).strength(0.1))
-        .force('charge', d3.forceManyBody(-100))
+        .force('charge', d3.forceManyBody(-10))
         // .force('center', d3.forceCenter(0,height/2)) 
         .force('collide', d3.forceCollide().radius(radius).strength(0.1))
         .force('r', d3.forceRadial(function(d){
             return poScale(d.loc) //nodes are placed in relation to their halls
-        }).strength(0.01))
+        }).strength(0.01)) //.001
    
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
-
     node = svg.append('g')
         .selectAll('circle');
     text = svg.append('g')
         .selectAll('text');
     link = svg.append('g')
         .selectAll('line');
+    //to trigger progression - this could be time based, for example
+    svg.on("click", function(){ 
+        series();
+    })
 
     return svg;
 }
 
-var mainNodes = [];
-var answerNodes = [];
-function chooseData(){
+function series(){
+    whichNum++;
+    chooseData(whichNum)
+}
+
+function chooseData(whichNum){
     console.log(whichNum)
 
+    //if the index of whichnum matches the question id, let's see those nodes - 
+    //so we are progressively adding in q+a to the network
     for (var i = 0; i<nodes.length; i++){
-        liveNodes.push(nodes[i])
-    }
-
-    for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].answer==-1){
-            mainNodes.push(nodes[i]);
-        }else{
-            answerNodes.push(nodes[i]);
+        if(nodes[i].questionID == whichNum){  
+            liveNodes.push(nodes[i])
         }
     }
 
-    for (var i = 0; i<answerNodes.length; i++){
-        for(j=0; j<answerNodes[i].tags.length; j++){
-            for (k=0; k<mainNodes.length; k++){
-                if(answerNodes[i].tags[j]==mainNodes[k].tags){
+    for (var i = 0; i<liveNodes.length; i++){
+        for(j=0; j<liveNodes[i].tags.length; j++){
+            for (k=0; k<topicNodes.length; k++){
+                if(liveNodes[i].tags[j]==topicNodes[k].tags && liveNodes[i].questionID == whichNum){
                     liveLinks.push({
-                        "source": answerNodes[i].id,
-                        "target": mainNodes[k].id
+                        "source": liveNodes[i].id,
+                        "target": topicNodes[k].id,
+                        "id":liveNodes[i].id
                     })
                 }
              }
@@ -103,13 +119,16 @@ function chooseData(){
 }
 
 
+const opacityScale = d3.scaleLinear()
+    .domain([0,100])
+    .range([0, 1])
+const satScale = d3.scaleLinear()
+    .domain([1,10])
+    .range([0, 100])
+
+const yellow = 60;
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
-    
-    var satScale = d3.scaleLinear()
-        .domain([1,10])
-        .range([0, 100])
-    var yellow = 60;
 
     node = node
         .data(liveNodes, function(d){
@@ -120,14 +139,15 @@ function restart(liveLinks, liveNodes, whichNum){
     node = node.enter().append('circle')
         .attr('r',function(d){
             if(d.answer==-1){
-                return radius*5
+                return radScale(d.frequency);
             }else {
                 return radius
             }
         })
         .attr('fill',function(d){
             if(d.answer==-1){
-                return 'none' //no color scale for main topic tags
+                //no color scale for main topic tags
+                return 'none' 
             }else {
                 if(d.loc=='e'){
                     if(d.type=='scale'){
@@ -148,26 +168,39 @@ function restart(liveLinks, liveNodes, whichNum){
             if(d.answer==-1){
                 return 'white'
             }else {
-                return 'none'
+                if(d.loc=='e'){
+                    if(d.type=='scale'){
+                        var sat = (satScale(d.answer)).toString()
+                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+                    }
+                    if(d.type=='scale-cat'){
+                        var sat = (satScale(d.answer*2)).toString()
+                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+                    }
+                    else{
+                        return d3.lab('hsl('+yellow+',100%, 50%)')
+                    }
+                }
             }
+        })
+        .attr('stroke-opacity', function(d){
+            return opacityScale(d.frequency);
         })
         .merge(node);
 
     text = text
-        .data(liveNodes, function(d){
-            return d.id;
+        .data(topicNodes, function(d){
+            return d.id
         })
     text.exit()
         .remove();       
+    
     text = text.enter()
-        .filter(function(d) { 
-            if(d.answer==-1){
-                return d;
-            }
-        })
         .append('text')
         .attr('dy', '.31em') 
         .attr('dx', '.41em') 
+        .attr('font-size','8px')
+        .attr('fill','white')
         .text(function(d){
             for(i=0; i<tagTable.length; i++){
                 if(d.tags==tagTable[i].tagID){
@@ -184,6 +217,9 @@ function restart(liveLinks, liveNodes, whichNum){
     link.exit()
         .remove();       
     link = link.enter().append('path')
+        .attr('class', function(d){
+            return 'l'+d.id;
+        })
         .attr('stroke','white')
         .attr('stroke-width',.1)
         .attr('fill','white')
@@ -194,9 +230,24 @@ function restart(liveLinks, liveNodes, whichNum){
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
-
+    // if (whichNum==5){
+    //     simulation
+    //         .force("y", d3.forceY(function(d){
+    //             return yScale(d.type)
+    //         }).strength(.1)) 
+    // }else{
+    //     simulation
+    //         .force("y", d3.forceY(function(d){
+    //             if (whichNum==3 && d.type==2){
+    //                 return yScale(1);
+    //             }
+    //             else{
+    //                 return yScale(d.type)
+    //             }
+    //         }).strength(1)) 
+    // }
     simulation
-        .alpha(.6)
+        .alpha(.09)
         .on('tick', ticked)
         .restart()
 }
@@ -237,5 +288,3 @@ function makeLinks(d) {
 makeRequest()
     .then(dataset => getNodes(dataset))
     .then(nodes => processPrep(dataset, nodes))
-    .then(svg => chooseData())
-
