@@ -62,12 +62,12 @@ const processPrep = async(dataset, nodes) => {
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id).strength(0.100001))
             // .distance(20).strength(0.1))
-        .force('charge', d3.forceManyBody(-10))
+        .force('charge', d3.forceManyBody(-400))
         // .force('center', d3.forceCenter(0,height/2)) 
-        .force('collide', d3.forceCollide().radius(radius).strength(0.1))
+        .force('collide', d3.forceCollide().radius(radius).strength(0.9))
         .force('r', d3.forceRadial(function(d){
             return poScale(d.loc) //nodes are placed in relation to their halls
-        }).strength(0.01)) //.001
+        }).strength(0.3)) //.001
    
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
@@ -124,8 +124,10 @@ const opacityScale = d3.scaleLinear()
     .range([0, 1])
 const satScale = d3.scaleLinear()
     .domain([1,10])
-    .range([0, 100])
-
+    .range([1, 100])
+const rad2Scale = d3.scaleLinear()
+    .domain([1,10])
+    .range([1, 50])
 const yellow = 60;
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
@@ -139,11 +141,14 @@ function restart(liveLinks, liveNodes, whichNum){
     node = node.enter().append('circle')
         .attr('r',function(d){
             if(d.answer==-1){
-                return radScale(d.frequency);
+                return radius*2
+                // return radScale(d.frequency);
             }else {
-                return radius
+                return rad2Scale(d.answer)
+                // return radius*5
             }
         })
+        .attr("opacity",.1)
         .attr('fill',function(d){
             if(d.answer==-1){
                 //no color scale for main topic tags
@@ -164,28 +169,32 @@ function restart(liveLinks, liveNodes, whichNum){
                 }
             }
         })
-        .attr('stroke',function(d){
-            if(d.answer==-1){
-                return 'white'
-            }else {
-                if(d.loc=='e'){
-                    if(d.type=='scale'){
-                        var sat = (satScale(d.answer)).toString()
-                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
-                    }
-                    if(d.type=='scale-cat'){
-                        var sat = (satScale(d.answer*2)).toString()
-                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
-                    }
-                    else{
-                        return d3.lab('hsl('+yellow+',100%, 50%)')
-                    }
-                }
-            }
-        })
-        .attr('stroke-opacity', function(d){
-            return opacityScale(d.frequency);
-        })
+        .attr('stroke','white')
+        //     function(d){
+        //     // if(d.answer==-1){
+        //         return 'white'
+        //     // }
+        //     // else {
+        //         // if(d.loc=='e'){
+        //         //     if(d.type=='scale'){
+        //         //         var sat = (satScale(d.answer)).toString()
+        //         //         return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+        //         //     }
+        //         //     if(d.type=='scale-cat'){
+        //         //         var sat = (satScale(d.answer*2)).toString()
+        //         //         return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+        //         //     }
+        //         //     else{
+        //         //         return d3.lab('hsl('+yellow+',100%, 50%)')
+        //         //     }
+        //         // }
+        //     // }
+        // })
+        .attr('stroke-width', 1)
+        .attr('stroke-opacity', 1)
+            // function(d){
+            // return opacityScale(d.frequency);
+        // })
         .merge(node);
 
     text = text
