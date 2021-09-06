@@ -19,7 +19,7 @@ var whichNum= -2;
 
 const makeRequest = async () => {
   try {
-    dataset = await d3.json('rwg/rwg_qtypes.json');
+    dataset = await d3.json('cacb-data/sep6.json');
     console.log(dataset)
     return dataset;
   } catch (err) {
@@ -60,14 +60,13 @@ const processPrep = async(dataset, nodes) => {
     radScale.domain([minRad, maxRad])
 
     simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => d.id).strength(0.100001))
-            // .distance(20).strength(0.1))
-        .force('charge', d3.forceManyBody(-400))
-        // .force('center', d3.forceCenter(0,height/2)) 
-        .force('collide', d3.forceCollide().radius(radius).strength(0.9))
-        .force('r', d3.forceRadial(function(d){
-            return poScale(d.loc) //nodes are placed in relation to their halls
-        }).strength(0.3)) //.001
+        .force('link', d3.forceLink().id(d => d.id).strength(0.9)
+            .distance(60).strength(0.3))
+        .force('charge', d3.forceManyBody(-100))
+        .force('collide', d3.forceCollide().radius(radius*20).strength(0.9))
+        // .force('r', d3.forceRadial(function(d){
+        //     return poScale(d.loc) //nodes are placed in relation to their halls
+        // }).strength(0.3)) //.001
    
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
@@ -124,11 +123,11 @@ const opacityScale = d3.scaleLinear()
     .range([0, 1])
 const satScale = d3.scaleLinear()
     .domain([1,10])
-    .range([1, 100])
+    .range([255, 255])
 const rad2Scale = d3.scaleLinear()
     .domain([1,10])
     .range([1, 50])
-const yellow = 60;
+const yellow = 255;
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
 
@@ -141,14 +140,11 @@ function restart(liveLinks, liveNodes, whichNum){
     node = node.enter().append('circle')
         .attr('r',function(d){
             if(d.answer==-1){
-                return radius*2
-                // return radScale(d.frequency);
+                return radScale(d.frequency);
             }else {
-                return rad2Scale(d.answer)
-                // return radius*5
+                return radius*2;
             }
         })
-        .attr("opacity",.1)
         .attr('fill',function(d){
             if(d.answer==-1){
                 //no color scale for main topic tags
@@ -157,44 +153,46 @@ function restart(liveLinks, liveNodes, whichNum){
                 if(d.loc=='e'){
                     if(d.type=='scale'){
                         var sat = (satScale(d.answer)).toString()
-                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+                        return d3.lab('hsl('+yellow+','+sat+'%, 100%)')
                     }
                     if(d.type=='scale-cat'){
                         var sat = (satScale(d.answer*2)).toString()
-                        return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
+                        return d3.lab('hsl('+yellow+','+sat+'%, 100%)')
                     }
                     else{
-                        return d3.lab('hsl('+yellow+',100%, 50%)')
+                        return d3.lab('hsl('+yellow+',100%, 100%)')
                     }
                 }
             }
         })
-        .attr('stroke','white')
-        //     function(d){
-        //     // if(d.answer==-1){
-        //         return 'white'
-        //     // }
-        //     // else {
-        //         // if(d.loc=='e'){
-        //         //     if(d.type=='scale'){
-        //         //         var sat = (satScale(d.answer)).toString()
-        //         //         return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
-        //         //     }
-        //         //     if(d.type=='scale-cat'){
-        //         //         var sat = (satScale(d.answer*2)).toString()
-        //         //         return d3.lab('hsl('+yellow+','+sat+'%, 50%)')
-        //         //     }
-        //         //     else{
-        //         //         return d3.lab('hsl('+yellow+',100%, 50%)')
-        //         //     }
-        //         // }
-        //     // }
-        // })
+        .attr('stroke', function(d){
+            if(d.answer==-1){
+                return 'white'
+            }
+            else {
+                if(d.loc=='e'){
+                    if(d.type=='scale'){
+                        var sat = (satScale(d.answer)).toString()
+                        return d3.lab('hsl('+yellow+','+sat+'%, 100%)')
+                    }
+                    if(d.type=='scale-cat'){
+                        var sat = (satScale(d.answer*2)).toString()
+                        return d3.lab('hsl('+yellow+','+sat+'%, 100%)')
+                    }
+                    else{
+                        return d3.lab('hsl('+yellow+',100%, 100%)')
+                    }
+                }
+            }
+        })
         .attr('stroke-width', 1)
-        .attr('stroke-opacity', 1)
-            // function(d){
-            // return opacityScale(d.frequency);
-        // })
+        .attr('stroke-opacity', function(d){
+            // if(d.answer==-1){
+                return opacityScale(d.frequency);
+            // }else{
+                // return 1;
+            // }
+        })
         .merge(node);
 
     text = text
