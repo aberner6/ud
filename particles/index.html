@@ -6,12 +6,36 @@
             svg { 
                 background-color: black;
             }
-            image{
+            .symbImg{
                 filter: invert(1);
             }
+            .backImg{
+                filter: url(#red);
+            }
         </style>
+
+
     </head>
     <body>
+  
+        <svg id='n' height='0px'>
+          <defs>
+            <filter id="red">
+    <!-- <feGaussianBlur in="SourceGraphic" stdDeviation="5" /> -->
+
+<!--     <feTurbulence type="turbulence" baseFrequency="0.05"
+        numOctaves="2" result="turbulence"/>
+    <feDisplacementMap in2="turbulence" in="SourceGraphic"
+        scale="50" xChannelSelector="R" yChannelSelector="G"/> -->
+              <feColorMatrix
+                type="matrix"
+                values="1   0   0   0   0
+                        1   0   0   0   0
+                        1   0   0   0   0
+                        0   0   0   1   0 "/>
+            </filter>
+          </defs>
+        </svg>
 		<script src="https://d3js.org/d3.v6.min.js"></script>
         <script src="cacb-js/draft_10.js"></script>
     </body>

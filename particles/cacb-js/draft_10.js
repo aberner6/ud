@@ -3,7 +3,7 @@ var width, height;
 var nodes = [];
 var tagTable = [];
 
-var svg, g, node, text, link;
+var svg, g, node, text, link, img;
 var liveLinks = [];
 var liveNodes = [];
 var liveTopics = [];
@@ -76,6 +76,8 @@ const processPrep = async(dataset, nodes) => {
         .selectAll('text');
     link = svg.append('g')
         .selectAll('line');
+    img = svg.append('g')
+        .selectAll('image');
     svg.on("click", function(){ 
         series();
     })
@@ -164,9 +166,7 @@ function restart(liveLinks, liveNodes, whichNum){
         .remove();
 
     node = node.enter().append('image')
-        .attr('class', function(d){
-            return 'n'+d.id;
-        })
+        .attr('class', 'symbImg')
         .attr("xlink:href", function(d){
             var max = d.symbNum;
             var initialRandom = Math.random();
@@ -181,37 +181,40 @@ function restart(liveLinks, liveNodes, whichNum){
         .merge(node);
 
 
-    // img = img
-    //     .data(liveNodes, function(d){
-    //         return d;
-    //     })
-    //     .attr("opacity", function (d){
-    //             if(d.type==whichNum){
-    //                 return .4;
-    //             }else{
-    //                 return .2;
-    //             }
-    //     })
-    // img.exit()
-    //     .remove();
-    // img = img.enter()
-    //     .filter(function(d) { 
-    //         if(d.img!=undefined && d.first ==1){
-    //             if(d.type==whichNum){
-    //                 return d;
-    //             }
-    //         }
-    //     })
-    //     .append("svg:image")
-    //     .attr("xlink:href", function(d) {
-    //         return d.img;
-    //     })
-    //     .attr("x", -width/2)
-    //     .attr("y", -100)
-    //     .attr("width", 1200+'px')
-    //     .attr("height", 1000+'px')
-    //     .attr("opacity",.4)
-    //     .merge(img);
+    img = img
+        .data(liveNodes, function(d){
+            return d;
+        })
+        .attr("opacity", function (d){
+                if(d.type==whichNum){
+                    return .4;
+                }else{
+                    return .2;
+                }
+        })
+    img.exit()
+        .remove();
+    img = img.enter()
+        .filter(function(d) { 
+            if(d.first ==1){
+                return d;
+                // if(d.type==whichNum){
+                //     return d;
+                // }
+            }
+        })
+        .append("svg:image")
+        .attr("class","backImg")
+        // .style("filter","url(#red)")
+        .attr("xlink:href", function(d) {
+            return 'img/'+d.type+'.jpeg';
+        })
+        .attr("x", -width/2)
+        .attr("y", -height/2)
+        .attr("width", 1200+'px')
+        .attr("height", 1000+'px')
+        .attr("opacity",.4)
+        .merge(img);
 
     text = text
         .data(liveTopics, function(d){
@@ -292,9 +295,10 @@ function ticked() {
 
 function positionNodes(d) {
     node
-        .attr('class', function(d){
-            return 'n'+d.id;
-        })
+        // .attr('class', function(d){
+        //     return 'n'+d.id;
+        // })
+        .attr('class','symbImg')
         .attr('y', function(d) { 
             return d.y;  
         })
