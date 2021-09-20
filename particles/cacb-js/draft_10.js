@@ -168,12 +168,12 @@ function restart(liveLinks, liveNodes, whichNum){
             return 'n'+d.id;
         })
         .attr("xlink:href", function(d){
-            var max = 8;
+            var max = d.symbNum;
             var initialRandom = Math.random();
             var multiplied = initialRandom * max;
             var answer = Math.floor(multiplied);
 
-            return 'symb/clouds/'+d.symb+'/'+answer+'.png';
+            return d.symb+'/'+answer+'.png';
         })
         .attr("transform","translate("+ -symWidth/2 +","+ -symHeight/2 +")")
         .attr("width", symWidth+"px")
