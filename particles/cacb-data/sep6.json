@@ -1,180 +1,179 @@
 {
-  "nodes":[
-     {
-       "id": 1,
-       "tags": [1],
-       "type": 1,
-       "first": 1,
-       "symb":"symb/clouds/high",
-       "symbNum":8
-     },
-     {
-       "id": 2,
-       "tags": [2],
-       "type": 2,
-       "first": 1,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 3,
-       "tags": [3],
-       "type": 3,
-       "first": 1,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 14,
-       "tags": [1],
-       "type": 1,
-       "first": 0,
-       "symb":"symb/clouds/high",
-       "symbNum":8
-     },
-     {
-       "id": 15,
-       "tags": [1],
-       "type": 1,
-       "first": 0,
-       "symb":"symb/clouds/high",
-       "symbNum":8
-     },
-     {
-       "id": 16,
-       "tags": [1],
-       "type": 1,
-       "first": 0,
-       "symb":"symb/clouds/high",
-       "symbNum":8
-     },
-     {
-       "id": 17,
-       "tags": [1],
-       "type": 1,
-       "first": 0,
-       "symb":"symb/clouds/high",
-       "symbNum":8
-     },
-     {
-       "id": 18,
-       "tags": [2],
-       "type": 2,
-       "first": 0,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 19,
-       "tags": [2],
-       "type": 2,
-       "first": 0,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 20,
-       "tags": [2],
-       "type": 2,
-       "first": 0,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 21,
-       "tags": [2],
-       "type": 2,
-       "first": 0,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 22,
-       "tags": [2],
-       "type": 2,
-       "first": 0,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 23,
-       "tags": [2, 1],
-       "type": 2,
-       "first": 0,
-       "symb":"symb/clouds/low",
-       "symbNum":6
-     },
-     {
-       "id": 24,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 25,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 26,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 27,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 28,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 29,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     },
-     {
-       "id": 30,
-       "tags": [3,2],
-       "type": 3,
-       "first": 0,
-       "symb":"symb/CO2",
-       "symbNum":2
-     }
-  ],
+  "nodes":
+[
+ {
+   "id": 1,
+   "tags": [1],
+   "type": 1,
+   "first": 1,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 2,
+   "tags": [2],
+   "type": 2,
+   "first": 1,
+   "symb": "symb/CO2",
+   "symbNum": 2
+ },
+ {
+   "id": 3,
+   "tags": [3],
+   "type": 3,
+   "first": 1,
+   "symb": "symb/clouds/high",
+   "symbNum": 8
+ },
+ {
+   "id": 4,
+   "tags": [4],
+   "type": 4,
+   "first": 1,
+   "symb": "symb/radiance",
+   "symbNum": 2
+ },
+ {
+   "id": 5,
+   "tags": [5],
+   "type": 5,
+   "first": 1,
+   "symb": "symb/tipping",
+   "symbNum": 3
+ },
+ {
+   "id": 6,
+   "tags": [6],
+   "type": 6,
+   "first": 1,
+   "symb": "symb/storage",
+   "symbNum": 2
+ },
+ {
+   "id": 7,
+   "tags": [7],
+   "type": 7,
+   "first": 1,
+   "symb": "symb/energy",
+   "symbNum": 1
+ },
+ {
+   "id": 8,
+   "tags": [8],
+   "type": 8,
+   "first": 1,
+   "symb": "symb/comms",
+   "symbNum": 2
+ },
+ {
+   "id": 9,
+   "tags": [9],
+   "type": 9,
+   "first": 1,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 10,
+   "tags": [10],
+   "type": 10,
+   "first": 1,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 11,
+   "tags": [11],
+   "type": 11,
+   "first": 1,
+   "symb": "symb/sensors",
+   "symbNum": 2
+ },
+ {
+   "id": 12,
+   "tags": [12],
+   "type": 12,
+   "first": 1,
+   "symb": "symb/process",
+   "symbNum": 1
+ },
+ {
+   "id": 13,
+   "tags": [13],
+   "type": 13,
+   "first": 1,
+   "symb": "symb/weather",
+   "symbNum": 3
+ },
+ {
+   "id": 14,
+   "tags": [1,2,3],
+   "type": 3,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 15,
+   "tags": [2,1],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/CO2",
+   "symbNum": 2
+ }
+],
   "tags":[
        {
           "tagID": 1,
-          "tag": "symb/clouds/high clouds",
-          "total": 5,
-          "type": 1,
-          "first": 1
+          "tag": "low clouds"
        },
        {
           "tagID": 2,
-          "tag": "symb/clouds/low clouds",
-          "total": 5,
-          "type": 2,
-          "first": 1
+          "tag": "CO2"
+       },
+       {
+          "tagID": 3,
+          "tag": "high clouds"
+       },
+       {
+          "tagID": 4,
+          "tag": "radiance"
+       },
+       {
+          "tagID": 5,
+          "tag": "tipping"
+       },
+       {
+          "tagID": 6,
+          "tag": "storage"
+       },
+       {
+          "tagID": 7,
+          "tag": "energy"
+       },
+       {
+          "tagID": 8,
+          "tag": "communications"
+       },
+       {
+          "tagID": 9,
+          "tag": "wind"
+       },
+       {
+          "tagID": 10,
+          "tag": "humidity"
+       },
+       {
+          "tagID": 11,
+          "tag": "sensors"
+       },
+       {
+          "tagID": 12,
+          "tag": "process"
+       },
+       {
+          "tagID": 13,
+          "tag": "weather"
        }
     ]
 }

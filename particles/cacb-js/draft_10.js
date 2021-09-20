@@ -181,40 +181,39 @@ function restart(liveLinks, liveNodes, whichNum){
         .merge(node);
 
 
-    img = img
-        .data(liveNodes, function(d){
-            return d;
-        })
-        .attr("opacity", function (d){
-                if(d.type==whichNum){
-                    return .4;
-                }else{
-                    return .2;
-                }
-        })
-    img.exit()
-        .remove();
-    img = img.enter()
-        .filter(function(d) { 
-            if(d.first ==1){
-                return d;
-                // if(d.type==whichNum){
-                //     return d;
-                // }
-            }
-        })
-        .append("svg:image")
-        .attr("class","backImg")
-        // .style("filter","url(#red)")
-        .attr("xlink:href", function(d) {
-            return 'img/'+d.type+'.jpeg';
-        })
-        .attr("x", -width/2)
-        .attr("y", -height/2)
-        .attr("width", 1200+'px')
-        .attr("height", 1000+'px')
-        .attr("opacity",.4)
-        .merge(img);
+    // img = img
+    //     .data(liveNodes, function(d){
+    //         return d;
+    //     })
+    //     .attr("opacity", function (d){
+    //             if(d.type==whichNum){
+    //                 return .4;
+    //             }else{
+    //                 return .2;
+    //             }
+    //     })
+    // img.exit()
+    //     .remove();
+    // img = img.enter()
+    //     .filter(function(d) { 
+    //         if(d.first ==1){
+    //             return d;
+    //             // if(d.type==whichNum){
+    //             //     return d;
+    //             // }
+    //         }
+    //     })
+    //     .append("svg:image")
+    //     .attr("class","backImg")
+    //     .attr("xlink:href", function(d) {
+    //         return 'img/'+d.type+'.jpeg';
+    //     })
+    //     .attr("x", -width/2)
+    //     .attr("y", -height/2)
+    //     .attr("width", 1200+'px')
+    //     .attr("height", 1000+'px')
+    //     .attr("opacity",.4)
+    //     .merge(img);
 
     text = text
         .data(liveTopics, function(d){
@@ -227,20 +226,21 @@ function restart(liveLinks, liveNodes, whichNum){
         .append('text')
         .attr('dy', '.31em') 
         .attr('dx', '.41em') 
-        .attr('font-size','1px')
+        .attr('font-size','10px')
         .attr('fill','white')
         .text(function(d){
             for(i=0; i<tagTable.length; i++){
-                if(d.tags==tagTable[i].tagID){
+                //only want 1 instance
+                if(d.tags==tagTable[i].tagID && d.first==1){
                     return tagTable[i].tag.toUpperCase();
                 }
-                if(d.tags.length>1){
-                    for(j=0; j<d.tags.length; j++){
-                        if(d.tags[j] == tagTable[i].tagID){
-                            return tagTable[i].tag.toUpperCase();                            
-                        }
-                    }
-                }
+                // if(d.tags.length>1){
+                //     for(j=0; j<d.tags.length; j++){
+                //         if(d.tags[j] == tagTable[i].tagID){
+                //             return tagTable[i].tag.toUpperCase();                            
+                //         }
+                //     }
+                // }
             }
         })
         .merge(text);    
