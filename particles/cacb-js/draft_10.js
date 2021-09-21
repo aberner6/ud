@@ -96,18 +96,60 @@ function series(){
 
 function chooseData(whichNum){
     console.log(whichNum)
-
-    for (var i = 0; i<nodes.length; i++){
-        if(nodes[i].type == whichNum){  
-            liveNodes.push(nodes[i])
-        }
-    }
     for (var i = 0; i<topicNodes.length; i++){
         if(topicNodes[i].type == whichNum){  
             liveTopics.push(topicNodes[i])
         }
     }
 
+    // var val = 0;
+
+    // if(whichNum==1){
+        for (var i = 0; i<nodes.length; i++){
+            if(nodes[i].type == whichNum){  
+                liveNodes.push(nodes[i])
+            }
+        }
+        // linkUp(liveNodes, liveLinks);
+    // }
+
+    // const removeNode = async(liveNodes, val)=>{
+    //   var i = 0;
+    //   while (i < liveNodes.length) {
+    //     if (liveNodes[i].first == val && liveNodes[i].type==1) {
+    //       liveNodes.splice(i, 1);
+    //     } else {
+    //       i++;
+    //     }
+    //   }
+    //   return liveNodes;
+    // }
+    // const removeLink = async(liveNodes, val)=>{
+    //   var i = 0;
+    //   while (i < liveLinks.length) {
+    //     if (liveLinks[i].first == val && liveNodes[i].type==1) {
+    //       liveLinks.splice(i, 1);
+    //     } else {
+    //       i++;
+    //     }
+    //   }
+    //   return liveLinks;
+    // }
+
+    // if(whichNum>1){
+    //     for (var i = 0; i<nodes.length; i++){
+    //         if(nodes[i].type == whichNum){  
+    //             liveNodes.push(nodes[i])
+    //         }
+    //     }
+    //     removeNode(liveNodes,val)
+    //         .then(liveNodes => removeLink(liveNodes))
+    //         .then(liveLinks => linkUp(liveNodes, liveLinks))
+    //     //also need to do it for the links
+    // }
+// }
+
+// function linkUp(liveNodes, liveLinks){
     for (var i = 0; i<liveNodes.length; i++){
         for(j=0; j<liveNodes[i].tags.length; j++){
             for (k=0; k<topicNodes.length; k++){
@@ -115,16 +157,16 @@ function chooseData(whichNum){
                     liveLinks.push({
                         "source": liveNodes[i].id,
                         "target": topicNodes[k].id,
+                        "first":liveNodes[i].first,
+                        "type":liveNodes[i].type,
                         "id":liveNodes[i].id
                     })
                 }
              }
         }
     }
-
     restart(liveLinks, liveNodes, whichNum);
 }
-
 
 const opacityScale = d3.scaleLinear()
     .domain([0,100])
@@ -139,25 +181,6 @@ const yellow = 255;
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
 
-    // node = node
-    //     .data(liveNodes, function(d){
-    //         return d.id;
-    //     })
-    // node.exit()
-    //     .remove();
-    // node = node.enter().append('circle')
-    //     .attr('r',function(d){
-    //         return radius; //to be changed to be in accordance with is this first or not
-    //     })
-    //     .attr('fill',function(d){
-    //         if(d.tags.length>1){
-    //             return 'pink'
-    //         }else{
-    //             return 'white'; //to be changed to be in accordance with is this first or not  
-    //         }
-    //     })
-    //     .attr('opacity',.5)
-    //     .merge(node);
     node = node
         .data(liveNodes, function(d){
             return d.id;

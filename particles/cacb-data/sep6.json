@@ -106,20 +106,92 @@
    "symbNum": 3
  },
  {
-   "id": 14,
-   "tags": [1,2,3],
-   "type": 3,
+   "id": 21,
+   "tags": [1],
+   "type": 1,
    "first": 0,
    "symb": "symb/clouds/low",
    "symbNum": 6
  },
  {
-   "id": 15,
-   "tags": [2,1],
-   "type": 2,
+   "id": 22,
+   "tags": [1],
+   "type": 1,
    "first": 0,
-   "symb": "symb/CO2",
-   "symbNum": 2
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 23,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 24,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 25,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 26,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 27,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 28,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 29,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 30,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 31,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
  }
 ],
   "tags":[
