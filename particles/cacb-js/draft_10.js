@@ -101,55 +101,18 @@ function chooseData(whichNum){
             liveTopics.push(topicNodes[i])
         }
     }
-
-    // var val = 0;
-
-    // if(whichNum==1){
-        for (var i = 0; i<nodes.length; i++){
-            if(nodes[i].type == whichNum){  
-                liveNodes.push(nodes[i])
-            }
+    for (var i = 0; i<nodes.length; i++){
+        if(nodes[i].type == whichNum){  
+            liveNodes.push(nodes[i])
         }
-        // linkUp(liveNodes, liveLinks);
-    // }
+    }
+    if(whichNum > 1){ //this is a way to filter out some that you don't want
+        var filtered = liveNodes.filter(function(value, index, arr){
+            return liveNodes[index].id<21 && liveNodes[index].id>31;
+        })
+        liveNodes = filtered;
+    }
 
-    // const removeNode = async(liveNodes, val)=>{
-    //   var i = 0;
-    //   while (i < liveNodes.length) {
-    //     if (liveNodes[i].first == val && liveNodes[i].type==1) {
-    //       liveNodes.splice(i, 1);
-    //     } else {
-    //       i++;
-    //     }
-    //   }
-    //   return liveNodes;
-    // }
-    // const removeLink = async(liveNodes, val)=>{
-    //   var i = 0;
-    //   while (i < liveLinks.length) {
-    //     if (liveLinks[i].first == val && liveNodes[i].type==1) {
-    //       liveLinks.splice(i, 1);
-    //     } else {
-    //       i++;
-    //     }
-    //   }
-    //   return liveLinks;
-    // }
-
-    // if(whichNum>1){
-    //     for (var i = 0; i<nodes.length; i++){
-    //         if(nodes[i].type == whichNum){  
-    //             liveNodes.push(nodes[i])
-    //         }
-    //     }
-    //     removeNode(liveNodes,val)
-    //         .then(liveNodes => removeLink(liveNodes))
-    //         .then(liveLinks => linkUp(liveNodes, liveLinks))
-    //     //also need to do it for the links
-    // }
-// }
-
-// function linkUp(liveNodes, liveLinks){
     for (var i = 0; i<liveNodes.length; i++){
         for(j=0; j<liveNodes[i].tags.length; j++){
             for (k=0; k<topicNodes.length; k++){
@@ -164,6 +127,12 @@ function chooseData(whichNum){
                 }
              }
         }
+    }
+    if(whichNum > 1){ //this is a way to filter out some that you don't want
+        var filtered = liveLinks.filter(function(value, index, arr){
+            return liveLinks[index].id<21 && liveLinks[index].id>31;
+        })
+        liveLinks = filtered;
     }
     restart(liveLinks, liveNodes, whichNum);
 }
@@ -257,13 +226,6 @@ function restart(liveLinks, liveNodes, whichNum){
                 if(d.tags==tagTable[i].tagID && d.first==1){
                     return tagTable[i].tag.toUpperCase();
                 }
-                // if(d.tags.length>1){
-                //     for(j=0; j<d.tags.length; j++){
-                //         if(d.tags[j] == tagTable[i].tagID){
-                //             return tagTable[i].tag.toUpperCase();                            
-                //         }
-                //     }
-                // }
             }
         })
         .merge(text);    
