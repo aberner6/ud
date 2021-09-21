@@ -106,11 +106,22 @@ function chooseData(whichNum){
             liveNodes.push(nodes[i])
         }
     }
+    filter1 = 21;
+    filter2 = 25;
+
+
+
+
+
+
+
     if(whichNum > 1){ //this is a way to filter out some that you don't want
-        var filtered = liveNodes.filter(function(value, index, arr){
-            return liveNodes[index].id<21 && liveNodes[index].id>31;
+        var filtered = liveNodes.filter(function(e){
+            console.log(e.id)
+            return e.id<filter1 || e.id>filter2;
         })
         liveNodes = filtered;
+        console.log(liveNodes)
     }
 
     for (var i = 0; i<liveNodes.length; i++){
@@ -120,8 +131,6 @@ function chooseData(whichNum){
                     liveLinks.push({
                         "source": liveNodes[i].id,
                         "target": topicNodes[k].id,
-                        "first":liveNodes[i].first,
-                        "type":liveNodes[i].type,
                         "id":liveNodes[i].id
                     })
                 }
@@ -129,10 +138,11 @@ function chooseData(whichNum){
         }
     }
     if(whichNum > 1){ //this is a way to filter out some that you don't want
-        var filtered = liveLinks.filter(function(value, index, arr){
-            return liveLinks[index].id<21 && liveLinks[index].id>31;
+        var filtered = liveLinks.filter(function(e){
+            return (e.id<filter1 || e.id>filter2) && (e.target.id<filter1 || e.target.id>filter2);
         })
         liveLinks = filtered;
+        console.log(liveLinks)
     }
     restart(liveLinks, liveNodes, whichNum);
 }
