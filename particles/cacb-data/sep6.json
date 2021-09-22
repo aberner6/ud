@@ -106,6 +106,62 @@
    "symbNum": 3
  },
  {
+   "id": 14,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ } ,
+ {
+   "id": 15,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 16,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 17,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 18,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 19,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 20,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
    "id": 21,
    "tags": [1],
    "type": 1,
@@ -139,56 +195,8 @@
  },
  {
    "id": 25,
-   "tags": [1],
-   "type": 1,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- },
- {
-   "id": 26,
-   "tags": [1],
-   "type": 1,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- },
- {
-   "id": 27,
-   "tags": [1],
-   "type": 1,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- },
- {
-   "id": 28,
-   "tags": [1],
-   "type": 1,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- },
- {
-   "id": 29,
-   "tags": [1],
-   "type": 1,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- },
- {
-   "id": 30,
-   "tags": [1],
-   "type": 1,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- },
- {
-   "id": 31,
-   "tags": [1],
-   "type": 1,
+   "tags": [1,2],
+   "type": 2,
    "first": 0,
    "symb": "symb/clouds/low",
    "symbNum": 6

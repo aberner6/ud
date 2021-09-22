@@ -106,24 +106,9 @@ function chooseData(whichNum){
             liveNodes.push(nodes[i])
         }
     }
-    filter1 = 21;
-    filter2 = 25;
-
-
-
-
-
-
-
-    if(whichNum > 1){ //this is a way to filter out some that you don't want
-        var filtered = liveNodes.filter(function(e){
-            console.log(e.id)
-            return e.id<filter1 || e.id>filter2;
-        })
-        liveNodes = filtered;
-        console.log(liveNodes)
-    }
-
+    linkUp(liveNodes, topicNodes) 
+}
+function linkUp(liveNodes, topicNodes){
     for (var i = 0; i<liveNodes.length; i++){
         for(j=0; j<liveNodes[i].tags.length; j++){
             for (k=0; k<topicNodes.length; k++){
@@ -131,22 +116,15 @@ function chooseData(whichNum){
                     liveLinks.push({
                         "source": liveNodes[i].id,
                         "target": topicNodes[k].id,
-                        "id":liveNodes[i].id
+                        "id":liveNodes[i].id,
+                        "type":liveNodes[i].type
                     })
                 }
              }
         }
     }
-    if(whichNum > 1){ //this is a way to filter out some that you don't want
-        var filtered = liveLinks.filter(function(e){
-            return (e.id<filter1 || e.id>filter2) && (e.target.id<filter1 || e.target.id>filter2);
-        })
-        liveLinks = filtered;
-        console.log(liveLinks)
-    }
-    restart(liveLinks, liveNodes, whichNum);
+    restart(liveLinks, liveNodes, whichNum);  
 }
-
 const opacityScale = d3.scaleLinear()
     .domain([0,100])
     .range([0, 1])
@@ -240,21 +218,33 @@ function restart(liveLinks, liveNodes, whichNum){
         })
         .merge(text);    
 
+
     link = link
         .data(liveLinks, function(d){
             return d.id;
         })
     link.exit()
-        .remove();       
+        .remove()
+      
     link = link.enter().append('path')
         .attr('class', function(d){
-            return 'l'+d.id;
+            return 'l'+d.type;
         })
         .attr('stroke','white')
         .attr('stroke-width',.1)
+        .attr('stroke-opacity',.01)
         .attr('fill','white')
-        .attr('fill-opacity',.09)
+        .attr('fill-opacity',.01)
         .merge(link);
+    link
+        .transition().duration(4000)
+        .attr('stroke-opacity',function(d){
+            if(d.type==whichNum){
+                return .9;
+            }else{
+                return .01;
+            }
+        })
 
 
     simulation
@@ -290,9 +280,6 @@ function ticked() {
 
 function positionNodes(d) {
     node
-        // .attr('class', function(d){
-        //     return 'n'+d.id;
-        // })
         .attr('class','symbImg')
         .attr('y', function(d) { 
             return d.y;  
