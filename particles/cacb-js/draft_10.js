@@ -115,9 +115,10 @@ function linkUp(liveNodes, topicNodes){
                 if(liveNodes[i].tags[j]==topicNodes[k].tags && liveNodes[i].type == whichNum){
                     liveLinks.push({
                         "source": liveNodes[i].id,
+                        "sourceType": liveNodes[i].type,
                         "target": topicNodes[k].id,
-                        "id":liveNodes[i].id,
-                        "type":liveNodes[i].type
+                        "targetType": topicNodes[k].type,
+                        "id":liveNodes[i].id
                     })
                 }
              }
@@ -147,7 +148,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append('image')
         .attr('class', 'symbImg')
-        .attr("xlink:href", function(d){
+        .attr('xlink:href', function(d){
             var max = d.symbNum;
             var initialRandom = Math.random();
             var multiplied = initialRandom * max;
@@ -155,45 +156,46 @@ function restart(liveLinks, liveNodes, whichNum){
 
             return d.symb+'/'+answer+'.png';
         })
-        .attr("transform","translate("+ -symWidth/2 +","+ -symHeight/2 +")")
-        .attr("width", symWidth+"px")
-        .attr("height", symHeight+"px")
+        .attr('transform',"translate("+ -symWidth/2 +","+ -symHeight/2 +")")
+        .attr('width', function(d){
+            return symWidth+'px'
+        })
+        .attr('height', function(d){
+            return symHeight+'px'
+        })
+        .attr('opacity',1)
         .merge(node);
-
-
-    // img = img
-    //     .data(liveNodes, function(d){
-    //         return d;
-    //     })
-    //     .attr("opacity", function (d){
-    //             if(d.type==whichNum){
-    //                 return .4;
-    //             }else{
-    //                 return .2;
-    //             }
-    //     })
-    // img.exit()
-    //     .remove();
-    // img = img.enter()
-    //     .filter(function(d) { 
-    //         if(d.first ==1){
-    //             return d;
-    //             // if(d.type==whichNum){
-    //             //     return d;
-    //             // }
-    //         }
-    //     })
-    //     .append("svg:image")
-    //     .attr("class","backImg")
-    //     .attr("xlink:href", function(d) {
-    //         return 'img/'+d.type+'.jpeg';
-    //     })
-    //     .attr("x", -width/2)
-    //     .attr("y", -height/2)
-    //     .attr("width", 1200+'px')
-    //     .attr("height", 1000+'px')
-    //     .attr("opacity",.4)
-    //     .merge(img);
+    node
+        .transition().duration(2000)
+        .attr('opacity',function(d){
+            if(d.type==whichNum){
+                return 1
+            }else{
+                return .1 //or maybe this should disintegrate?
+            }   
+        })
+        // .attr('width',function(d){
+        //     if(d.type==whichNum){
+        //         return symWidth+'px'
+        //     }
+        //     else if(d.first!=0){
+        //         return symWidth+'px'
+        //     }
+        //     else{
+        //         return 0+'px';
+        //     }
+        // })
+        // .attr('height',function(d){
+        //     if(d.type==whichNum){
+        //         return symHeight+'px'
+        //     }
+        //     else if(d.first!=0){
+        //         return symWidth+'px'
+        //     }
+        //     else{
+        //         return 0+'px';
+        //     }
+        // })
 
     text = text
         .data(liveTopics, function(d){
@@ -225,26 +227,41 @@ function restart(liveLinks, liveNodes, whichNum){
         })
     link.exit()
         .remove()
-      
+
+    var opa = .5;
     link = link.enter().append('path')
         .attr('class', function(d){
-            return 'l'+d.type;
+            return 'l'+d.id;
         })
         .attr('stroke','white')
-        .attr('stroke-width',.1)
-        .attr('stroke-opacity',.01)
-        .attr('fill','white')
-        .attr('fill-opacity',.01)
-        .merge(link);
-    link
-        .transition().duration(4000)
-        .attr('stroke-opacity',function(d){
-            if(d.type==whichNum){
-                return .9;
+        .attr('stroke-width',1)
+        .attr('stroke-opacity', function(d){
+            if(whichNum==1){
+                return opa;
             }else{
-                return .01;
+                return 0;
             }
         })
+        .attr('fill','none')
+        .merge(link);
+
+    if(whichNum>1){
+        link
+            .transition().duration(4000)
+            .attr('stroke-opacity',function(d){
+                if(d.sourceType==whichNum && d.targetType==whichNum){
+                    return opa;
+                }else{
+                    console.log("no")
+                    return 0;
+                }
+            })
+            .attr('d',function(d){
+                return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
+            })
+    }
+
+
 
 
     simulation

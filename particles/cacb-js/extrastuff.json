@@ -1,0 +1,218 @@
+ ,
+ {
+   "id": 15,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 16,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 17,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 18,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 19,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 20,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 21,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 22,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 23,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 24,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 25,
+   "tags": [1],
+   "type": 1,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 26,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 27,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 28,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 29,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 30,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 31,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 32,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 33,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 34,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 35,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ },
+ {
+   "id": 36,
+   "tags": [1,2],
+   "type": 2,
+   "first": 0,
+   "symb": "symb/clouds/low",
+   "symbNum": 6
+ }
+
+
+
+
+
+
+
+
+     // img = img
+    //     .data(liveNodes, function(d){
+    //         return d;
+    //     })
+    //     .attr("opacity", function (d){
+    //             if(d.type==whichNum){
+    //                 return .4;
+    //             }else{
+    //                 return .2;
+    //             }
+    //     })
+    // img.exit()
+    //     .remove();
+    // img = img.enter()
+    //     .filter(function(d) { 
+    //         if(d.first ==1){
+    //             return d;
+    //             // if(d.type==whichNum){
+    //             //     return d;
+    //             // }
+    //         }
+    //     })
+    //     .append("svg:image")
+    //     .attr("class","backImg")
+    //     .attr("xlink:href", function(d) {
+    //         return 'img/'+d.type+'.jpeg';
+    //     })
+    //     .attr("x", -width/2)
+    //     .attr("y", -height/2)
+    //     .attr("width", 1200+'px')
+    //     .attr("height", 1000+'px')
+    //     .attr("opacity",.4)
+    //     .merge(img);
