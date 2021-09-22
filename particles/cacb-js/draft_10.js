@@ -39,25 +39,31 @@ const getNodes = async(dataset)=>{
         // if(dataset.nodes[i].first==0){
             topicNodes.push(dataset.nodes[i]) //it looks cool when they are all topic nodes
         // }
+        types.push(dataset.nodes[i].type);
+    }
+
+    uniqueTypes = types.filter(onlyUnique);
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
     }
 
     for (var i = 0; i<dataset.tags.length; i++){
         tagTable.push(dataset.tags[i]);
-        types.push(dataset.tags[i].type);
+        // types.push(dataset.tags[i].tagID);
     }
     return nodes;
 }
 
 
-var poScale = d3.scaleOrdinal()
+var yScale = d3.scaleOrdinal()
 
 const processPrep = async(dataset, nodes) => {
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
-    poScale
-        .domain(types)
-        .range([10, height/2])
+    yScale
+        .domain(uniqueTypes)
+        .range([-height/4, height/4])
 
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id).strength(0.01)
@@ -67,7 +73,8 @@ const processPrep = async(dataset, nodes) => {
         // .force('r', d3.forceRadial(function(d){
         //     return poScale(d.type) //nodes are placed in relation to their halls
         // }).strength(0.9)) //.001
-   
+
+
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
     node = svg.append('g')
@@ -78,10 +85,15 @@ const processPrep = async(dataset, nodes) => {
         .selectAll('line');
     img = svg.append('g')
         .selectAll('image');
-    svg.on("click", function(){ 
-        series();
-    })
 
+    document.onkeydown = checkKey;
+    function checkKey(e) {
+        e = e || window.event;
+        if (e.keyCode == '39') {
+           // right arrow
+           series();
+        }
+    }
     return svg;
 }
 
@@ -90,6 +102,16 @@ function zoomed({ transform }) {
 }
 
 function series(){
+    //HOW TO MAKE SYMBOLS DEGRADE?
+    //need to make low clouds degrade
+    //comms 18 degrades?
+    //servers 7 degrades
+    //symb/clouds/low degrades
+    //comms 20
+    //also need to make it so the 1-13 initial symbols pop up correctly in order
+    //as in, the live topics
+    //tech only shows up once (this is my plan)
+    //make it so that the locations of the nodes make more sense in the yscale
     whichNum++;
     chooseData(whichNum)
 }
@@ -112,7 +134,7 @@ function linkUp(liveNodes, topicNodes){
     for (var i = 0; i<liveNodes.length; i++){
         for(j=0; j<liveNodes[i].tags.length; j++){
             for (k=0; k<topicNodes.length; k++){
-                if(liveNodes[i].tags[j]==topicNodes[k].tags && liveNodes[i].type == whichNum){
+                if(liveNodes[i].tags[j]==topicNodes[k].tags && liveNodes[i].type == whichNum){ //place to change if all
                     liveLinks.push({
                         "source": liveNodes[i].id,
                         "sourceType": liveNodes[i].type,
@@ -135,9 +157,13 @@ const satScale = d3.scaleLinear()
 const rad2Scale = d3.scaleLinear()
     .domain([1,10])
     .range([1, 50])
-const yellow = 255;
+
 function restart(liveLinks, liveNodes, whichNum){
     console.log('restart')
+    var opa = .6;
+    var minOpa = .1;
+    var maxOpa = .9;
+    var minOpaNode = opa;
 
     node = node
         .data(liveNodes, function(d){
@@ -163,62 +189,17 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('height', function(d){
             return symHeight+'px'
         })
-        .attr('opacity',1)
+        .attr('opacity',minOpa)
         .merge(node);
     node
         .transition().duration(2000)
         .attr('opacity',function(d){
             if(d.type==whichNum){
-                return 1
+                return maxOpa;
             }else{
-                return .1 //or maybe this should disintegrate?
+                return minOpaNode; //or maybe this should disintegrate?
             }   
-        })
-        // .attr('width',function(d){
-        //     if(d.type==whichNum){
-        //         return symWidth+'px'
-        //     }
-        //     else if(d.first!=0){
-        //         return symWidth+'px'
-        //     }
-        //     else{
-        //         return 0+'px';
-        //     }
-        // })
-        // .attr('height',function(d){
-        //     if(d.type==whichNum){
-        //         return symHeight+'px'
-        //     }
-        //     else if(d.first!=0){
-        //         return symWidth+'px'
-        //     }
-        //     else{
-        //         return 0+'px';
-        //     }
-        // })
-
-    text = text
-        .data(liveTopics, function(d){
-            return d.id
-        })
-    text.exit()
-        .remove();       
-    
-    text = text.enter()
-        .append('text')
-        .attr('dy', '.31em') 
-        .attr('dx', '.41em') 
-        .attr('font-size','10px')
-        .attr('fill','white')
-        .text(function(d){
-            for(i=0; i<tagTable.length; i++){
-                //only want 1 instance
-                if(d.tags==tagTable[i].tagID && d.first==1){
-                    return tagTable[i].tag.toUpperCase();
-                }
-            }
-        })
-        .merge(text);    
+        })   
 
 
     link = link
@@ -228,61 +209,40 @@ function restart(liveLinks, liveNodes, whichNum){
     link.exit()
         .remove()
 
-    var opa = .5;
     link = link.enter().append('path')
         .attr('class', function(d){
             return 'l'+d.id;
         })
         .attr('stroke','white')
-        .attr('stroke-width',1)
-        .attr('stroke-opacity', function(d){
-            if(whichNum==1){
-                return opa;
-            }else{
-                return 0;
-            }
-        })
+        .attr('stroke-width',.5)
+        .attr('stroke-opacity',.1)
         .attr('fill','none')
         .merge(link);
 
-    if(whichNum>1){
-        link
-            .transition().duration(4000)
-            .attr('stroke-opacity',function(d){
-                if(d.sourceType==whichNum && d.targetType==whichNum){
-                    return opa;
-                }else{
-                    console.log("no")
-                    return 0;
-                }
-            })
-            .attr('d',function(d){
-                return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
-            })
-    }
+    link
+        .transition().duration(4000)
+        .attr('stroke-opacity',function(d){
+            if(d.sourceType==whichNum && d.targetType==whichNum){
+                return opa;
+            }else{
+                return minOpa;
+            }
+        })
+        // .attr('d',function(d){
+        //     return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
+        // })
 
 
 
-
+    //can simulation get smaller the more clicks
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
-    // if (whichNum==5){
-    //     simulation
-    //         .force("y", d3.forceY(function(d){
-    //             return yScale(d.type)
-    //         }).strength(.1)) 
-    // }else{
-    //     simulation
-    //         .force("y", d3.forceY(function(d){
-    //             if (whichNum==3 && d.type==2){
-    //                 return yScale(1);
-    //             }
-    //             else{
-    //                 return yScale(d.type)
-    //             }
-    //         }).strength(1)) 
-    // }
+        simulation
+        .force("y", d3.forceY(function(d){
+            return yScale(d.type)
+        }).strength(1)) 
+
     simulation
         .alpha(.09)
         .on('tick', ticked)
@@ -292,7 +252,7 @@ function restart(liveLinks, liveNodes, whichNum){
 function ticked() {
     node.attr('class', positionNodes);
     link.attr('d', makeLinks);
-    text.attr('class', positionNodes)
+    // text.attr('class', positionNodes)
 }
 
 function positionNodes(d) {
@@ -305,16 +265,16 @@ function positionNodes(d) {
             return d.x; 
         })
     
-    text
-        .attr('class', function(d){
-            return 't'+d.id;
-        })
-        .attr('y', function(d) { 
-            return d.y;  
-        })
-        .attr('x', function(d) {
-            return d.x; 
-        })
+    // text
+    //     .attr('class', function(d){
+    //         return 't'+d.id;
+    //     })
+    //     .attr('y', function(d) { 
+    //         return d.y;  
+    //     })
+    //     .attr('x', function(d) {
+    //         return d.x; 
+    //     })
 }
 function makeLinks(d) {
     var dx = d.target.x - d.source.x,

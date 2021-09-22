@@ -338,6 +338,22 @@
    "symbNum": 2
  },
  {
+   "id": 43,
+   "tags": [6,7],
+   "type": 7,
+   "first": 0,
+   "symb": "symb/storage",
+   "symbNum": 2
+ },
+ {
+   "id": 44,
+   "tags": [6,7],
+   "type": 7,
+   "first": 0,
+   "symb": "symb/storage",
+   "symbNum": 2
+ },
+ {
    "id": 45,
    "tags": [2,6,7],
    "type": 8,
@@ -363,106 +379,34 @@
  }, 
  {
    "id": 48,
-   "tags": [1,2],
+   "tags": [5,4,2],
    "type": 9,
    "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
+   "symb": "symb/tipping",
+   "symbNum": 3
  }, 
  {
    "id": 49,
-   "tags": [3,2],
-   "type": 10,
+   "tags": [5,4,2],
+   "type": 9,
    "first": 0,
-   "symb": "symb/clouds/high",
-   "symbNum": 6
- },
+   "symb": "symb/tipping",
+   "symbNum": 3
+ }, 
  {
    "id": 50,
-   "tags": [4,3],
-   "type": 11,
+   "tags": [5,4,2],
+   "type": 9,
    "first": 0,
-   "symb": "symb/radiance",
-   "symbNum": 2
+   "symb": "symb/tipping",
+   "symbNum": 3
  },
  {
    "id": 51,
-   "tags": [5,4],
-   "type": 12,
-   "first": 0,
-   "symb": "symb/tipping",
-   "symbNum": 3
- },
- {
-   "id": 52,
    "tags": [5,4,2],
-   "type": 13,
+   "type": 10,
    "first": 0,
    "symb": "symb/CO2",
-   "symbNum": 2
- },
- {
-   "id": 53,
-   "tags": [5,4,2],
-   "type": 13,
-   "first": 0,
-   "symb": "symb/CO2",
-   "symbNum": 2
- },
- {
-   "id": 54,
-   "tags": [5,4,2],
-   "type": 13,
-   "first": 0,
-   "symb": "symb/CO2",
-   "symbNum": 2
- },
- {
-   "id": 55,
-   "tags": [1,2],
-   "type": 14,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- }, 
- {
-   "id": 56,
-   "tags": [3,2],
-   "type": 15,
-   "first": 0,
-   "symb": "symb/clouds/high",
-   "symbNum": 6
- },
- {
-   "id": 57,
-   "tags": [4,3],
-   "type": 16,
-   "first": 0,
-   "symb": "symb/radiance",
-   "symbNum": 2
- },
- {
-   "id": 58,
-   "tags": [5,4],
-   "type": 17,
-   "first": 0,
-   "symb": "symb/tipping",
-   "symbNum": 3
- },
- {
-   "id": 59,
-   "tags": [5,4],
-   "type": 17,
-   "first": 0,
-   "symb": "symb/tipping",
-   "symbNum": 3
- },
- {
-   "id": 60,
-   "tags": [8,5],
-   "type": 18,
-   "first": 0,
-   "symb": "symb/comms",
    "symbNum": 2
  }
 ],
