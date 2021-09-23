@@ -36,9 +36,9 @@ var types = [];
 const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i])
-        // if(dataset.nodes[i].first==0){
+        if(dataset.nodes[i].first==0){
             topicNodes.push(dataset.nodes[i]) //it looks cool when they are all topic nodes
-        // }
+        }
         types.push(dataset.nodes[i].type);
     }
 
@@ -113,41 +113,47 @@ function series(){
     //tech only shows up once (this is my plan)
     //make it so that the locations of the nodes make more sense in the yscale
     whichNum++;
+
     chooseData(whichNum)
+        .then(liveNodes => linkUp(liveNodes, liveTopics))
+        .then(liveLinks => restart(liveLinks, liveNodes, whichNum))
 }
 
-function chooseData(whichNum){
+const chooseData = async(whichNum)=>{
     console.log(whichNum)
     for (var i = 0; i<topicNodes.length; i++){
         if(topicNodes[i].type == whichNum){  
             liveTopics.push(topicNodes[i])
-        }
+        }//else{}
     }
     for (var i = 0; i<nodes.length; i++){
         if(nodes[i].type == whichNum){  
             liveNodes.push(nodes[i])
         }
+        // else{}
     }
-    linkUp(liveNodes, topicNodes) 
+    console.log(liveNodes)
+    return liveNodes;
 }
-function linkUp(liveNodes, topicNodes){
+const linkUp = async(liveNodes, topicNodes)=>{
     for (var i = 0; i<liveNodes.length; i++){
         for(j=0; j<liveNodes[i].tags.length; j++){
-            for (k=0; k<topicNodes.length; k++){
-                if(liveNodes[i].tags[j]==topicNodes[k].tags && liveNodes[i].type == whichNum){ //place to change if all
+            for (k=0; k<liveTopics.length; k++){
+                if((liveNodes[i].tags[j]==liveTopics[k].tags) && (liveNodes[i].type == whichNum)){//place to change if all
                     liveLinks.push({
                         "source": liveNodes[i].id,
                         "sourceType": liveNodes[i].type,
-                        "target": topicNodes[k].id,
-                        "targetType": topicNodes[k].type,
+                        "target": liveTopics[k].id,
+                        "targetType": liveTopics[k].type,
                         "id":liveNodes[i].id
                     })
                 }
              }
         }
     }
-    restart(liveLinks, liveNodes, whichNum);  
+    return liveLinks;
 }
+
 const opacityScale = d3.scaleLinear()
     .domain([0,100])
     .range([0, 1])
