@@ -727,6 +727,17 @@
 
 
 
+
+
+
+
+
+
+    // uniqueTypes = types.filter(onlyUnique);
+    // function onlyUnique(value, index, self) {
+    //     return self.indexOf(value) === index;
+    // }
+
           // .attr('width',function(d){
         //     if(d.type==whichNum){
         //         return symWidth+'px'

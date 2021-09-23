@@ -32,44 +32,39 @@ const makeRequest = async () => {
 }
 
 var topicNodes = [];
-var types = [];
+var locs = [];
 const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i])
         if(dataset.nodes[i].first==0){
             topicNodes.push(dataset.nodes[i]) //it looks cool when they are all topic nodes
         }
-        types.push(dataset.nodes[i].type);
-    }
-
-    uniqueTypes = types.filter(onlyUnique);
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
     }
 
     for (var i = 0; i<dataset.tags.length; i++){
         tagTable.push(dataset.tags[i]);
-        // types.push(dataset.tags[i].tagID);
+        locs.push(dataset.tags[i].loc);
     }
+    locs.sort(d3.ascending)
     return nodes;
 }
 
 
-var yScale = d3.scaleOrdinal()
+var yScale = d3.scaleLinear()
 
 const processPrep = async(dataset, nodes) => {
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
     yScale
-        .domain(uniqueTypes)
-        .range([-height/4, height/4])
+        .domain(locs)
+        .range([-height/3,height/8])
 
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id).strength(0.01)
-            .distance(height/2).strength(0.3))
+            .distance(60).strength(0.3))
         // .force('charge', d3.forceManyBody(-100))
-        // .force('collide', d3.forceCollide().radius(radius*2).strength(0.1))
+        .force('collide', d3.forceCollide().radius(radius*2).strength(0.1))
         // .force('r', d3.forceRadial(function(d){
         //     return poScale(d.type) //nodes are placed in relation to their halls
         // }).strength(0.9)) //.001
@@ -102,16 +97,6 @@ function zoomed({ transform }) {
 }
 
 function series(){
-    //HOW TO MAKE SYMBOLS DEGRADE?
-    //need to make low clouds degrade
-    //comms 18 degrades?
-    //servers 7 degrades
-    //symb/clouds/low degrades
-    //comms 20
-    //also need to make it so the 1-13 initial symbols pop up correctly in order
-    //as in, the live topics
-    //tech only shows up once (this is my plan)
-    //make it so that the locations of the nodes make more sense in the yscale
     whichNum++;
 
     chooseData(whichNum)
@@ -120,19 +105,16 @@ function series(){
 }
 
 const chooseData = async(whichNum)=>{
-    console.log(whichNum)
     for (var i = 0; i<topicNodes.length; i++){
         if(topicNodes[i].type == whichNum){  
             liveTopics.push(topicNodes[i])
-        }//else{}
+        }
     }
     for (var i = 0; i<nodes.length; i++){
         if(nodes[i].type == whichNum){  
             liveNodes.push(nodes[i])
         }
-        // else{}
     }
-    console.log(liveNodes)
     return liveNodes;
 }
 const linkUp = async(liveNodes, topicNodes)=>{
@@ -165,7 +147,6 @@ const rad2Scale = d3.scaleLinear()
     .range([1, 50])
 
 function restart(liveLinks, liveNodes, whichNum){
-    console.log('restart')
     var opa = .6;
     var minOpa = .1;
     var maxOpa = .9;
@@ -238,15 +219,19 @@ function restart(liveLinks, liveNodes, whichNum){
         //     return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
         // })
 
-
-
     //can simulation get smaller the more clicks
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
         simulation
         .force("y", d3.forceY(function(d){
-            return yScale(d.type)
+            if(d.tags.length==1){
+                var adjst = d.tags-1;
+                return yScale(dataset.tags[adjst].loc)
+            }else{
+                var adjst = (d.tags[0])-1;
+                return yScale(dataset.tags[adjst].loc)
+            }
         }).strength(1)) 
 
     simulation

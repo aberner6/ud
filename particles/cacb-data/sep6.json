@@ -531,7 +531,7 @@
  },
  {
    "id": 63,
-   "tags": [9],
+   "tags": [9,1],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -547,7 +547,7 @@
  },
  {
    "id": 65,
-   "tags": [9],
+   "tags": [9,3],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -563,7 +563,7 @@
  },
  {
    "id": 67,
-   "tags": [9],
+   "tags": [9,8],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -579,7 +579,7 @@
  },
  {
    "id": 69,
-   "tags": [9],
+   "tags": [9,8],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -595,7 +595,7 @@
  },
  {
    "id": 71,
-   "tags": [9],
+   "tags": [9,8],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -619,7 +619,7 @@
  },
  {
    "id": 74,
-   "tags": [10,8],
+   "tags": [10],
    "type": 21,
    "first": 1,
    "symb": "symb/humidity",
@@ -635,7 +635,7 @@
  },
  {
    "id": 76,
-   "tags": [10,8],
+   "tags": [10],
    "type": 21,
    "first": 1,
    "symb": "symb/humidity",
@@ -651,7 +651,7 @@
  },
  {
    "id": 78,
-   "tags": [10,8],
+   "tags": [10],
    "type": 21,
    "first": 1,
    "symb": "symb/humidity",
@@ -667,7 +667,7 @@
  },
  {
    "id": 80,
-   "tags": [10,8],
+   "tags": [10],
    "type": 21,
    "first": 1,
    "symb": "symb/humidity",
@@ -789,55 +789,68 @@
   "tags":[
        {
           "tagID": 1,
-          "tag": "low clouds"
+          "tag": "low clouds",
+          "loc": 3
        },
        {
           "tagID": 2,
-          "tag": "CO2"
+          "tag": "CO2",
+          "loc": 2
        },
        {
           "tagID": 3,
-          "tag": "high clouds"
+          "tag": "high clouds",
+          "loc": 1
        },
        {
           "tagID": 4,
-          "tag": "radiance"
+          "tag": "radiance",
+          "loc": 4
        },
        {
           "tagID": 5,
-          "tag": "tipping"
+          "tag": "tipping",
+          "loc": 7
        },
        {
           "tagID": 6,
-          "tag": "energy"
+          "tag": "energy",
+          "loc": 8
        },
        {
           "tagID": 7,
-          "tag": "storage"
+          "tag": "storage",
+          "loc": 9
        },
        {
           "tagID": 8,
-          "tag": "communications"
+          "tag": "communications",
+          "loc": 7
        },
        {
           "tagID": 9,
-          "tag": "wind"
+          "tag": "wind",
+          "loc": 2
        },
        {
           "tagID": 10,
-          "tag": "humidity"
+          "tag": "humidity",
+          "loc": 5
        },
        {
           "tagID": 11,
-          "tag": "sensors"
+          "tag": "sensors",
+          "loc": 8
        },
        {
           "tagID": 12,
-          "tag": "process"
+          "tag": "process",
+          "loc": 7
        },
        {
           "tagID": 13,
-          "tag": "weather"
+          "tag": "weather",
+          "loc": 6
        }
     ]
 }
