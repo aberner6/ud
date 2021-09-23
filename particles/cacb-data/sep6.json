@@ -251,7 +251,7 @@
  },
  {
    "id": 32,
-   "tags": [5,4],
+   "tags": [5],
    "type": 5,
    "first": 0,
    "symb": "symb/tipping",
@@ -275,7 +275,7 @@
  }, 
  {
    "id": 35,
-   "tags": [6,4],
+   "tags": [6],
    "type": 6,
    "first": 0,
    "symb": "symb/energy",
@@ -331,6 +331,14 @@
  },
  {
    "id": 42,
+   "tags": [7],
+   "type": 7,
+   "first": 0,
+   "symb": "symb/storage",
+   "symbNum": 2
+ },
+ {
+   "id": 43,
    "tags": [6,7],
    "type": 7,
    "first": 0,
@@ -451,7 +459,7 @@
  },
  {
    "id": 60,
-   "tags": [8,5],
+   "tags": [8],
    "type": 18,
    "first": 0,
    "symb": "symb/comms",
@@ -460,62 +468,6 @@
  {
    "id": 61,
    "tags": [9],
-   "type": 19,
-   "first": 0,
-   "symb": "symb/wind",
-   "symbNum": 6
- },
- {
-   "id": 55,
-   "tags": [1,2],
-   "type": 14,
-   "first": 0,
-   "symb": "symb/clouds/low",
-   "symbNum": 6
- }, 
- {
-   "id": 56,
-   "tags": [3,2],
-   "type": 15,
-   "first": 0,
-   "symb": "symb/clouds/high",
-   "symbNum": 6
- },
- {
-   "id": 57,
-   "tags": [4,3],
-   "type": 16,
-   "first": 0,
-   "symb": "symb/radiance",
-   "symbNum": 2
- },
- {
-   "id": 58,
-   "tags": [5,4],
-   "type": 17,
-   "first": 0,
-   "symb": "symb/tipping",
-   "symbNum": 3
- },
- {
-   "id": 59,
-   "tags": [5,4],
-   "type": 17,
-   "first": 0,
-   "symb": "symb/tipping",
-   "symbNum": 3
- },
- {
-   "id": 60,
-   "tags": [8,5],
-   "type": 18,
-   "first": 0,
-   "symb": "symb/comms",
-   "symbNum": 2
- },
- {
-   "id": 61,
-   "tags": [9,5],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -523,55 +475,55 @@
  },
  {
    "id": 62,
-   "tags": [9],
-   "type": 19,
+   "tags": [1,2],
+   "type": 14,
    "first": 0,
-   "symb": "symb/wind",
+   "symb": "symb/clouds/low",
    "symbNum": 6
- },
+ }, 
  {
    "id": 63,
-   "tags": [9,1],
-   "type": 19,
+   "tags": [3,2],
+   "type": 15,
    "first": 0,
-   "symb": "symb/wind",
+   "symb": "symb/clouds/high",
    "symbNum": 6
  },
  {
    "id": 64,
-   "tags": [9],
-   "type": 19,
+   "tags": [4,3],
+   "type": 16,
    "first": 0,
-   "symb": "symb/wind",
-   "symbNum": 6
+   "symb": "symb/radiance",
+   "symbNum": 2
  },
  {
    "id": 65,
-   "tags": [9,3],
-   "type": 19,
+   "tags": [5,4],
+   "type": 17,
    "first": 0,
-   "symb": "symb/wind",
-   "symbNum": 6
+   "symb": "symb/tipping",
+   "symbNum": 3
  },
  {
    "id": 66,
-   "tags": [9],
-   "type": 19,
+   "tags": [5,4],
+   "type": 17,
    "first": 0,
-   "symb": "symb/wind",
-   "symbNum": 6
+   "symb": "symb/tipping",
+   "symbNum": 3
  },
  {
    "id": 67,
-   "tags": [9,8],
-   "type": 19,
+   "tags": [8,5],
+   "type": 18,
    "first": 0,
-   "symb": "symb/wind",
-   "symbNum": 6
+   "symb": "symb/comms",
+   "symbNum": 2
  },
  {
    "id": 68,
-   "tags": [9],
+   "tags": [9,5],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -579,14 +531,6 @@
  },
  {
    "id": 69,
-   "tags": [9,8],
-   "type": 19,
-   "first": 0,
-   "symb": "symb/wind",
-   "symbNum": 6
- }, 
- {
-   "id": 70,
    "tags": [9],
    "type": 19,
    "first": 0,
@@ -594,8 +538,16 @@
    "symbNum": 6
  },
  {
+   "id": 70,
+   "tags": [9,1],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
    "id": 71,
-   "tags": [9,8],
+   "tags": [9],
    "type": 19,
    "first": 0,
    "symb": "symb/wind",
@@ -603,6 +555,62 @@
  },
  {
    "id": 72,
+   "tags": [9,3],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 73,
+   "tags": [9],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 74,
+   "tags": [9,8],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 75,
+   "tags": [9],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 76,
+   "tags": [9,8],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ }, 
+ {
+   "id": 77,
+   "tags": [9],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 78,
+   "tags": [9,8],
+   "type": 19,
+   "first": 0,
+   "symb": "symb/wind",
+   "symbNum": 6
+ },
+ {
+   "id": 79,
    "tags": [8,5],
    "type": 20,
    "first": 0,
@@ -610,79 +618,79 @@
    "symbNum": 2
  },
  {
-   "id": 73,
-   "tags": [10,8],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
-   "id": 74,
-   "tags": [10],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
-   "id": 75,
-   "tags": [10,8],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
-   "id": 76,
-   "tags": [10],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
-   "id": 77,
-   "tags": [10,8],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
-   "id": 78,
-   "tags": [10],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
-   "id": 79,
-   "tags": [10,8],
-   "type": 21,
-   "first": 1,
-   "symb": "symb/humidity",
-   "symbNum": 2
- },
- {
    "id": 80,
-   "tags": [10],
+   "tags": [10,8],
    "type": 21,
-   "first": 1,
+   "first": 0,
    "symb": "symb/humidity",
    "symbNum": 2
  },
  {
    "id": 81,
-   "tags": [10,8],
+   "tags": [10],
    "type": 21,
-   "first": 1,
+   "first": 0,
    "symb": "symb/humidity",
    "symbNum": 2
  },
  {
    "id": 82,
+   "tags": [10,8],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 83,
+   "tags": [10],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 84,
+   "tags": [10,8],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 85,
+   "tags": [10],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 86,
+   "tags": [10,8],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 87,
+   "tags": [10],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 88,
+   "tags": [10,8],
+   "type": 21,
+   "first": 0,
+   "symb": "symb/humidity",
+   "symbNum": 2
+ },
+ {
+   "id": 89,
    "tags": [10,8],
    "type": 22,
    "first": 0,
@@ -690,7 +698,7 @@
    "symbNum": 2
  },
  {
-   "id": 83,
+   "id": 90,
    "tags": [11,8],
    "type": 23,
    "first": 1,
@@ -698,7 +706,7 @@
    "symbNum": 2
  },
  {
-   "id": 84,
+   "id": 91,
    "tags": [10,8,11],
    "type": 24,
    "first": 0,
@@ -706,23 +714,23 @@
    "symbNum": 2
  },
  {
-   "id": 85,
+   "id": 92,
    "tags": [12,10,8,11],
    "type": 25,
-   "first": 1,
+   "first": 0,
    "symb": "symb/process",
    "symbNum": 1
  },
  {
-   "id": 86,
+   "id": 93,
    "tags": [7,12,10,8,11,6,2],
    "type": 26,
-   "first": 1,
+   "first": 0,
    "symb": "symb/storage",
    "symbNum": 1
  },
  {
-   "id": 87,
+   "id": 94,
    "tags": [13],
    "type": 27,
    "first": 0,
@@ -730,7 +738,7 @@
    "symbNum": 3
  },
  {
-   "id": 88,
+   "id": 95,
    "tags": [5,4,2],
    "type": 28,
    "first": 0,
@@ -738,7 +746,7 @@
    "symbNum": 2
  },
  {
-   "id": 89,
+   "id": 96,
    "tags": [1,2],
    "type": 29,
    "first": 0,
@@ -746,7 +754,7 @@
    "symbNum": 6
  }, 
  {
-   "id": 90,
+   "id": 97,
    "tags": [3,2],
    "type": 30,
    "first": 0,
@@ -754,7 +762,7 @@
    "symbNum": 6
  },
  {
-   "id": 91,
+   "id": 98,
    "tags": [4,3],
    "type": 31,
    "first": 0,
@@ -762,7 +770,7 @@
    "symbNum": 2
  },
  {
-   "id": 92,
+   "id": 99,
    "tags": [5,4],
    "type": 32,
    "first": 0,
@@ -770,7 +778,7 @@
    "symbNum": 3
  },
  {
-   "id": 93,
+   "id": 100,
    "tags": [13,5],
    "type": 33,
    "first": 0,
@@ -778,7 +786,7 @@
    "symbNum": 3
  },
  {
-   "id": 94,
+   "id": 101,
    "tags": [13,5],
    "type": 33,
    "first": 0,

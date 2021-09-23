@@ -58,13 +58,13 @@ const processPrep = async(dataset, nodes) => {
 
     yScale
         .domain(locs)
-        .range([-height/3,height/8])
+        .range([-290,-210])
 
     simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => d.id).strength(0.01)
-            .distance(60).strength(0.3))
-        // .force('charge', d3.forceManyBody(-100))
-        .force('collide', d3.forceCollide().radius(radius*2).strength(0.1))
+        .force('link', d3.forceLink().id(d => d.id)//.strength(0.01)
+            .distance(2).strength(0.3))
+        .force('charge', d3.forceManyBody(-100))
+        .force('collide', d3.forceCollide().radius(symWidth*2).strength(0.1))
         // .force('r', d3.forceRadial(function(d){
         //     return poScale(d.type) //nodes are placed in relation to their halls
         // }).strength(0.9)) //.001
@@ -160,7 +160,9 @@ function restart(liveLinks, liveNodes, whichNum){
         .remove();
 
     node = node.enter().append('image')
-        .attr('class', 'symbImg')
+        .attr('class', function(d){
+            return d.id+'symbImg'
+        })
         .attr('xlink:href', function(d){
             var max = d.symbNum;
             var initialRandom = Math.random();
@@ -200,21 +202,23 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('class', function(d){
             return 'l'+d.id;
         })
-        .attr('stroke','white')
-        .attr('stroke-width',.5)
-        .attr('stroke-opacity',.1)
-        .attr('fill','none')
+        .attr('stroke','none')
+        // .attr('stroke','white')
+        // .attr('stroke-width',.5)
+        // .attr('stroke-opacity',.3)
+        .attr('fill','white')
+        .attr('fill-opacity',.05)
         .merge(link);
 
-    link
-        .transition().duration(4000)
-        .attr('stroke-opacity',function(d){
-            if(d.sourceType==whichNum && d.targetType==whichNum){
-                return opa;
-            }else{
-                return minOpa;
-            }
-        })
+    // link
+    //     .transition().duration(4000)
+    //     .attr('stroke-opacity',function(d){
+    //         if(d.sourceType==whichNum && d.targetType==whichNum){
+    //             return opa;
+    //         }else{
+    //             return minOpa;
+    //         }
+    //     })
         // .attr('d',function(d){
         //     return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
         // })
@@ -248,7 +252,9 @@ function ticked() {
 
 function positionNodes(d) {
     node
-        .attr('class','symbImg')
+        .attr('class', function(d){
+            return d.id+'symbImg'
+        })
         .attr('y', function(d) { 
             return d.y;  
         })
