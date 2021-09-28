@@ -63,8 +63,8 @@ const processPrep = async(dataset, nodes) => {
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id)//.strength(0.01)
             .distance(2).strength(0.3))
-        .force('charge', d3.forceManyBody(-100))
-        .force('collide', d3.forceCollide().radius(symWidth*2).strength(0.1))
+        // .force('charge', d3.forceManyBody(-100))
+        .force('collide', d3.forceCollide().radius(symWidth).strength(0.1))
         // .force('r', d3.forceRadial(function(d){
         //     return poScale(d.type) //nodes are placed in relation to their halls
         // }).strength(0.9)) //.001
@@ -190,6 +190,67 @@ function restart(liveLinks, liveNodes, whichNum){
             }   
         })   
 
+    //  img = img
+    //     .data(liveNodes, function(d){
+    //         return d;
+    //     })
+    //     .attr("opacity", function (d){
+    //             if(d.type==whichNum){
+    //                 return .4;
+    //             }else{
+    //                 return .2;
+    //             }
+    //     })
+    // img.exit()
+    //     .remove();
+    // img = img.enter()
+    //     .filter(function(d) { 
+    //         if(d.first ==1){
+    //             return d;
+    //             // if(d.type==whichNum){
+    //             //     return d;
+    //             // }
+    //         }
+    //     })
+    //     .append("svg:image")
+    //     .attr("class","backImg")
+    //     .attr("xlink:href", function(d) {
+    //         return 'img/'+d.type+'.jpeg';
+    //     })
+    //     .attr("x", -width/2)
+    //     .attr("y", -height/2)
+    //     .attr("width", 1200+'px')
+    //     .attr("height", 1000+'px')
+    //     .attr("opacity",.1)
+    //     .merge(img);
+
+
+
+    // text = text
+    //     .data(liveTopics, function(d){
+    //         return d.id
+    //     })
+    // text.exit()
+    //     .remove();       
+    
+    // text = text.enter()
+    //     .append('text')
+    //     .attr('dy', '.31em') 
+    //     .attr('dx', '.41em') 
+    //     .attr('font-size','10px')
+    //     .attr('fill','white')
+    //     .text(function(d){
+    //         for(i=0; i<tagTable.length; i++){
+    //             //only want 1 instance
+    //             if(d.tags==tagTable[i].tagID && d.first==1){
+    //                 return tagTable[i].tag.toUpperCase();
+    //             }
+    //         }
+    //     })
+    //     .merge(text); 
+
+
+
 
     link = link
         .data(liveLinks, function(d){
@@ -202,23 +263,24 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('class', function(d){
             return 'l'+d.id;
         })
-        .attr('stroke','none')
-        // .attr('stroke','white')
+        // .attr('stroke','none')
+        .attr('stroke','white')
         // .attr('stroke-width',.5)
-        // .attr('stroke-opacity',.3)
-        .attr('fill','white')
-        .attr('fill-opacity',.05)
+        .attr('stroke-opacity',.1)
+        .attr('stroke-dasharray','5,5')
+        .attr('fill','none')
+        // .attr('fill-opacity',.01)
         .merge(link);
 
-    // link
-    //     .transition().duration(4000)
-    //     .attr('stroke-opacity',function(d){
-    //         if(d.sourceType==whichNum && d.targetType==whichNum){
-    //             return opa;
-    //         }else{
-    //             return minOpa;
-    //         }
-    //     })
+    link
+        .transition().duration(4000)
+        .attr('stroke-opacity',function(d){
+            if(d.sourceType==whichNum && d.targetType==whichNum){
+                return opa;
+            }else{
+                return minOpa;
+            }
+        })
         // .attr('d',function(d){
         //     return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
         // })
@@ -239,7 +301,7 @@ function restart(liveLinks, liveNodes, whichNum){
         }).strength(1)) 
 
     simulation
-        .alpha(.09)
+        .alpha(.05)
         .on('tick', ticked)
         .restart()
 }
@@ -253,7 +315,7 @@ function ticked() {
 function positionNodes(d) {
     node
         .attr('class', function(d){
-            return d.id+'symbImg'
+            return 'symbImg'
         })
         .attr('y', function(d) { 
             return d.y;  
@@ -276,7 +338,7 @@ function positionNodes(d) {
 function makeLinks(d) {
     var dx = d.target.x - d.source.x,
         dy = d.target.y - d.source.y,
-        dr = Math.sqrt(dx * dx + dy * dy);
+        dr = Math.sqrt(dx * dx + dy * dy); //possible to play with this curve?
     return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y;
 }
 

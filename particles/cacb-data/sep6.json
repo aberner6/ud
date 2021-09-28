@@ -60,7 +60,7 @@
  {
    "id": 8,
    "tags": [8],
-   "type": 8,
+   "type": 18,
    "first": 1,
    "symb": "symb/comms",
    "symbNum": 2
@@ -68,7 +68,7 @@
  {
    "id": 9,
    "tags": [9],
-   "type": 9,
+   "type": 19,
    "first": 1,
    "symb": "symb/wind",
    "symbNum": 6
@@ -76,7 +76,7 @@
  {
    "id": 10,
    "tags": [10],
-   "type": 10,
+   "type": 21,
    "first": 1,
    "symb": "symb/humidity",
    "symbNum": 2
@@ -84,7 +84,7 @@
  {
    "id": 11,
    "tags": [11],
-   "type": 11,
+   "type": 23,
    "first": 1,
    "symb": "symb/sensors",
    "symbNum": 2
@@ -92,7 +92,7 @@
  {
    "id": 12,
    "tags": [12],
-   "type": 12,
+   "type": 25,
    "first": 1,
    "symb": "symb/process",
    "symbNum": 1
@@ -100,7 +100,7 @@
  {
    "id": 13,
    "tags": [13],
-   "type": 13,
+   "type": 27,
    "first": 1,
    "symb": "symb/weather",
    "symbNum": 3
@@ -515,7 +515,7 @@
  },
  {
    "id": 67,
-   "tags": [8,5],
+   "tags": [8],
    "type": 18,
    "first": 0,
    "symb": "symb/comms",
@@ -699,9 +699,9 @@
  },
  {
    "id": 90,
-   "tags": [11,8],
+   "tags": [11,7],
    "type": 23,
-   "first": 1,
+   "first": 0,
    "symb": "symb/sensors",
    "symbNum": 2
  },
@@ -715,7 +715,7 @@
  },
  {
    "id": 92,
-   "tags": [12,10,8,11],
+   "tags": [12],
    "type": 25,
    "first": 0,
    "symb": "symb/process",
@@ -792,6 +792,14 @@
    "first": 0,
    "symb": "symb/weather",
    "symbNum": 3
+ },
+ {
+   "id": 102,
+   "tags": [11],
+   "type": 23,
+   "first": 0,
+   "symb": "symb/sensors",
+   "symbNum": 2
  }
 ],
   "tags":[
