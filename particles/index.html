@@ -6,8 +6,11 @@
             svg { 
                 background-color: black;
             }
-            .symbImg{
+            image{
                 filter: invert(1);
+            }
+            .add{
+                filter: url(#weird);
             }
             .backImg{
                 filter: url(#red);
@@ -34,6 +37,21 @@
                         1   0   0   0   0
                         0   0   0   1   0 "/>
             </filter>
+
+
+            <filter id="weird">
+    <feTurbulence type="turbulence" baseFrequency="0.05"
+        numOctaves="2" result="turbulence"/>
+    <!-- <feDisplacementMap in2="turbulence" in="SourceGraphic" -->
+        <!-- scale="50" xChannelSelector="R" yChannelSelector="G"/> -->
+<!--               <feColorMatrix
+                type="matrix"
+                values="1   0   0   0   0
+                        1   0   0   0   0
+                        1   0   0   0   0
+                        0   0   0   1   0 "/> -->
+            </filter>
+
           </defs>
         </svg>
 		<script src="https://d3js.org/d3.v6.min.js"></script>

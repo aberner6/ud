@@ -36,7 +36,7 @@ var locs = [];
 const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i])
-        if(dataset.nodes[i].first==0){
+        if(dataset.nodes[i].first==1){
             topicNodes.push(dataset.nodes[i]) //it looks cool when they are all topic nodes
         }
     }
@@ -161,7 +161,15 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append('image')
         .attr('class', function(d){
-            return d.id+'symbImg'
+            if(whichNum>1){
+                if(d.symb=='symb/clouds/low'){
+                    return 'add';
+                }else{
+                    return d.id;
+                }
+            }else{
+                return d.id;
+            }
         })
         .attr('xlink:href', function(d){
             var max = d.symbNum;
@@ -178,17 +186,51 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('height', function(d){
             return symHeight+'px'
         })
-        .attr('opacity',minOpa)
+        .attr('opacity',opa)
         .merge(node);
-    node
-        .transition().duration(2000)
-        .attr('opacity',function(d){
-            if(d.type==whichNum){
-                return maxOpa;
-            }else{
-                return minOpaNode; //or maybe this should disintegrate?
-            }   
-        })   
+    // node
+    //     .transition().duration(2000)
+    //     .attr('opacity',function(d){
+    //         if(d.type==whichNum){
+    //             return maxOpa;
+    //         }else{
+    //             return minOpaNode; //or maybe this should disintegrate?
+    //         }   
+    //     })   
+
+
+// low clouds filter for the thing? fx: symb/clouds/low?
+// comms, sensors, storage, 
+    // if(whichNum==2){
+    //     node
+    //         .transition().duration(2000)
+    //         .attr('class',function(d){
+    //             if(d.symb=='symb/clouds/low'){
+    //                 return 'add';
+    //             }else{
+    //                 return d.id;
+    //             }
+    //         })
+            // .attr('width', function(d){
+            //     if(d.symb=='symb/clouds/low'){
+            //         return .1+'px';
+            //     }else{
+            //         return symWidth+'px'                    
+            //     }
+            // })
+            // .attr('height', function(d){
+            //     if(d.symb=='symb/clouds/low'){
+            //         return .1+'px';
+            //     }else{
+            //         return symHeight+'px'
+            //     }
+            // })
+    // }
+
+
+
+
+
 
     //  img = img
     //     .data(liveNodes, function(d){
@@ -260,27 +302,31 @@ function restart(liveLinks, liveNodes, whichNum){
         .remove()
 
     link = link.enter().append('path')
-        .attr('class', function(d){
-            return 'l'+d.id;
-        })
-        // .attr('stroke','none')
+        .attr('class', 'link')
         .attr('stroke','white')
-        // .attr('stroke-width',.5)
-        .attr('stroke-opacity',.1)
+        .attr('stroke-opacity',opa)
         .attr('stroke-dasharray','5,5')
         .attr('fill','none')
         // .attr('fill-opacity',.01)
         .merge(link);
 
-    link
-        .transition().duration(4000)
-        .attr('stroke-opacity',function(d){
-            if(d.sourceType==whichNum && d.targetType==whichNum){
-                return opa;
-            }else{
-                return minOpa;
-            }
-        })
+
+    //making the path move
+      link.transition().duration(2000)
+        .attr('stroke-dashoffset','450').attr("stroke-dasharray","450")
+      link.transition().duration(2000)
+        .attr('stroke-dashoffset','0')
+
+
+    // link
+    //     .transition().duration(4000)
+    //     .attr('stroke-opacity',function(d){
+    //         if(d.sourceType==whichNum && d.targetType==whichNum){
+    //             return opa;
+    //         }else{
+    //             return minOpa;
+    //         }
+    //     })
         // .attr('d',function(d){
         //     return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
         // })
@@ -308,14 +354,23 @@ function restart(liveLinks, liveNodes, whichNum){
 
 function ticked() {
     node.attr('class', positionNodes);
-    link.attr('d', makeLinks);
+    link.attr('d', makeLinks)
+
+
     // text.attr('class', positionNodes)
 }
 
 function positionNodes(d) {
+
     node
-        .attr('class', function(d){
-            return 'symbImg'
+        .attr('class',function(d){
+            if(whichNum>1){
+                if(d.symb=='symb/clouds/low'){
+                    return 'add';
+                }else{
+                    return d.id;
+                }
+            }
         })
         .attr('y', function(d) { 
             return d.y;  
