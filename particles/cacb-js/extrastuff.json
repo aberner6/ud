@@ -760,3 +760,41 @@
         //         return 0+'px';
         //     }
         // })
+
+
+    //making the path move once only
+    // link.attr('class',function(d){
+    //     if(d.sourceType==whichNum){
+    //         d3.select(this)
+    //             .attr('stroke-dashoffset','450')
+    //             .attr('stroke-dasharray','1,450')
+    //             .transition()
+    //             .ease(d3.easeCubicInOut,.5)
+    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+    //             .duration(2000) //maybe duration could have to do with the character of the item
+    //             .attr('stroke-dasharray','1,10')
+    //             .attr('stroke-dashoffset','0')
+    //     }else{
+    //         d3.select(this)
+    //             .attr('stroke-dasharray','1,10')
+    //             .attr('stroke-dashoffset','0')
+    //     }
+    // })
+
+
+
+//             <filter id = "multiple">
+// <!--                   <feOffset result="offOut" in="SourceGraphic" dx="20" dy="20" />
+//                   <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
+//                   <feBlend in="SourceGraphic" in2="blurOut" mode="normal" /> -->
+//             </filter>
+            
+//             <filter id="degrade">
+// <!--                 <feTurbulence type="turbulence" baseFrequency="0.05"
+//                     numOctaves="2" result="turbulence"/>
+//                 <feDisplacementMap in2="turbulence" in="SourceGraphic"
+//                     scale="10" xChannelSelector="B" yChannelSelector="G"/>
+//  -->
+
+
+//             </filter>

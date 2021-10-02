@@ -36,9 +36,9 @@ var locs = [];
 const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i])
-        if(dataset.nodes[i].first==1){
+        // if(dataset.nodes[i].first==1){
             topicNodes.push(dataset.nodes[i]) //it looks cool when they are all topic nodes
-        }
+        // }
     }
 
     for (var i = 0; i<dataset.tags.length; i++){
@@ -161,16 +161,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
     node = node.enter().append('image')
         .attr('class', function(d){
-            if(whichNum>1){
-                if(d.symb=='symb/clouds/low'){
-                    return 'add';
-                }else{
-                    return d.id;
-                }
-            }else{
-                return d.id;
-            }
-        })
+            return d.id}) //'sym')
         .attr('xlink:href', function(d){
             var max = d.symbNum;
             var initialRandom = Math.random();
@@ -188,111 +179,7 @@ function restart(liveLinks, liveNodes, whichNum){
         })
         .attr('opacity',opa)
         .merge(node);
-    // node
-    //     .transition().duration(2000)
-    //     .attr('opacity',function(d){
-    //         if(d.type==whichNum){
-    //             return maxOpa;
-    //         }else{
-    //             return minOpaNode; //or maybe this should disintegrate?
-    //         }   
-    //     })   
-
-
-// low clouds filter for the thing? fx: symb/clouds/low?
-// comms, sensors, storage, 
-    // if(whichNum==2){
-    //     node
-    //         .transition().duration(2000)
-    //         .attr('class',function(d){
-    //             if(d.symb=='symb/clouds/low'){
-    //                 return 'add';
-    //             }else{
-    //                 return d.id;
-    //             }
-    //         })
-            // .attr('width', function(d){
-            //     if(d.symb=='symb/clouds/low'){
-            //         return .1+'px';
-            //     }else{
-            //         return symWidth+'px'                    
-            //     }
-            // })
-            // .attr('height', function(d){
-            //     if(d.symb=='symb/clouds/low'){
-            //         return .1+'px';
-            //     }else{
-            //         return symHeight+'px'
-            //     }
-            // })
-    // }
-
-
-
-
-
-
-    //  img = img
-    //     .data(liveNodes, function(d){
-    //         return d;
-    //     })
-    //     .attr("opacity", function (d){
-    //             if(d.type==whichNum){
-    //                 return .4;
-    //             }else{
-    //                 return .2;
-    //             }
-    //     })
-    // img.exit()
-    //     .remove();
-    // img = img.enter()
-    //     .filter(function(d) { 
-    //         if(d.first ==1){
-    //             return d;
-    //             // if(d.type==whichNum){
-    //             //     return d;
-    //             // }
-    //         }
-    //     })
-    //     .append("svg:image")
-    //     .attr("class","backImg")
-    //     .attr("xlink:href", function(d) {
-    //         return 'img/'+d.type+'.jpeg';
-    //     })
-    //     .attr("x", -width/2)
-    //     .attr("y", -height/2)
-    //     .attr("width", 1200+'px')
-    //     .attr("height", 1000+'px')
-    //     .attr("opacity",.1)
-    //     .merge(img);
-
-
-
-    // text = text
-    //     .data(liveTopics, function(d){
-    //         return d.id
-    //     })
-    // text.exit()
-    //     .remove();       
-    
-    // text = text.enter()
-    //     .append('text')
-    //     .attr('dy', '.31em') 
-    //     .attr('dx', '.41em') 
-    //     .attr('font-size','10px')
-    //     .attr('fill','white')
-    //     .text(function(d){
-    //         for(i=0; i<tagTable.length; i++){
-    //             //only want 1 instance
-    //             if(d.tags==tagTable[i].tagID && d.first==1){
-    //                 return tagTable[i].tag.toUpperCase();
-    //             }
-    //         }
-    //     })
-    //     .merge(text); 
-
-
-
+ 
 
     link = link
         .data(liveLinks, function(d){
@@ -304,32 +191,51 @@ function restart(liveLinks, liveNodes, whichNum){
     link = link.enter().append('path')
         .attr('class', 'link')
         .attr('stroke','white')
-        .attr('stroke-opacity',opa)
-        .attr('stroke-dasharray','5,5')
+        .attr('stroke-opacity',.01)
         .attr('fill','none')
-        // .attr('fill-opacity',.01)
         .merge(link);
 
 
-    //making the path move
-      link.transition().duration(2000)
-        .attr('stroke-dashoffset','450').attr("stroke-dasharray","450")
-      link.transition().duration(2000)
-        .attr('stroke-dashoffset','0')
+//only if you are CO2 and other human made things?
+    // drawOut()
+    function drawOut(){
+        link.attr('class',function(d){
+            if(d.sourceType==whichNum){
+                d3.select(this)
+                    .transition()
+                    .duration(5000)
+                    .attr('stroke-dashoffset','450')
+                    .attr('stroke-dasharray','1,450')
+                    .on('end',drawIn)
+            }else{
+                d3.select(this)
+                    .attr('stroke-dasharray','1,10')
+                    .attr('stroke-dashoffset','0')
+            }
+        })        
+    }
 
+    function drawIn(){
+        link.attr('class',function(d){
+            if(d.sourceType==whichNum){
+                d3.select(this)
+                    .transition()
+ //maybe duration could have more to do with 
+ //the character of the item
+                    .duration(6000)
+                    .ease(d3.easeCubicInOut,1)
+                    .ease(d3.easeElasticOut.amplitude(1).period(2))
+                    .attr('stroke-dasharray','1,10')
+                    .attr('stroke-dashoffset','0')
+                    .on('end',drawOut)
+            }else{
+                d3.select(this)
+                    .attr('stroke-dasharray','1,10')
+                    .attr('stroke-dashoffset','0')
+            }
+        }) 
+    }
 
-    // link
-    //     .transition().duration(4000)
-    //     .attr('stroke-opacity',function(d){
-    //         if(d.sourceType==whichNum && d.targetType==whichNum){
-    //             return opa;
-    //         }else{
-    //             return minOpa;
-    //         }
-    //     })
-        // .attr('d',function(d){
-        //     return //MAKE IT GET SMALLER AND GO AWAY TOWARDS ITS TARGET?
-        // })
 
     //can simulation get smaller the more clicks
     simulation
@@ -355,23 +261,14 @@ function restart(liveLinks, liveNodes, whichNum){
 function ticked() {
     node.attr('class', positionNodes);
     link.attr('d', makeLinks)
-
-
-    // text.attr('class', positionNodes)
 }
 
 function positionNodes(d) {
 
     node
-        .attr('class',function(d){
-            if(whichNum>1){
-                if(d.symb=='symb/clouds/low'){
-                    return 'add';
-                }else{
-                    return d.id;
-                }
-            }
-        })
+        .attr('class', function(d){
+            return d.id
+        }) 
         .attr('y', function(d) { 
             return d.y;  
         })
@@ -379,16 +276,6 @@ function positionNodes(d) {
             return d.x; 
         })
     
-    // text
-    //     .attr('class', function(d){
-    //         return 't'+d.id;
-    //     })
-    //     .attr('y', function(d) { 
-    //         return d.y;  
-    //     })
-    //     .attr('x', function(d) {
-    //         return d.x; 
-    //     })
 }
 function makeLinks(d) {
     var dx = d.target.x - d.source.x,
