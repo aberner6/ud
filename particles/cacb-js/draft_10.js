@@ -20,6 +20,8 @@ var maxStrength = 0.25;
 //hacky way to get the vis started well
 var whichNum= 0;
 
+
+
 const makeRequest = async () => {
   try {
     dataset = await d3.json('cacb-data/sep6.json');
@@ -31,6 +33,7 @@ const makeRequest = async () => {
   }
 }
 
+var filter;
 var topicNodes = [];
 var locs = [];
 const getNodes = async(dataset)=>{
@@ -63,12 +66,13 @@ const processPrep = async(dataset, nodes) => {
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id)//.strength(0.01)
             .distance(2).strength(0.3))
-        // .force('charge', d3.forceManyBody(-100))
-        .force('collide', d3.forceCollide().radius(symWidth).strength(0.1))
+        .force('center', d3.forceCenter(0,0))
+        .force('charge', d3.forceManyBody(-100).strength(0))
+        .force('collide', d3.forceCollide().radius(symWidth).strength(0))
         // .force('r', d3.forceRadial(function(d){
         //     return poScale(d.type) //nodes are placed in relation to their halls
         // }).strength(0.9)) //.001
-
+        //ADD SOME CENTERING FORCE SO THEY STAY ON THE SCREEN
 
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
@@ -237,25 +241,32 @@ function restart(liveLinks, liveNodes, whichNum){
     }
 
 
-    //can simulation get smaller the more clicks
-    simulation
-        .nodes(liveNodes)
-        .force('link').links(liveLinks)
         simulation
-        .force("y", d3.forceY(function(d){
-            if(d.tags.length==1){
-                var adjst = d.tags-1;
-                return yScale(dataset.tags[adjst].loc)
-            }else{
-                var adjst = (d.tags[0])-1;
-                return yScale(dataset.tags[adjst].loc)
-            }
-        }).strength(1)) 
+            .nodes(liveNodes)
+            .force('link').links(liveLinks)
+    if(whichNum>1){
+        simulation
+            .force('collide', d3.forceCollide().radius(symWidth/2).strength(.5))
+            .force('charge', d3.forceManyBody(-100).strength(1))
+    }
+    if(whichNum==1){
+        //can simulation get smaller the more clicks
+            simulation
+            .force("y", d3.forceY(function(d){
+                if(d.tags.length==1){
+                    var adjst = d.tags-1;
+                    return yScale(dataset.tags[adjst].loc)
+                }else{
+                    var adjst = (d.tags[0])-1;
+                    return yScale(dataset.tags[adjst].loc)
+                }
+            }).strength(1)) 
+    }
+        simulation
+            .alpha(.05)
+            .on('tick', ticked)
+            .restart()
 
-    simulation
-        .alpha(.05)
-        .on('tick', ticked)
-        .restart()
 }
 
 function ticked() {
