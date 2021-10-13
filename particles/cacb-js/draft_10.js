@@ -55,6 +55,7 @@ const getNodes = async(dataset)=>{
 
 
 var yScale = d3.scaleLinear()
+var xScale = d3.scaleLinear()
 var symSize = d3.scaleLinear()
 const processPrep = async(dataset, nodes) => {
     width = window.innerWidth*.99;
@@ -69,6 +70,11 @@ const processPrep = async(dataset, nodes) => {
         .domain(locs)
         .range([-290,-210])
 
+
+    xScale
+        .domain([0,34])
+        .range([-width/2,width/2])
+
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id)//.strength(0.01)
             .distance(2).strength(0.3))
@@ -82,6 +88,7 @@ const processPrep = async(dataset, nodes) => {
 
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
+
     img = svg.append('g')
         .selectAll('image');
 
@@ -199,9 +206,7 @@ function restart(liveLinks, liveNodes, whichNum){
             return d.id
         })
     text.exit()
-        .remove();       
-    
-
+        .remove();
     text = text.enter()
         .append('text')
         .attr('font-size','10px')
@@ -215,7 +220,6 @@ function restart(liveLinks, liveNodes, whichNum){
             }
         })
         .merge(text); 
-
 
 
 
@@ -237,6 +241,9 @@ function restart(liveLinks, liveNodes, whichNum){
 //only if you are CO2 and other human made things?
     drawOut()
     function drawOut(){
+        //IF YOU ARE DEGRADING, THE LINKS WILL BE WEIRD
+        //this is tied to the whichNum in terms of sequence
+        //and tied to the symb in terms of topical focus
         link.attr('class',function(d){
             if(d.sourceType==whichNum){
                 d3.select(this)
@@ -276,25 +283,25 @@ function restart(liveLinks, liveNodes, whichNum){
 
 
     //this is nicer than the data based version
-    node.attr('class',function(d){
-        if(d.type==whichNum){
-            d3.select(this)
-                .transition()
-                .duration(6000)
-                .ease(d3.easeCubicInOut,1)
-                .ease(d3.easeElasticOut.amplitude(1).period(2))
-                .attr('width',symWidth*2 + 'px')
-                .attr('height',symWidth*2 + 'px')
-        }else{
-            d3.select(this)
-                .transition()
-                .duration(6000)
-                .ease(d3.easeCubicInOut,1)
-                .ease(d3.easeElasticOut.amplitude(1).period(2))
-                .attr('width',symWidth/2 + 'px')
-                .attr('height',symWidth/2 + 'px')
-        }
-    }) 
+    // node.attr('class',function(d){
+    //     if(d.type==whichNum){
+    //         d3.select(this)
+    //             .transition()
+    //             .duration(6000)
+    //             .ease(d3.easeCubicInOut,1)
+    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+    //             .attr('width',symWidth*2 + 'px')
+    //             .attr('height',symWidth*2 + 'px')
+    //     }else{
+    //         d3.select(this)
+    //             .transition()
+    //             .duration(6000)
+    //             .ease(d3.easeCubicInOut,1)
+    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+    //             .attr('width',symWidth/2 + 'px')
+    //             .attr('height',symWidth/2 + 'px')
+    //     }
+    // }) 
 
 
 
@@ -303,38 +310,34 @@ function restart(liveLinks, liveNodes, whichNum){
         .data(liveNodes, function(d){
             return d;
         })
-        // .attr('opacity', function (d){
-        //         if(d.type==whichNum){
-        //             return .4;
-        //         }else{
-        //             return .2;
-        //         }
-        // })
     img.exit()
         .remove();
     img = img.enter()
-        .filter(function(d) { 
-            if(d.first ==1){
-                return d;
-            }
-        })
         .append('svg:image')
         .attr('class','backImg')
         .attr('xlink:href', function(d) {
-            return 'img/TOC/'+d.type+'.png';
+                if(d.first==1){
+                    console.log(d.symb)
+                    return 'img/TOC/'+d.id+'.png';
+                }else{}
         })
-        // .attr('x', -width/2+400)
-        // .attr('y', -height/2)
-        .attr('width', photoWidth+'px')
-        // .attr('height', 1000+'px')
-        // .attr('opacity',.4)
+        .attr('width', function(d){
+            return photoWidth+'px' 
+        })
+        .attr('clip-path', function(d){
+            if(d.type==3){
+                return 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)';
+            }else{ return 'none' }
+        })
         .merge(img);
+
+
 
 
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
-    if(whichNum>1){
+    if(whichNum>1 && whichNum<33){
         simulation
             .force('collide', d3.forceCollide().radius(function(d){
                 if(d.first==1){
@@ -353,6 +356,21 @@ function restart(liveLinks, liveNodes, whichNum){
                     return yScale(dataset.tags[adjst].loc)
                 }
             }).strength(1)) 
+    }
+    if(whichNum==34){
+        simulation
+            .force('collide', d3.forceCollide().radius(function(d){
+                if(d.first==1){
+                    return symWidth
+                }else{
+                    return symWidth/2;
+                }
+            }).strength(.8))
+            .force('charge', d3.forceManyBody(-100).strength(1))
+            .force('x', d3.forceX(function(d){
+                    return xScale(d.type)
+            }).strength(1)) 
+            .force('y', d3.forceY().strength(.1)) 
     }
     if(whichNum==1){
         //can simulation get smaller the more clicks
