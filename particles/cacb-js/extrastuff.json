@@ -798,3 +798,32 @@
 
 
 //             </filter>
+
+
+        // node.attr('class',function(d){
+        //     if(d.type==whichNum){
+        //         d3.select(this)
+        //             .transition()
+        //             .duration(2000)
+        //             .ease(d3.easeCubicInOut,1)
+        //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+        //             .attr('width',function(d){
+        //                 if(d.tags.length==1){
+        //                     var adjst = d.tags-1;
+        //                     return (symSize(dataset.tags[adjst].loc))+'px'
+        //                 }else{
+        //                     var adjst = (d.tags[0])-1;
+        //                     return (symSize(dataset.tags[adjst].loc))+'px'
+        //                 }
+        //             })
+        //             .attr('height',function(d){
+        //                 if(d.tags.length==1){
+        //                     var adjst = d.tags-1;
+        //                     return (symSize(dataset.tags[adjst].loc))+'px'
+        //                 }else{
+        //                     var adjst = (d.tags[0])-1;
+        //                     return (symSize(dataset.tags[adjst].loc))+'px'
+        //                 }
+        //             })
+        //         }
+        //     })

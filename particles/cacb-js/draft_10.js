@@ -36,6 +36,7 @@ const makeRequest = async () => {
 var filter;
 var topicNodes = [];
 var locs = [];
+var maxLoc;
 const getNodes = async(dataset)=>{
     for (var i = 0; i<dataset.nodes.length; i++){
         nodes.push(dataset.nodes[i])
@@ -48,16 +49,21 @@ const getNodes = async(dataset)=>{
         tagTable.push(dataset.tags[i]);
         locs.push(dataset.tags[i].loc);
     }
-    locs.sort(d3.ascending)
+    locs.sort(d3.ascending);
     return nodes;
 }
 
 
 var yScale = d3.scaleLinear()
-
+var symSize = d3.scaleLinear()
 const processPrep = async(dataset, nodes) => {
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
+
+    maxLoc = d3.max(locs);
+    symSize
+        .domain([0, maxLoc])
+        .range([symWidth*2, symWidth/2])
 
     yScale
         .domain(locs)
@@ -176,14 +182,36 @@ function restart(liveLinks, liveNodes, whichNum){
         })
         .attr('transform',"translate("+ -symWidth/2 +","+ -symHeight/2 +")")
         .attr('width', function(d){
-            return symWidth+'px'
+            return symWidth/2+'px'
         })
         .attr('height', function(d){
-            return symHeight+'px'
+            return symHeight/2+'px'
         })
         .attr('opacity',opa)
         .merge(node);
  
+
+    text = text
+        .data(liveTopics, function(d){
+            return d.id
+        })
+    text.exit()
+        .remove();       
+    
+    text = text.enter()
+        .append('text')
+        .attr('font-size','10px')
+        .attr('fill','white')
+        .text(function(d){
+            for(i=0; i<tagTable.length; i++){
+                //only want 1 instance
+                if(d.tags==tagTable[i].tagID && d.first==1){
+                    return tagTable[i].tag.toUpperCase();
+                }
+            }
+        })
+        .merge(text); 
+
 
     link = link
         .data(liveLinks, function(d){
@@ -241,18 +269,42 @@ function restart(liveLinks, liveNodes, whichNum){
     }
 
 
-        simulation
-            .nodes(liveNodes)
-            .force('link').links(liveLinks)
+    //this is nicer than the data based version
+    node.attr('class',function(d){
+        if(d.type==whichNum){
+            d3.select(this)
+                .transition()
+                .duration(6000)
+                .ease(d3.easeCubicInOut,1)
+                .ease(d3.easeElasticOut.amplitude(1).period(2))
+                .attr('width',symWidth*2 + 'px')
+                .attr('height',symWidth*2 + 'px')
+        }else{
+            d3.select(this)
+                .transition()
+                .duration(6000)
+                .ease(d3.easeCubicInOut,1)
+                .ease(d3.easeElasticOut.amplitude(1).period(2))
+                .attr('width',symWidth/2 + 'px')
+                .attr('height',symWidth/2 + 'px')
+        }
+    }) 
+
+
+    simulation
+        .nodes(liveNodes)
+        .force('link').links(liveLinks)
     if(whichNum>1){
         simulation
-            .force('collide', d3.forceCollide().radius(symWidth/2).strength(.5))
+            .force('collide', d3.forceCollide().radius(function(d){
+                if(d.first==1){
+                    return symWidth
+                }else{
+                    return symWidth/2;
+                }
+            }).strength(.8))
             .force('charge', d3.forceManyBody(-100).strength(1))
-    }
-    if(whichNum==1){
-        //can simulation get smaller the more clicks
-            simulation
-            .force("y", d3.forceY(function(d){
+            .force('y', d3.forceY(function(d){
                 if(d.tags.length==1){
                     var adjst = d.tags-1;
                     return yScale(dataset.tags[adjst].loc)
@@ -262,20 +314,45 @@ function restart(liveLinks, liveNodes, whichNum){
                 }
             }).strength(1)) 
     }
+    if(whichNum==1){
+        //can simulation get smaller the more clicks
         simulation
-            .alpha(.05)
-            .on('tick', ticked)
-            .restart()
+            .force('collide', d3.forceCollide().radius(symWidth/2).strength(.5))
+            .force('y', d3.forceY(function(d){
+                if(d.tags.length==1){
+                    var adjst = d.tags-1;
+                    return yScale(dataset.tags[adjst].loc)
+                }else{
+                    var adjst = (d.tags[0])-1;
+                    return yScale(dataset.tags[adjst].loc)
+                }
+            }).strength(1)) 
+    }
+    simulation
+        .alpha(.05)
+        .on('tick', ticked)
+        .restart()
 
 }
 
 function ticked() {
+    text.attr('class', positionNodes);
     node.attr('class', positionNodes);
     link.attr('d', makeLinks)
 }
 
 function positionNodes(d) {
 
+    text
+        .attr('class', function(d){
+            return 'txt'
+        }) 
+        .attr('y', function(d,i) { 
+            return d.y; 
+        })
+        .attr('x', function(d) {
+            return d.x; 
+        })
     node
         .attr('class', function(d){
             return d.id
