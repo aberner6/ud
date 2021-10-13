@@ -82,14 +82,15 @@ const processPrep = async(dataset, nodes) => {
 
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
+    img = svg.append('g')
+        .selectAll('image');
+
     node = svg.append('g')
         .selectAll('circle');
     text = svg.append('g')
         .selectAll('text');
     link = svg.append('g')
         .selectAll('line');
-    img = svg.append('g')
-        .selectAll('image');
 
     document.onkeydown = checkKey;
     function checkKey(e) {
@@ -133,11 +134,11 @@ const linkUp = async(liveNodes, topicNodes)=>{
             for (k=0; k<liveTopics.length; k++){
                 if((liveNodes[i].tags[j]==liveTopics[k].tags) && (liveNodes[i].type == whichNum)){//place to change if all
                     liveLinks.push({
-                        "source": liveNodes[i].id,
-                        "sourceType": liveNodes[i].type,
-                        "target": liveTopics[k].id,
-                        "targetType": liveTopics[k].type,
-                        "id":liveNodes[i].id
+                        'source': liveNodes[i].id,
+                        'sourceType': liveNodes[i].type,
+                        'target': liveTopics[k].id,
+                        'targetType': liveTopics[k].type,
+                        'id':liveNodes[i].id
                     })
                 }
              }
@@ -155,7 +156,9 @@ const satScale = d3.scaleLinear()
 const rad2Scale = d3.scaleLinear()
     .domain([1,10])
     .range([1, 50])
+var photoWidth = 100;
 
+var fillColor = 'black';
 function restart(liveLinks, liveNodes, whichNum){
     var opa = .6;
     var minOpa = .1;
@@ -180,14 +183,14 @@ function restart(liveLinks, liveNodes, whichNum){
 
             return d.symb+'/'+answer+'.png';
         })
-        .attr('transform',"translate("+ -symWidth/2 +","+ -symHeight/2 +")")
+        .attr('transform','translate('+ -symWidth/2 +','+ -symHeight/2 +')')
         .attr('width', function(d){
             return symWidth/2+'px'
         })
         .attr('height', function(d){
             return symHeight/2+'px'
         })
-        .attr('opacity',opa)
+        // .attr('opacity',opa)
         .merge(node);
  
 
@@ -198,10 +201,11 @@ function restart(liveLinks, liveNodes, whichNum){
     text.exit()
         .remove();       
     
+
     text = text.enter()
         .append('text')
         .attr('font-size','10px')
-        .attr('fill','white')
+        .attr('fill',fillColor)
         .text(function(d){
             for(i=0; i<tagTable.length; i++){
                 //only want 1 instance
@@ -213,6 +217,8 @@ function restart(liveLinks, liveNodes, whichNum){
         .merge(text); 
 
 
+
+
     link = link
         .data(liveLinks, function(d){
             return d.id;
@@ -222,14 +228,14 @@ function restart(liveLinks, liveNodes, whichNum){
 
     link = link.enter().append('path')
         .attr('class', 'link')
-        .attr('stroke','white')
-        .attr('stroke-opacity',.01)
+        .attr('stroke',fillColor)
+        .attr('stroke-opacity',.9)
         .attr('fill','none')
         .merge(link);
 
 
 //only if you are CO2 and other human made things?
-    // drawOut()
+    drawOut()
     function drawOut(){
         link.attr('class',function(d){
             if(d.sourceType==whichNum){
@@ -291,6 +297,40 @@ function restart(liveLinks, liveNodes, whichNum){
     }) 
 
 
+
+
+    img = img
+        .data(liveNodes, function(d){
+            return d;
+        })
+        // .attr('opacity', function (d){
+        //         if(d.type==whichNum){
+        //             return .4;
+        //         }else{
+        //             return .2;
+        //         }
+        // })
+    img.exit()
+        .remove();
+    img = img.enter()
+        .filter(function(d) { 
+            if(d.first ==1){
+                return d;
+            }
+        })
+        .append('svg:image')
+        .attr('class','backImg')
+        .attr('xlink:href', function(d) {
+            return 'img/TOC/'+d.type+'.png';
+        })
+        // .attr('x', -width/2+400)
+        // .attr('y', -height/2)
+        .attr('width', photoWidth+'px')
+        // .attr('height', 1000+'px')
+        // .attr('opacity',.4)
+        .merge(img);
+
+
     simulation
         .nodes(liveNodes)
         .force('link').links(liveLinks)
@@ -336,13 +376,23 @@ function restart(liveLinks, liveNodes, whichNum){
 }
 
 function ticked() {
+    img.attr('class', positionNodes);
     text.attr('class', positionNodes);
     node.attr('class', positionNodes);
     link.attr('d', makeLinks)
 }
 
 function positionNodes(d) {
-
+    img
+        .attr('class', function(d){
+            return 'img'
+        }) 
+        .attr('y', function(d,i) { 
+            return d.y-photoWidth/2; 
+        })
+        .attr('x', function(d) {
+            return d.x-photoWidth/2; 
+        })
     text
         .attr('class', function(d){
             return 'txt'
