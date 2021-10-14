@@ -9,7 +9,7 @@ var liveNodes = [];
 var liveTopics = [];
 var liveFirsts = [];
 
-var radius = 15;
+var radius = 30;
 var symWidth = radius;
 var symHeight = radius;
 
@@ -60,12 +60,19 @@ var poScale = d3.scaleLinear()
 var xScale = d3.scaleLinear()
 var strokeScale = d3.scaleLinear()
 var dashScale = d3.scaleLinear()
+var symSize = d3.scaleLinear()
 const processPrep = async(dataset, nodes) => {
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
     maxLoc = d3.max(locs);
 
+
+
+
+    symSize
+        .domain([0, maxLoc])
+        .range([symWidth*5, symWidth/5])
     yScale
         .domain(locs)
         .range([-290,-210])
@@ -217,6 +224,32 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         .merge(node);
  
 
+    node
+        .transition()
+        .duration(4000)
+        .attr('width', function(d){
+            if(whichNum>1 && d.type!=whichNum && d.symb=='symb/clouds/low' && d.first!=1){
+                return 0+'px'
+            }
+            if(d.type!=whichNum && d.symb=='symb/comms' && d.first!=1){
+                return 0+'px'
+            }
+            if(d.type!=whichNum && d.symb=='symb/sensors' && d.first!=1){
+                return 0+'px'
+            }
+            if(d.type!=whichNum && d.symb=='symb/storage' && d.first!=1){
+                return 0+'px'
+            }
+            if(d.type!=whichNum && d.symb=='symb/process' && d.first!=1){
+                return 0+'px'
+            }
+            else{
+                return symWidth+'px';
+            }
+        })
+
+
+
     // text = text
     //     .data(liveFirsts, function(d){
     //         return d.id
@@ -334,7 +367,33 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         })
         .merge(img);
 
-
+    // node.attr('class',function(d){
+    //     if(d.type==whichNum){
+    //         d3.select(this)
+    //             .transition()
+    //             .duration(2000)
+    //             .ease(d3.easeCubicInOut,1)
+    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+    //             .attr('width',function(d){
+    //                 if(d.tags.length==1){
+    //                     var adjst = d.tags-1;
+    //                     return (symSize(dataset.tags[adjst].loc))+'px'
+    //                 }else{
+    //                     var adjst = (d.tags[0])-1;
+    //                     return (symSize(dataset.tags[adjst].loc))+'px'
+    //                 }
+    //             })
+    //             .attr('height',function(d){
+    //                 if(d.tags.length==1){
+    //                     var adjst = d.tags-1;
+    //                     return (symSize(dataset.tags[adjst].loc))+'px'
+    //                 }else{
+    //                     var adjst = (d.tags[0])-1;
+    //                     return (symSize(dataset.tags[adjst].loc))+'px'
+    //                 }
+    //             })
+    //         }
+    //     })
 
 
     simulation
@@ -358,18 +417,22 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     }
 
     if(whichNum>1 && whichNum<33){
-        // simulation
-        //     .force('link', d3.forceLink().id(d => d.id)//.strength(0.01)
-        //         .distance(2).strength(0.3))
+
         simulation
             .force('collide', d3.forceCollide().radius(function(d){
                 if(d.first==1){
                     return symWidth*2;
-                }else{
+                }
+                else{
                     return symWidth;
                 }
             }).strength(.8))
-            .force('charge', d3.forceManyBody(-100).strength(1))
+            .force('charge', d3.forceManyBody(function(d){
+                if(d.symb=='symb/clouds/low'){
+                    return -500;
+                }else{ 
+                    return -100 
+                }}).strength(.5))
             .force('y', d3.forceY(function(d){
                 if(d.tags.length==1){
                     var adjst = d.tags-1;
@@ -390,7 +453,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                 }
             }).strength(.8))
             .force('charge', d3.forceManyBody(function(d){
-                if(d.type==1){
+                if(d.symb=='symb/clouds/low'){
                     return -500;
                 }else{
                     return -100;  
