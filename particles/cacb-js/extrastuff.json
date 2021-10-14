@@ -650,7 +650,29 @@
 ]
 
 
-
+    // symSize
+    //     .domain([0, maxLoc])
+    //     .range([symWidth*2, symWidth/2])
+    //this is nicer than the data based version
+    // node.attr('class',function(d){
+    //     if(d.type==whichNum){
+    //         d3.select(this)
+    //             .transition()
+    //             .duration(6000)
+    //             .ease(d3.easeCubicInOut,1)
+    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+    //             .attr('width',symWidth*2 + 'px')
+    //             .attr('height',symWidth*2 + 'px')
+    //     }else{
+    //         d3.select(this)
+    //             .transition()
+    //             .duration(6000)
+    //             .ease(d3.easeCubicInOut,1)
+    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
+    //             .attr('width',symWidth/2 + 'px')
+    //             .attr('height',symWidth/2 + 'px')
+    //     }
+    // }) 
 
 
 
