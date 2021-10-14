@@ -7,6 +7,7 @@ var svg, g, node, text, link, img;
 var liveLinks = [];
 var liveNodes = [];
 var liveTopics = [];
+var liveFirsts = [];
 
 var radius = 30;
 var symWidth = radius;
@@ -57,6 +58,9 @@ const getNodes = async(dataset)=>{
 var yScale = d3.scaleLinear()
 var xScale = d3.scaleLinear()
 var symSize = d3.scaleLinear()
+var strokeScale = d3.scaleLinear()
+var dashScale = d3.scaleLinear()
+
 const processPrep = async(dataset, nodes) => {
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
@@ -74,6 +78,14 @@ const processPrep = async(dataset, nodes) => {
     xScale
         .domain([0,34])
         .range([-width/2,width/2])
+
+
+    strokeScale
+        .domain([0, maxLoc])
+        .range([1, 10])
+    dashScale
+        .domain([0, maxLoc])
+        .range([10, 1])
 
     simulation = d3.forceSimulation()
         .force('link', d3.forceLink().id(d => d.id)//.strength(0.01)
@@ -119,13 +131,16 @@ function series(){
 
     chooseData(whichNum)
         .then(liveNodes => linkUp(liveNodes, liveTopics))
-        .then(liveLinks => restart(liveLinks, liveNodes, whichNum))
+        .then(liveLinks => restart(liveLinks, liveNodes, liveFirsts, whichNum))
 }
 
 const chooseData = async(whichNum)=>{
     for (var i = 0; i<topicNodes.length; i++){
         if(topicNodes[i].type == whichNum){  
             liveTopics.push(topicNodes[i])
+        }
+        if(topicNodes[i].type == whichNum && topicNodes[i].first==1){  
+            liveFirsts.push(topicNodes[i])
         }
     }
     for (var i = 0; i<nodes.length; i++){
@@ -145,6 +160,10 @@ const linkUp = async(liveNodes, topicNodes)=>{
                         'sourceType': liveNodes[i].type,
                         'target': liveTopics[k].id,
                         'targetType': liveTopics[k].type,
+                        'sourceSym': liveNodes[i].symb,
+                        'targetSym': liveTopics[k].symb,                        
+                        'sourceTags': liveNodes[i].tags,
+                        'targetTags': liveTopics[k].tags,  
                         'id':liveNodes[i].id
                     })
                 }
@@ -163,10 +182,11 @@ const satScale = d3.scaleLinear()
 const rad2Scale = d3.scaleLinear()
     .domain([1,10])
     .range([1, 50])
+
 var photoWidth = 100;
 
 var fillColor = 'black';
-function restart(liveLinks, liveNodes, whichNum){
+function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     var opa = .6;
     var minOpa = .1;
     var maxOpa = .9;
@@ -202,7 +222,7 @@ function restart(liveLinks, liveNodes, whichNum){
  
 
     text = text
-        .data(liveTopics, function(d){
+        .data(liveFirsts, function(d){
             return d.id
         })
     text.exit()
@@ -233,13 +253,36 @@ function restart(liveLinks, liveNodes, whichNum){
     link = link.enter().append('path')
         .attr('class', 'link')
         .attr('stroke',fillColor)
-        .attr('stroke-opacity',.9)
+        .attr('stroke-opacity',.5)
         .attr('fill','none')
+//add if not animating
+        .attr('stroke-dasharray',function(d){
+            var adjst;
+            if(d.sourceTags.length==1){
+                adjst = d.sourceTags-1;
+            }else{
+                adjst = (d.sourceTags[0])-1;
+            }
+            return strokeScale(dataset.tags[adjst].loc)+","+dashScale(strokeScale(dataset.tags[adjst].loc))
+        })
+
+
+
+
+        //     if(d.targetSym=="symb/CO2"){
+        //         return '1,10'
+        //     } 
+        //     // || d.symb=='symb/storage' || d.symb== 'symb/communications' || d.symb=='symb/processing'|| d.symb=='symb/energy'){
+        //     else{
+        //         return '10,1'
+        //     }
+        // })
+        .attr('stroke-dashoffset','0')
         .merge(link);
 
 
 //only if you are CO2 and other human made things?
-    drawOut()
+    // drawOut()
     function drawOut(){
         //IF YOU ARE DEGRADING, THE LINKS WILL BE WEIRD
         //this is tied to the whichNum in terms of sequence
@@ -307,7 +350,7 @@ function restart(liveLinks, liveNodes, whichNum){
 
 
     img = img
-        .data(liveNodes, function(d){
+        .data(liveFirsts, function(d){
             return d;
         })
     img.exit()
@@ -317,7 +360,6 @@ function restart(liveLinks, liveNodes, whichNum){
         .attr('class','backImg')
         .attr('xlink:href', function(d) {
                 if(d.first==1){
-                    console.log(d.symb)
                     return 'img/TOC/'+d.id+'.png';
                 }else{}
         })
@@ -366,7 +408,13 @@ function restart(liveLinks, liveNodes, whichNum){
                     return symWidth/2;
                 }
             }).strength(.8))
-            .force('charge', d3.forceManyBody(-100).strength(1))
+            .force('charge', d3.forceManyBody(function(d){
+                if(d.type==1){
+                    return -500;
+                }else{
+                    return -100;  
+                }
+            }).strength(1))
             .force('x', d3.forceX(function(d){
                     return xScale(d.type)
             }).strength(1)) 
@@ -374,17 +422,16 @@ function restart(liveLinks, liveNodes, whichNum){
     }
     if(whichNum==1){
         //can simulation get smaller the more clicks
-        simulation
-            .force('collide', d3.forceCollide().radius(symWidth/2).strength(.5))
-            .force('y', d3.forceY(function(d){
-                if(d.tags.length==1){
-                    var adjst = d.tags-1;
-                    return yScale(dataset.tags[adjst].loc)
-                }else{
-                    var adjst = (d.tags[0])-1;
-                    return yScale(dataset.tags[adjst].loc)
-                }
-            }).strength(1)) 
+        // simulation
+        //     .force('y', d3.forceY(function(d){
+        //         if(d.tags.length==1){
+        //             var adjst = d.tags-1;
+        //             return yScale(dataset.tags[adjst].loc)
+        //         }else{
+        //             var adjst = (d.tags[0])-1;
+        //             return yScale(dataset.tags[adjst].loc)
+        //         }
+        //     }).strength(1)) 
     }
     simulation
         .alpha(.05)
