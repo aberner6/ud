@@ -228,19 +228,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         .transition()
         .duration(4000)
         .attr('width', function(d){
-            if(whichNum>1 && d.type!=whichNum && d.symb=='symb/clouds/low' && d.first!=1){
-                return 0+'px'
-            }
-            if(d.type!=whichNum && d.symb=='symb/comms' && d.first!=1){
-                return 0+'px'
-            }
-            if(d.type!=whichNum && d.symb=='symb/sensors' && d.first!=1){
-                return 0+'px'
-            }
-            if(d.type!=whichNum && d.symb=='symb/storage' && d.first!=1){
-                return 0+'px'
-            }
-            if(d.type!=whichNum && d.symb=='symb/process' && d.first!=1){
+            if(whichNum>1 && d.type!=whichNum && d.first!=1 && ((d.symb=='symb/clouds/low') || (d.symb=='symb/comms') || (d.symb=='symb/sensors') || (d.symb =='symb/storage') || (d.symb=='symb/process'))){
                 return 0+'px'
             }
             else{
@@ -367,33 +355,6 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         })
         .merge(img);
 
-    // node.attr('class',function(d){
-    //     if(d.type==whichNum){
-    //         d3.select(this)
-    //             .transition()
-    //             .duration(2000)
-    //             .ease(d3.easeCubicInOut,1)
-    //             .ease(d3.easeElasticOut.amplitude(1).period(2))
-    //             .attr('width',function(d){
-    //                 if(d.tags.length==1){
-    //                     var adjst = d.tags-1;
-    //                     return (symSize(dataset.tags[adjst].loc))+'px'
-    //                 }else{
-    //                     var adjst = (d.tags[0])-1;
-    //                     return (symSize(dataset.tags[adjst].loc))+'px'
-    //                 }
-    //             })
-    //             .attr('height',function(d){
-    //                 if(d.tags.length==1){
-    //                     var adjst = d.tags-1;
-    //                     return (symSize(dataset.tags[adjst].loc))+'px'
-    //                 }else{
-    //                     var adjst = (d.tags[0])-1;
-    //                     return (symSize(dataset.tags[adjst].loc))+'px'
-    //                 }
-    //             })
-    //         }
-    //     })
 
 
     simulation
@@ -462,7 +423,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
             .force('x', d3.forceX(function(d){
                     return xScale(d.type)
             }).strength(1)) 
-            .force('y', d3.forceY().strength(.1)) 
+            .force('y', d3.forceY().strength(0)) 
     }
     if(whichNum==35){
         simulation
