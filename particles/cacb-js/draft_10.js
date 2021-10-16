@@ -9,7 +9,7 @@ var liveNodes = [];
 var liveTopics = [];
 var liveFirsts = [];
 
-var radius = 30;
+var radius = 20;
 var symWidth = radius;
 var symHeight = radius;
 
@@ -62,6 +62,7 @@ var strokeScale = d3.scaleLinear()
 var dashScale = d3.scaleLinear()
 var symSize = d3.scaleLinear()
 const processPrep = async(dataset, nodes) => {
+    //2480 by 1417
     width = window.innerWidth*.99;
     height = window.innerHeight*.99;
 
@@ -77,6 +78,10 @@ const processPrep = async(dataset, nodes) => {
         .domain(locs)
         .range([-290,-210])
     
+    // yScale
+    //     .domain(locs)
+    //     .range([-height/2,height/2])
+
     poScale
         .domain([0, maxLoc])
         .range([-100,100])
@@ -216,10 +221,25 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         })
         .attr('transform','translate('+ -symWidth/2 +','+ -symHeight/2 +')')
         .attr('width', function(d){
-            return symWidth+'px'
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+                return (symWidth-4) + 'px';
+            }else{
+                return symWidth+'px'
+            }
         })
         .attr('height', function(d){
-            return symHeight+'px'
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+                return (symWidth-4) + 'px';
+            }else{
+                return symHeight+'px'  
+            }
+        })
+        .attr('opacity', function(d){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+                return .8;
+            }else{
+                return 1;
+            }
         })
         .merge(node);
  
@@ -232,31 +252,13 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                 return 0+'px'
             }
             else{
-                return symWidth+'px';
+                if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+                    return (symWidth-4) + 'px';
+                }else{
+                    return symWidth+'px'
+                }
             }
         })
-
-
-
-    // text = text
-    //     .data(liveFirsts, function(d){
-    //         return d.id
-    //     })
-    // text.exit()
-    //     .remove();
-    // text = text.enter()
-    //     .append('text')
-    //     .attr('font-size','10px')
-    //     .attr('fill',fillColor)
-    //     .text(function(d){
-    //         for(i=0; i<tagTable.length; i++){
-    //             //only want 1 instance
-    //             if(d.tags==tagTable[i].tagID && d.first==1){
-    //                 return tagTable[i].tag.toUpperCase();
-    //             }
-    //         }
-    //     })
-    //     .merge(text); 
 
 
 
@@ -270,8 +272,8 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     link = link.enter().append('path')
         .attr('class', 'link')
         .attr('stroke',fillColor)
-        .attr('stroke-width',.3)
-        .attr('stroke-opacity',.5)
+        .attr('stroke-width',.5)
+        .attr('stroke-opacity',.7)
         .attr('fill','none')
 //add if not animating
         .attr('stroke-dasharray',function(d){
@@ -303,7 +305,15 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                     .on('end',drawIn)
             }else{
                 d3.select(this)
-                    .attr('stroke-dasharray','1,10')
+                    .attr('stroke-dasharray',function(d){
+                        var adjst;
+                        if(d.sourceTags.length==1){
+                            adjst = d.sourceTags-1;
+                        }else{
+                            adjst = (d.sourceTags[0])-1;
+                        }
+                        return strokeScale(dataset.tags[adjst].loc)+","+dashScale(strokeScale(dataset.tags[adjst].loc))
+                    })
                     .attr('stroke-dashoffset','0')
             }
         })        
@@ -342,16 +352,14 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         .attr('class','backImg')
         .attr('xlink:href', function(d) {
                 if(d.first==1){
-                    return 'img/TOC/'+d.id+'.png';
+                    return 'img/'+d.id+'.png';
                 }else{}
         })
         .attr('width', function(d){
             return photoWidth+'px' 
         })
-        .attr('clip-path', function(d){
-            if(d.type==3){
-                return 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)';
-            }else{ return 'none' }
+        .attr('height', function(d){
+            return photoWidth+'px' 
         })
         .merge(img);
 

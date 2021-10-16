@@ -703,6 +703,28 @@
 
 
 
+    // text = text
+    //     .data(liveFirsts, function(d){
+    //         return d.id
+    //     })
+    // text.exit()
+    //     .remove();
+    // text = text.enter()
+    //     .append('text')
+    //     .attr('font-size','10px')
+    //     .attr('fill',fillColor)
+    //     .text(function(d){
+    //         for(i=0; i<tagTable.length; i++){
+    //             //only want 1 instance
+    //             if(d.tags==tagTable[i].tagID && d.first==1){
+    //                 return tagTable[i].tag.toUpperCase();
+    //             }
+    //         }
+    //     })
+    //     .merge(text); 
+
+
+
     // node.attr('class',function(d){
     //     if(d.type==whichNum){
     //         d3.select(this)
