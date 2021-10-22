@@ -7,7 +7,8 @@
    "type": 1,
    "first": 1,
    "symb": "symb/clouds/low",
-   "symbNum": 6
+   "symbNum": 6,
+   "size": 90
  },
  {
    "id": 2,
@@ -15,7 +16,8 @@
    "type": 2,
    "first": 1,
    "symb": "symb/CO2",
-   "symbNum": 2
+   "symbNum": 2,
+   "size": 70
  },
  {
    "id": 3,
@@ -23,7 +25,8 @@
    "type": 3,
    "first": 1,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 8,
+   "size": 110
  },
  {
    "id": 4,
@@ -31,7 +34,8 @@
    "type": 4,
    "first": 1,
    "symb": "symb/radiance",
-   "symbNum": 2
+   "symbNum": 2,
+   "size": 140
  },
  {
    "id": 5,
@@ -39,7 +43,8 @@
    "type": 5,
    "first": 1,
    "symb": "symb/tipping",
-   "symbNum": 3
+   "symbNum": 3,
+   "size": 110
  },
  {
    "id": 6,
@@ -47,7 +52,8 @@
    "type": 6,
    "first": 1,
    "symb": "symb/energy",
-   "symbNum": 2
+   "symbNum": 2,
+   "size": 80
  },
  {
    "id": 7,
@@ -55,7 +61,8 @@
    "type": 7,
    "first": 1,
    "symb": "symb/storage",
-   "symbNum": 1
+   "symbNum": 1,
+   "size": 80
  },
  {
    "id": 8,
@@ -63,7 +70,8 @@
    "type": 18,
    "first": 1,
    "symb": "symb/comms",
-   "symbNum": 2
+   "symbNum": 2,
+   "size": 80
  },
  {
    "id": 9,
@@ -71,7 +79,8 @@
    "type": 19,
    "first": 1,
    "symb": "symb/wind",
-   "symbNum": 6
+   "symbNum": 6,
+   "size": 80
  },
  {
    "id": 10,
@@ -79,7 +88,8 @@
    "type": 21,
    "first": 1,
    "symb": "symb/humidity",
-   "symbNum": 2
+   "symbNum": 2,
+   "size": 100
  },
  {
    "id": 11,
@@ -87,7 +97,8 @@
    "type": 23,
    "first": 1,
    "symb": "symb/sensors",
-   "symbNum": 2
+   "symbNum": 2,
+   "size": 50
  },
  {
    "id": 12,
@@ -95,7 +106,8 @@
    "type": 25,
    "first": 1,
    "symb": "symb/process",
-   "symbNum": 1
+   "symbNum": 1,
+   "size": 80
  },
  {
    "id": 13,
@@ -103,7 +115,8 @@
    "type": 27,
    "first": 1,
    "symb": "symb/weather",
-   "symbNum": 3
+   "symbNum": 3,
+   "size": 120
  },
  {
    "id": 14,

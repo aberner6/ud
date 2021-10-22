@@ -195,7 +195,7 @@ const rad2Scale = d3.scaleLinear()
     .range([1, 50])
 
 var photoWidth = 100;
-
+var photoSmall = 80;
 var fillColor = 'black';
 function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     var opa = .6;
@@ -221,21 +221,21 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         })
         .attr('transform','translate('+ -symWidth/2 +','+ -symHeight/2 +')')
         .attr('width', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/energy')){
                 return (symWidth-4) + 'px';
             }else{
                 return symWidth+'px'
             }
         })
         .attr('height', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/energy')){
                 return (symWidth-4) + 'px';
             }else{
                 return symHeight+'px'  
             }
         })
         .attr('opacity', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/energy')){
                 return .8;
             }else{
                 return 1;
@@ -252,7 +252,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                 return 0+'px'
             }
             else{
-                if((d.symb=='symb/CO2') || (d.symb=='symb/energy')){
+                if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
                     return (symWidth-4) + 'px';
                 }else{
                     return symWidth+'px'
@@ -355,12 +355,22 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                     return 'img/'+d.id+'.png';
                 }else{}
         })
-        .attr('width', function(d){
-            return photoWidth+'px' 
-        })
+        // .attr('width', function(d){
+        //     if(d.id==11 || d.id==1 || d.id==2){
+        //         return photoWidth+3+'px' 
+        //     }else{
+        //         return photoWidth+'px' 
+        //     }
+        // })
         .attr('height', function(d){
-            return photoWidth+'px' 
+            return d.size +'px'
+            // if(d.id==1 || d.id==3){
+            //     return photoWidth+'px' 
+            // }else{
+            //     return photoSmall+'px' 
+            // }
         })
+        .attr('opacity',1)
         .merge(img);
 
 
