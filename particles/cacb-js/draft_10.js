@@ -88,7 +88,7 @@ const processPrep = async(dataset, nodes) => {
 
     xScale
         .domain([0,34])
-        .range([-width/2,width/2])
+        .range([width/3,-width/3])
 
     strokeScale
         .domain([0, maxLoc])
@@ -221,26 +221,20 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         })
         .attr('transform','translate('+ -symWidth/2 +','+ -symHeight/2 +')')
         .attr('width', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/energy')){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
                 return (symWidth-4) + 'px';
             }else{
                 return symWidth+'px'
             }
         })
         .attr('height', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/energy')){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
                 return (symWidth-4) + 'px';
             }else{
                 return symHeight+'px'  
             }
         })
-        .attr('opacity', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/energy')){
-                return .8;
-            }else{
-                return 1;
-            }
-        })
+        .attr('opacity', 1)
         .merge(node);
  
 
@@ -257,6 +251,11 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                 }else{
                     return symWidth+'px'
                 }
+            }
+        })
+        .attr('opacity', function(d){
+            if(d.type<whichNum){
+                return .2;
             }
         })
 
@@ -286,8 +285,16 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
             return strokeScale(dataset.tags[adjst].loc)+","+dashScale(strokeScale(dataset.tags[adjst].loc))
         })
         .attr('stroke-dashoffset','0')
+        .attr('opacity',1)
         .merge(link);
 
+    link
+        .transition()
+        .attr('opacity', function(d){
+            if(d.sourceType<whichNum){
+                return .4;
+            }
+        })
 
 //only if you are CO2 and other human made things?
     // drawOut()
@@ -363,14 +370,24 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         //     }
         // })
         .attr('height', function(d){
-            return d.size +'px'
+            // if(d.type==whichNum){
+                return d.size +'px'
+            // }else{
+                // return 0; //testing something
+            // }
             // if(d.id==1 || d.id==3){
             //     return photoWidth+'px' 
             // }else{
             //     return photoSmall+'px' 
             // }
         })
-        .attr('opacity',1)
+        .attr('opacity', function(d){
+            if(d.type==whichNum){
+                return 1
+            }else{
+                return .3;
+            }
+        })
         .merge(img);
 
 

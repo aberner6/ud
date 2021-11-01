@@ -25,7 +25,7 @@
    "type": 3,
    "first": 1,
    "symb": "symb/clouds/high",
-   "symbNum": 8,
+   "symbNum": 7,
    "size": 110
  },
  {
@@ -180,7 +180,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 22,
@@ -188,7 +188,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 23,
@@ -196,7 +196,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 24,
@@ -204,7 +204,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 25,
@@ -212,7 +212,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 26,
@@ -220,7 +220,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 27,
@@ -228,7 +228,7 @@
    "type": 3,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 8
+   "symbNum": 7
  },
  {
    "id": 28,
@@ -388,7 +388,7 @@
    "type": 10,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 6
+   "symbNum": 7
  },
  {
    "id": 50,
@@ -444,7 +444,7 @@
    "type": 15,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 6
+   "symbNum": 7
  },
  {
    "id": 57,
@@ -500,7 +500,7 @@
    "type": 15,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 6
+   "symbNum": 7
  },
  {
    "id": 64,
@@ -772,7 +772,7 @@
    "type": 30,
    "first": 0,
    "symb": "symb/clouds/high",
-   "symbNum": 6
+   "symbNum": 7
  },
  {
    "id": 98,
