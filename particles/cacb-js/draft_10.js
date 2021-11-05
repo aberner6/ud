@@ -88,7 +88,7 @@ const processPrep = async(dataset, nodes) => {
 
     xScale
         .domain([0,34])
-        .range([width/3,-width/3])
+        .range([-width/3,width/2])
 
     strokeScale
         .domain([0, maxLoc])
@@ -234,7 +234,14 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                 return symHeight+'px'  
             }
         })
-        .attr('opacity', 1)
+        .attr('opacity', function(d){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+                return .7;
+            }else{
+                return .8;
+            }            
+        })
+
         .merge(node);
  
 
@@ -251,11 +258,6 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                 }else{
                     return symWidth+'px'
                 }
-            }
-        })
-        .attr('opacity', function(d){
-            if(d.type<whichNum){
-                return .2;
             }
         })
 
@@ -285,16 +287,18 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
             return strokeScale(dataset.tags[adjst].loc)+","+dashScale(strokeScale(dataset.tags[adjst].loc))
         })
         .attr('stroke-dashoffset','0')
-        .attr('opacity',1)
+        .attr('opacity',.8)
         .merge(link);
 
-    link
-        .transition()
-        .attr('opacity', function(d){
-            if(d.sourceType<whichNum){
-                return .4;
-            }
-        })
+    // link
+    //     .transition()
+    //     .attr('opacity', function(d){
+    //         if(d.sourceType<whichNum){
+    //             return .6;
+    //         }else{
+    //             return .8;
+    //         }
+    //     })
 
 //only if you are CO2 and other human made things?
     // drawOut()
@@ -381,13 +385,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
             //     return photoSmall+'px' 
             // }
         })
-        .attr('opacity', function(d){
-            if(d.type==whichNum){
-                return 1
-            }else{
-                return .3;
-            }
-        })
+        .attr('opacity', .8) 
         .merge(img);
 
 

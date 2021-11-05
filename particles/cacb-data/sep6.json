@@ -44,7 +44,7 @@
    "first": 1,
    "symb": "symb/tipping",
    "symbNum": 3,
-   "size": 110
+   "size": 130
  },
  {
    "id": 6,
@@ -53,7 +53,7 @@
    "first": 1,
    "symb": "symb/energy",
    "symbNum": 2,
-   "size": 80
+   "size": 120
  },
  {
    "id": 7,
@@ -62,7 +62,7 @@
    "first": 1,
    "symb": "symb/storage",
    "symbNum": 1,
-   "size": 80
+   "size": 140
  },
  {
    "id": 8,
@@ -80,7 +80,7 @@
    "first": 1,
    "symb": "symb/wind",
    "symbNum": 6,
-   "size": 80
+   "size": 100
  },
  {
    "id": 10,
@@ -98,7 +98,7 @@
    "first": 1,
    "symb": "symb/sensors",
    "symbNum": 2,
-   "size": 50
+   "size": 100
  },
  {
    "id": 12,
@@ -116,7 +116,7 @@
    "first": 1,
    "symb": "symb/weather",
    "symbNum": 3,
-   "size": 120
+   "size": 100
  },
  {
    "id": 14,
