@@ -196,7 +196,7 @@ const rad2Scale = d3.scaleLinear()
 
 var photoWidth = 100;
 var photoSmall = 80;
-var fillColor = 'black';
+var fillColor = 'white';
 function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     var opa = .6;
     var minOpa = .1;
@@ -210,8 +210,9 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     node.exit()
         .remove();
     node = node.enter().append('image')
-        .attr('class', function(d){
-            return d.id}) //'sym')
+        .attr('class', 'sym')//function(d){
+            // return d.id}) //'sym')
+        .style('filter',0)
         .attr('xlink:href', function(d){
             var max = d.symbNum;
             var initialRandom = Math.random();
@@ -236,9 +237,9 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         })
         .attr('opacity', function(d){
             if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
-                return .7;
+                return .6;
             }else{
-                return .8;
+                return 1;//.8;
             }            
         })
 
@@ -361,6 +362,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     img = img.enter()
         .append('svg:image')
         .attr('class','backImg')
+        .style('filter',0)
         .attr('xlink:href', function(d) {
                 if(d.first==1){
                     return 'img/'+d.id+'.png';
@@ -507,7 +509,7 @@ function positionNodes(d) {
     //     })
     node
         .attr('class', function(d){
-            return d.id
+            return 'sym'//d.id
         }) 
         .attr('y', function(d) { 
             return d.y;  
