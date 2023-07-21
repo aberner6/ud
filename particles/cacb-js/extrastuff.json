@@ -669,13 +669,7 @@
 
         
 
-// spreadsheet id 
-// 1H0OWV0Ukt70m0G3QZhig9UMIlFhvRkboj5wr2C0Z4B4
-// API key
-// AIzaSyB1wTqee6k1wulPDfRBlMuhxhOyM2VuLNM
-
-// https:sheets.googleapis.com/v4/spreadsheets/1H0OWV0Ukt70m0G3QZhig9UMIlFhvRkboj5wr2C0Z4B4/values/WIP?alt=json&key=AIzaSyB1wTqee6k1wulPDfRBlMuhxhOyM2VuLNM
-
+//deleted 
 
 
 // body { background: linear-gradient(to bottom, #57c1eb 0%,#246fa8 100%); }
