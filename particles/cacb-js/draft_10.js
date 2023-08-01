@@ -3,7 +3,7 @@ var width, height;
 var nodes = [];
 var tagTable = [];
 
-var svg, g, node, text, link, img;
+var svg, g, node, text, link, img, subtitle;
 var liveLinks = [];
 var liveNodes = [];
 var liveTopics = [];
@@ -110,6 +110,15 @@ const processPrep = async(dataset, nodes) => {
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
 
+
+    subtitle = svg
+        .append("text")
+        .attr("class","subtitle")
+        .attr("x", -width/2+100)
+        .attr("y", -height/2+100)
+        .attr("fill","none")
+        .text(whichNum);
+
     img = svg.append('g')
         .selectAll('image');
 
@@ -135,12 +144,30 @@ function zoomed({ transform }) {
     svg.attr('transform', transform)
 }
 
+
+
 function series(){
     whichNum++;
+
+    subtitle
+      .exit()
+      .remove();
+
+    addText(whichNum);
 
     chooseData(whichNum)
         .then(liveNodes => linkUp(liveNodes, liveTopics))
         .then(liveLinks => restart(liveLinks, liveNodes, liveFirsts, whichNum))
+}
+
+var subtitleText = 
+["one low cloud hangs above us,", "a co2 particle turns into many and the low cloud disappears -", "a high cloud forming instead", "and the sun’s radiance pours through", "a tipping point tips", "and energy swarms to cool", "the servers that heat", "the cooling makes co2", "and low clouds disappear", "and high clouds form instead", "the sun sends radiance through", "tipping points tip, permafrost thaws,", "releasing co2", "low clouds disappear", "high clouds form instead", "and the sun’s radiance shines through", "tipping points tip, the ice melts, the seas rise", "and now the sending signals degrade, as the seas rise arond the internet landing sites", "and now the wind is here", "and the radio towers bend", "and the humidity swarms around the signals","changing their form", "the sensors seek to sense", "","but the processors misinterpret, misstep","signals drop between the droplets", "what is the weather tomorrow", "as the co2 releases", "and the radiance shines through", "and the high clouds form", "and the radiance shines through", "and the signals degrade as the seas rise and the humidity particles form", "and the loop plays over time", "as each element changes over time", "everything is connected"]
+
+function addText(whichNum){
+    console.log(whichNum)
+    subtitle
+        .attr("fill","white")
+        .text(subtitleText[whichNum-1])
 }
 
 const chooseData = async(whichNum)=>{
