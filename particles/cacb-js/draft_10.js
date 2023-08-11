@@ -3,7 +3,7 @@ var width, height;
 var nodes = [];
 var tagTable = [];
 
-var svg, g, node, text, link, img, subtitle;
+var svg, g, node, text, link, img, subtitle, infoHeadline, infoSymbol, infoText, legendText, legendSymbol;
 var liveLinks = [];
 var liveNodes = [];
 var liveTopics = [];
@@ -68,9 +68,6 @@ const processPrep = async(dataset, nodes) => {
 
     maxLoc = d3.max(locs);
 
-
-
-
     symSize
         .domain([0, maxLoc])
         .range([symWidth*5, symWidth/5])
@@ -78,10 +75,6 @@ const processPrep = async(dataset, nodes) => {
         .domain(locs)
         .range([-290,-210])
     
-    // yScale
-    //     .domain(locs)
-    //     .range([-height/2,height/2])
-
     poScale
         .domain([0, maxLoc])
         .range([-100,100])
@@ -103,21 +96,62 @@ const processPrep = async(dataset, nodes) => {
         .force('center', d3.forceCenter(0,0))
         .force('charge', d3.forceManyBody(-100).strength(0))
         .force('collide', d3.forceCollide().radius(symWidth).strength(0))
-        // .force('r', d3.forceRadial(function(d){
-        //     return poScale(d.type) 
-        // }).strength(0.9)) //.001
 
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
 
 
     subtitle = svg
-        .append("text")
+        .append("foreignObject")
+            .attr("width", 300)
+            .attr("height", 200)
+            .attr("x", width/4)
+            .attr("y", -height/2+100)
+            .append("xhtml:div")
         .attr("class","subtitle")
-        .attr("x", -width/2+100)
-        .attr("y", -height/2+100)
-        .attr("fill","none")
-        .text(whichNum);
+        .style("color","none")
+        .html(whichNum);
+    infoSymbol = svg
+        .append("image")
+        .style('filter','brightness(0) invert(1)')
+        .attr("class","infoSymbol")
+        .attr("x", width/4)
+        .attr("y", 100)
+    infoHeadline = svg
+        .append("foreignObject")
+            .attr("width", 100)
+            .attr("height", 100)
+            .attr("x", width/4+60)
+            .attr("y", 100)
+            .append("xhtml:div")
+        .attr("class","infoHeadline")
+        .style("color","none")
+        .html(whichNum);
+    infoText = svg
+        .append("foreignObject")
+            .attr("width", 100)
+            .attr("height", 100)
+            .attr("x", width/4+60)
+            .attr("y", 150)
+            .append("xhtml:div")
+        .attr("class","infoText")
+        .style("color","none")
+        .html(whichNum);
+    // legendText = svg
+    //     .append("foreignObject")
+    //         .attr("width", 100)
+    //         .attr("height", 100)
+    //         .attr("x", width/4+60)
+    //         .attr("y", -height/4+whichNum*100)
+    //         .append("xhtml:div")
+    //     .attr("class","legendText")
+    //     .style("color","none")
+    // legendSymbol = svg
+    //     .append("image")
+    //     .style('filter','brightness(0) invert(1)')
+    //     .attr("class","legendSymbol")
+    //     .attr("x", width/4)
+    //     .attr("y", -height/4+whichNum*100)
 
     img = svg.append('g')
         .selectAll('image');
@@ -149,10 +183,12 @@ function zoomed({ transform }) {
 function series(){
     whichNum++;
 
-    subtitle
-      .exit()
-      .remove();
-
+    subtitle.exit().remove();
+    infoText.exit().remove();
+    infoHeadline.exit().remove();
+    infoSymbol.exit().remove();
+    // legendText.exit().remove();
+    // legendSymbol.exit().remove();
     addText(whichNum);
 
     chooseData(whichNum)
@@ -161,13 +197,72 @@ function series(){
 }
 
 var subtitleText = 
-["one low cloud hangs above us,", "a co2 particle turns into many and the low cloud disappears -", "a high cloud forming instead", "and the sun’s radiance pours through", "a tipping point tips", "and energy swarms to cool", "the servers that heat", "the cooling makes co2", "and low clouds disappear", "and high clouds form instead", "the sun sends radiance through", "tipping points tip, permafrost thaws,", "releasing co2", "low clouds disappear", "high clouds form instead", "and the sun’s radiance shines through", "tipping points tip, the ice melts, the seas rise", "and now the sending signals degrade, as the seas rise arond the internet landing sites", "and now the wind is here", "and the radio towers bend", "and the humidity swarms around the signals","changing their form", "the sensors seek to sense", "","but the processors misinterpret, misstep","signals drop between the droplets", "what is the weather tomorrow", "as the co2 releases", "and the radiance shines through", "and the high clouds form", "and the radiance shines through", "and the signals degrade as the seas rise and the humidity particles form", "and the loop plays over time", "as each element changes over time", "everything is connected"]
+["one low cloud hangs above us,", "a co2 particle turns into many and the low cloud disappears -", "a high cloud forming instead", "and the sun’s radiance pours through", "a tipping point tips", "and energy swarms to cool", "the servers that heat", "the cooling makes co2", "and low clouds disappear", "and high clouds form instead", "the sun sends radiance through", "tipping points tip, permafrost thaws,", "releasing co2", "low clouds disappear", "high clouds form instead", "and the sun’s radiance shines through", "tipping points tip, the ice melts, the seas rise", "and now the sending signals degrade, as the seas rise around the internet landing sites", "and now the wind is here", "and the radio towers bend", "and the humidity swarms around the signals","changing their form", "the sensors seek to sense", "","but the processors misinterpret, misstep","signals drop between the droplets", "what is the weather tomorrow", "as the co2 releases", "and the radiance shines through", "and the high clouds form", "and the radiance shines through", "and the signals degrade as the seas rise and the humidity particles form", "and the loop plays over time", "as each element changes over time", "everything is connected"]
 
 function addText(whichNum){
-    console.log(whichNum)
     subtitle
-        .attr("fill","white")
-        .text(subtitleText[whichNum-1])
+        .style("color","white")
+        .html(subtitleText[whichNum-1])
+}
+
+var a = [];
+function addToLegend(liveFirsts, whichNum){
+    // console.log(symb)
+    // make placement related to whichnum
+    //figure out how to know if you are already have one of those
+
+    legendText = svg.selectAll("foreignObject")
+        .data(liveFirsts, function(d){
+            return d;
+        }) 
+        .enter()
+        .append("foreignObject")
+            .attr("width", 100)
+            .attr("height", 100)
+            .attr("x", width/4+60)
+            .attr("y", -height/4+whichNum*100)
+            .append("xhtml:div")
+        .attr("class","legendText")
+        .style("color","white")
+        .html(function(d){
+            console.log(d);
+            return names[d.id-1]
+        });
+    legendSymbol = svg.selectAll("image")
+        .data(liveFirsts, function(d){
+            return d;
+        })
+        .enter()
+        .append("image")
+        .style('filter','brightness(0) invert(1)')
+        .attr("class","legendSymbol")
+        .attr("x", width/4)
+        .attr("y", -height/4+whichNum*100)
+        .attr('xlink:href', function(d){
+            return d.symb+'/'+1+'.png'
+        })
+        .attr('transform','translate('+ 0 +','+ -infoSymHeight/2 +')')
+        .attr('width', function(d){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+                return (infoSymWidth-4) + 'px';
+            }else{
+                return infoSymWidth+'px'
+            }
+        })
+        .attr('height', function(d){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+                return (infoSymWidth-4) + 'px';
+            }else{
+                return infoSymHeight+'px'  
+            }
+        })
+        .attr('opacity', function(d){
+            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+                return .6;
+            }else{
+                return 1;//.8;
+            }            
+        })
 }
 
 const chooseData = async(whichNum)=>{
@@ -225,6 +320,10 @@ var photoWidth = 100;
 var photoSmall = 80;
 var fillColor = 'white';
 function restart(liveLinks, liveNodes, liveFirsts, whichNum){
+
+
+    addToLegend(liveFirsts, whichNum)
+
     var opa = .6;
     var minOpa = .1;
     var maxOpa = .9;
@@ -237,9 +336,8 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
     node.exit()
         .remove();
     node = node.enter().append('image')
-        .attr('class', 'sym')//function(d){
-            // return d.id}) //'sym')
-        .style('filter',0)
+        .attr('class', 'sym')
+        .style('filter','brightness(0) invert(1)')
         .attr('xlink:href', function(d){
             var max = d.symbNum;
             var initialRandom = Math.random();
@@ -318,15 +416,6 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         .attr('opacity',.8)
         .merge(link);
 
-    // link
-    //     .transition()
-    //     .attr('opacity', function(d){
-    //         if(d.sourceType<whichNum){
-    //             return .6;
-    //         }else{
-    //             return .8;
-    //         }
-    //     })
 
 //only if you are CO2 and other human made things?
     // drawOut()
@@ -395,28 +484,16 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
                     return 'img/'+d.id+'.png';
                 }else{}
         })
-        // .attr('width', function(d){
-        //     if(d.id==11 || d.id==1 || d.id==2){
-        //         return photoWidth+3+'px' 
-        //     }else{
-        //         return photoWidth+'px' 
-        //     }
-        // })
         .attr('height', function(d){
-            // if(d.type==whichNum){
                 return d.size +'px'
-            // }else{
-                // return 0; //testing something
-            // }
-            // if(d.id==1 || d.id==3){
-            //     return photoWidth+'px' 
-            // }else{
-            //     return photoSmall+'px' 
-            // }
         })
         .attr('opacity', .8) 
-        .merge(img);
-
+        .on("mouseover", function(event, d){
+            if(d.first==1){
+                addInfo(d.id, d.symb);
+            }
+        })
+        .merge(img)
 
 
     simulation
@@ -425,18 +502,7 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
 
 
     if(whichNum==1){
-        //first simulation, nothing happening
-        //can simulation get smaller the more clicks
-        // simulation
-        //     .force('y', d3.forceY(function(d){
-        //         if(d.tags.length==1){
-        //             var adjst = d.tags-1;
-        //             return yScale(dataset.tags[adjst].loc)
-        //         }else{
-        //             var adjst = (d.tags[0])-1;
-        //             return yScale(dataset.tags[adjst].loc)
-        //         }
-        //     }).strength(1)) 
+        //first simulation, nothing happening 
     }
 
     if(whichNum>1 && whichNum<33){
@@ -505,12 +571,49 @@ function restart(liveLinks, liveNodes, liveFirsts, whichNum){
         .on('tick', ticked)
         .restart()
 }
+var names = ["low clouds","CO2","high clouds","radiance","tipping points","energy","storage","communications","wind","humidity","sensors","processors","weather"]
+var paragraphs = ["low clouds are the singlemost blah di blah","CO2 are the singlemost blah di blah","high clouds are the singlemost blah di blah","radiance are the singlemost blah di blah","tipping points are the singlemost blah di blah","energy are the singlemost blah di blah","storage are the singlemost blah di blah","communications are the singlemost blah di blah","wind are the singlemost blah di blah","humidity are the singlemost blah di blah","sensors","processors are the singlemost blah di blah","weather are the singlemost blah di blah"]
+var infoSymWidth = symWidth*2;
+var infoSymHeight = symHeight*2;
+function addInfo(id, symb){
+    infoHeadline
+        .style("color","white")
+        .text(names[id-1]);
+
+    infoText
+        .style("color","white")
+        .html(paragraphs[id-1]);
+
+    infoSymbol
+        .attr('xlink:href', symb+'/'+1+'.png')
+        .attr('transform','translate('+ 0 +','+ -infoSymHeight/2 +')')
+        .attr('width', function(){
+            if((symb=='symb/CO2') || (symb=='symb/energy')|| (symb=='symb/humidity')){
+                return (infoSymWidth-4) + 'px';
+            }else{
+                return infoSymWidth+'px'
+            }
+        })
+        .attr('height', function(){
+            if((symb=='symb/CO2') || (symb=='symb/energy')|| (symb=='symb/humidity')){
+                return (infoSymWidth-4) + 'px';
+            }else{
+                return infoSymHeight+'px'  
+            }
+        })
+        .attr('opacity', function(){
+            if((symb=='symb/CO2') || (symb=='symb/energy')|| (symb=='symb/humidity')){
+                return .6;
+            }else{
+                return 1;//.8;
+            }            
+        })
+}
 
 function ticked() {
     img.attr('class', positionNodes);
-    // text.attr('class', positionNodes);
     node.attr('class', positionNodes);
-    link.attr('d', makeLinks)
+    link.attr('d', makeLinks);
 }
 
 function positionNodes(d) {
@@ -524,16 +627,7 @@ function positionNodes(d) {
         .attr('x', function(d) {
             return d.x-photoWidth/2; 
         })
-    // text
-    //     .attr('class', function(d){
-    //         return 'txt'
-    //     }) 
-    //     .attr('y', function(d,i) { 
-    //         return d.y; 
-    //     })
-    //     .attr('x', function(d) {
-    //         return d.x; 
-    //     })
+
     node
         .attr('class', function(d){
             return 'sym'//d.id
