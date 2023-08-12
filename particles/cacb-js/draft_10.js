@@ -3,7 +3,7 @@ var width, height;
 var nodes = [];
 var tagTable = [];
 
-var svg, g, node, text, link, img, subtitle, infoHeadline, infoSymbol, infoText, legendText, legendSymbol;
+var svg, g, node, text, link, img, subtitle, infoHeadline, infoSymbol, infoText, legendText, legendSymbol, legendDiv;
 var liveLinks = [];
 var liveNodes = [];
 var liveTopics = [];
@@ -99,7 +99,7 @@ const processPrep = async(dataset, nodes) => {
 
     svg = d3.select('body').append('svg')
         .attr('viewBox', [-width/2,-height/2, width, height]);
-
+    legendG = svg.append("g").attr("class","legendG")
 
     subtitle = svg
         .append("foreignObject")
@@ -137,21 +137,6 @@ const processPrep = async(dataset, nodes) => {
         .attr("class","infoText")
         .style("color","none")
         .html(whichNum);
-    // legendText = svg
-    //     .append("foreignObject")
-    //         .attr("width", 100)
-    //         .attr("height", 100)
-    //         .attr("x", width/4+60)
-    //         .attr("y", -height/4+whichNum*100)
-    //         .append("xhtml:div")
-    //     .attr("class","legendText")
-    //     .style("color","none")
-    // legendSymbol = svg
-    //     .append("image")
-    //     .style('filter','brightness(0) invert(1)')
-    //     .attr("class","legendSymbol")
-    //     .attr("x", width/4)
-    //     .attr("y", -height/4+whichNum*100)
 
     img = svg.append('g')
         .selectAll('image');
@@ -187,8 +172,7 @@ function series(){
     infoText.exit().remove();
     infoHeadline.exit().remove();
     infoSymbol.exit().remove();
-    // legendText.exit().remove();
-    // legendSymbol.exit().remove();
+
     addText(whichNum);
 
     chooseData(whichNum)
@@ -205,64 +189,85 @@ function addText(whichNum){
         .html(subtitleText[whichNum-1])
 }
 
-var a = [];
-function addToLegend(liveFirsts, whichNum){
-    // console.log(symb)
-    // make placement related to whichnum
-    //figure out how to know if you are already have one of those
+var isNew = [];
+var add = false;
+function prepLegend(liveFirsts, whichNum){
+    isNew.push(liveFirsts.length-1);
+    var elNum = liveFirsts.length-1;
 
-    legendText = svg.selectAll("foreignObject")
-        .data(liveFirsts, function(d){
-            return d;
-        }) 
-        .enter()
+
+    for(var i = 0; i<isNew.length; i++){
+        if(isNew[i-1]==elNum){
+            add = false;
+        }else{
+            add = true;
+        }
+    }
+    if(add){
+        addToLegend(elNum, liveFirsts[elNum].symb)
+    }else{}
+}
+function addToLegend(elNum, thisSymb){
+
+    console.log(elNum)
+    //HAVE TO FIGURE OUT HOW TO SPACE THE LEGEND OUT NICELY, PROGRAMMATICALLY
+    legendText = legendG
         .append("foreignObject")
             .attr("width", 100)
             .attr("height", 100)
-            .attr("x", width/4+60)
-            .attr("y", -height/4+whichNum*100)
-            .append("xhtml:div")
+            .attr("x", function(){
+                if(elNum<3){ 
+                    return width/4+60
+                }if(elNum>=3&&elNum<8){
+                    return width/4+160
+                }if(elNum>=8&&elNum<14){
+                    return width/4+260
+                }
+            })
+            .attr("y", function(){
+                if(elNum<3){ 
+                    return -height/4+whichNum*5
+                }if(elNum>=3&&elNum<8){
+                    return -height/4+whichNum*5
+                }if(elNum>=8&&elNum<14){
+                    return width/4+260
+                }
+            })
+            .append("xhtml")
         .attr("class","legendText")
         .style("color","white")
-        .html(function(d){
-            console.log(d);
-            return names[d.id-1]
-        });
-    legendSymbol = svg.selectAll("image")
-        .data(liveFirsts, function(d){
-            return d;
-        })
-        .enter()
+        .html(names[elNum])
+
+    legendSymbol = legendG
         .append("image")
         .style('filter','brightness(0) invert(1)')
         .attr("class","legendSymbol")
         .attr("x", width/4)
-        .attr("y", -height/4+whichNum*100)
-        .attr('xlink:href', function(d){
-            return d.symb+'/'+1+'.png'
-        })
+        .attr("y", -height/4+whichNum*5)
+        .attr('xlink:href', thisSymb+'/'+1+'.png')
         .attr('transform','translate('+ 0 +','+ -infoSymHeight/2 +')')
-        .attr('width', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+        .attr('width', function(){
+            if((thisSymb=='symb/CO2') || (thisSymb=='symb/energy')|| (thisSymb=='symb/humidity')){
                 return (infoSymWidth-4) + 'px';
             }else{
                 return infoSymWidth+'px'
             }
         })
-        .attr('height', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+        .attr('height', function(){
+            if((thisSymb=='symb/CO2') || (thisSymb=='symb/energy')|| (thisSymb=='symb/humidity')){
                 return (infoSymWidth-4) + 'px';
             }else{
                 return infoSymHeight+'px'  
             }
         })
-        .attr('opacity', function(d){
-            if((d.symb=='symb/CO2') || (d.symb=='symb/energy')|| (d.symb=='symb/humidity')){
+        .attr('opacity', function(){
+            if((thisSymb=='symb/CO2') || (thisSymb=='symb/energy')|| (thisSymb=='symb/humidity')){
                 return .6;
             }else{
                 return 1;//.8;
             }            
         })
+        add = false;
 }
 
 const chooseData = async(whichNum)=>{
@@ -320,9 +325,7 @@ var photoWidth = 100;
 var photoSmall = 80;
 var fillColor = 'white';
 function restart(liveLinks, liveNodes, liveFirsts, whichNum){
-
-
-    addToLegend(liveFirsts, whichNum)
+    prepLegend(liveFirsts, whichNum)
 
     var opa = .6;
     var minOpa = .1;
